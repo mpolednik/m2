@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if category %}
+        <br><br>Category<br>
+        {{ category }}<br>
+    {% endif %}
+    <br><br>Images<br>
+    {% for image in images %}
+        <a href="/i/{{ image.id }}">{{ image }}</a><br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+    <br><br>Image<br>
+    {{ image }}<br>
+    <br><br>Owner<br>
+    <a href="/u/{{ image.owner.id }}">{{ image.owner }}</a><br>
+    <br><br>Category<br>
+    <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
+    <br><br>Comments<br>
+    {% for comment in image.comments %}
+        {{ comment }}<br>
+    {% endfor %}
+{% endblock %}

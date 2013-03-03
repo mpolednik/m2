@@ -1,0 +1,46 @@
+from flask import session
+from app.helpers.middleware import db, bcrypt
+
+from app.models.image import Image
+from app.models.comment import Comment
+from app.models.rating import Rating
+from app.models.request import Request
+
+class User(db.Model):
+    __tablename__ = 'user'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    mail = db.Column(db.String(255))
+    password = db.Column(db.String(32))
+    phone = db.Column(db.String(16))
+    rating_image = db.Column(db.Integer, default=0)
+    rating_comment = db.Column(db.Integer, default=0)
+    ts = db.Column(db.DateTime)
+    level = db.Column(db.Integer, default=0)
+
+    images = db.relationship('Image', backref='owner')
+    comments = db.relationship('Comment', backref='owner')
+    ratings = db.relationship('Rating', backref='owner')
+    requests = db.relationship('Request', backref='owner')
+
+    def __init__(self, name, mail, password):
+        self.name = name
+        self.mail = mail
+        self.password = bcrypt.generate_password_hash(password)
+
+    def __repr__(self):
+        return '<User({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.name, self.mail, self.password, self.phone, self.rating_image, self.rating_comment, self.ts, self.level)
+
+    @staticmethod
+    def login(mail, password):
+        candidate = db.session.query(User).filter_by(mail=mail).first()
+        if (bcrypt.check_password_hash(candidate.password, password)):
+            session['user'] = candidate
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def logout():
+        session.destroy()

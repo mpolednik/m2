@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!-- Charset & Title -->
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+
+        <!-- Meta tags -->
+        <meta name="author" content="Martin Polednik">
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="/static/css/master.css">
+   
+    </head>
+<body>
+    User<br>
+    {% if DEF_user %}
+        {{ DEF_user }}
+    {% else %}
+        Login / logout
+    {% endif %}
+    <br><br>Categories<br>
+    {% for category in DEF_categories %}
+        <a href="/c/{{ category.name }}">{{ category }}</a><br>
+    {% endfor %}
+    {% block body %}{% endblock %}
+</body>
+</html

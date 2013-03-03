@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+    <br><br>User<br>
+    {{ user }}
+    <br><br>Images<br>
+    {% for image in user.images %}
+        {{ image }}<br>
+    {% endfor %}
+{% endblock %}
