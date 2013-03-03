@@ -1,5 +1,7 @@
 Project for final high school exam
 
+Simple reddit-like photogallery build using flask + modules and sqlalchemy
+
 Required software
 =================
 * UNIX based operating system
@@ -22,4 +24,3 @@ Python packages
 * itsdangerous==0.17
 * py-bcrypt==0.2
 * simplekv==0.5
-* wsgiref==0.1.2
