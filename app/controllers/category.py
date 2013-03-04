@@ -44,8 +44,13 @@ def category_submit(name):
     return render('category_submit.html', title='test', form=form)
 
 def category_edit(name):
-    form = SubmitForm()
+    form = EditForm()
 
     category = db.session.query(Category).filter_by(name=name).one()
+
+    if request.method == 'POST' and form.validate():
+        category.text = form.text.data
+        db.session.commit()
+        return redirect(url_for('category_one', name=name))
 
     return render('category_edit.html', title='test', form=form, category=category)
