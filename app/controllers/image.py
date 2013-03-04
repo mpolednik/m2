@@ -1,21 +1,45 @@
+from flask import request, redirect
+
 from app.helpers.middleware import db
+from app.helpers.bootstrap import current_user
 from app.helpers.rendering import render
 
+from flask.ext.wtf import Form
+from wtforms import fields, validators
+
 from app.models.image import Image
+from app.models.comment import Comment, construct_comment_tree
+from app.controllers.comment import CommentForm
+
+class EditForm(Form):
+    text = fields.TextAreaField('Text')
 
 def image(id):
+    form = CommentForm(request.form)
+
     image = db.session.query(Image).filter_by(id=id).one()
 
-    return render('image.html', image=image)
+    if request.method == 'POST' and form.validate():
+        comment = Comment(current_user, image, form.text.data)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect('/i/{}'.format(id))
 
-def image_add():
-    pass
+    comments = construct_comment_tree(image.comments)
 
-def image_edit():
-    pass
+    return render('image.html', image=image, form=form, comments=comments)
 
-def image_del():
-    pass
+def image_edit(id):
+    image = db.session.query(Image).filter_by(id=id).one()
 
-def image_vote():
-    pass
+    form = EditForm(request.form, image)
+
+    if request.method == 'POST' and form.validate():
+        image.text = form.text.data
+        db.session.commit()
+        return redirect('/i/{}'.format(id))
+
+    return render('image_edit.html', image=image, form=form)
+
+def image_delete(id):
+    return 'IMGDEL'
