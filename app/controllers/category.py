@@ -39,7 +39,7 @@ def category_submit(name):
         image = Image(current_user, category, form.name.data, form.text.data, form.path.data)
         db.session.add(image)
         db.session.commit()
-        return redirect('/c/{}'.format(name))
+        return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
 

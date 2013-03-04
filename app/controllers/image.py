@@ -23,7 +23,7 @@ def image(id):
         comment = Comment(current_user, image, form.text.data)
         db.session.add(comment)
         db.session.commit()
-        return redirect('/i/{}'.format(id))
+        return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments)
 
@@ -37,7 +37,7 @@ def image_edit(id):
     if request.method == 'POST' and form.validate():
         image.text = form.text.data
         db.session.commit()
-        return redirect('/i/{}'.format(id))
+        return redirect(url_for('image', id=id))
 
     return render('image_edit.html', image=image, form=form)
 
@@ -47,4 +47,4 @@ def image_delete(id):
 
     db.session.delete(image)
     db.session.commit()
-    return redirect('/c/{}'.format(category.name))
+    return redirect(url_for('category_one', category=name))
