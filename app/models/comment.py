@@ -9,7 +9,7 @@ class Comment(db.Model):
     id_image= db.Column(db.Integer, db.ForeignKey('image.id'))
     text = db.Column(db.String(1000))
     rating = db.Column(db.Integer, default=0)
-    state = db.Column(db.Integer, default=0)
+    state = db.Column(db.Integer, default=1)
     ts = db.Column(db.DateTime)
 
     father = db.relationship('Comment')
