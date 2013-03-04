@@ -21,6 +21,7 @@
         Login / logout
     {% endif %}
     <br><br>Categories<br>
+    <a href="/">All</a><br>
     {% for category in DEF_categories %}
         <a href="/c/{{ category.name }}">{{ category }}</a><br>
     {% endfor %}
