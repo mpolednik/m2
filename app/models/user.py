@@ -38,7 +38,7 @@ class User(db.Model):
     def __init__(self, name, mail, password):
         self.name = name
         self.mail = mail
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = password
 
     def __repr__(self):
         return '<User({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.name, self.mail, self.password, self.phone, self.rating_image, self.rating_comment, self.ts, self.level)
