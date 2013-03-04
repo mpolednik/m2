@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+    <br><br>Menu<br>
+    <a href="/i/{{ image.id }}/edit">Edit</a><br>
+    <a href="/i/{{ image.id }}/delete">Delete</a><br>
+    <a href="/i/{{ image.id }}/i/{{ image.id }}/vote">Upvote</a><br>
+    <a href="/i/{{ image.id }}/i/{{ image.id }}/vote">Downvote</a><br>
     <br><br>Image<br>
     {{ image }}<br>
     <br><br>Owner<br>
@@ -7,7 +12,20 @@
     <br><br>Category<br>
     <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
     <br><br>Comments<br>
-    {% for comment in image.comments %}
-        {{ comment }}<br>
+    <form action="" method="POST">
+        {{ form.text }}
+        {{ form.hidden_tag() }}
+        <input type="submit" value="Komentovat">
+    </form>
+    {% for comment in comments %}
+        {% for delim in range(1, comment.depth) %}
+            >
+        {% endfor  %}
+        {{ comment.depth }}
+        <a href="/i/{{ image.id }}/c/{{ comment.id }}">{{ comment }}</a>
+        <a href="/i/{{ image.id }}/c/{{ comment.id }}/vote">Upvote</a>
+        <a href="/i/{{ image.id }}/c/{{ comment.id }}/vote">Downvote</a>
+        <a href="/i/{{ image.id }}/c/{{ comment.id }}/edit">Edit</a>
+        <a href="/i/{{ image.id }}/c/{{ comment.id }}/delete">Delete</a><br>
     {% endfor %}
 {% endblock %}

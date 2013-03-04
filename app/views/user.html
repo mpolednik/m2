@@ -4,6 +4,6 @@
     {{ user }}
     <br><br>Images<br>
     {% for image in user.images %}
-        {{ image }}<br>
+        <a href="/i/{{ image.id }}">{{ image }}</a><br>
     {% endfor %}
 {% endblock %}

@@ -1,8 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
+    <br><br>Menu<br>
     {% if category %}
+        <a href="/r/submit">Request moderator</a><br>
+        <a href="/c/{{ category.name }}/submit">New image</a><br>
+        <a href="/c/{{ category.name }}/edit">Edit</a><br>
         <br><br>Category<br>
         {{ category }}<br>
+    {% else %}
+        <a href="/r/submit">Request new category</a><br>
     {% endif %}
     <br><br>Images<br>
     {% for image in images %}

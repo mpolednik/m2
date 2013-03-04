@@ -16,7 +16,7 @@
 <body>
     User<br>
     {% if DEF_user %}
-        {{ DEF_user }}
+        <a href="/u/{{ DEF_user.id }}">{{ DEF_user }}</a>
     {% else %}
         Login / logout
     {% endif %}

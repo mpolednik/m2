@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="" method="POST">
+        {{ form.text }}
+        {{ form.hidden_tag() }}
+        <input type="submit" value="reply">
+    </form>
+    <br><br>Comment<br>
+    {% for comment in comments %}
+        {% for delim in range(1, comment.depth) %}
+            >
+        {% endfor  %}
+        {{ comment }}<br>
+    {% endfor %}
+{% endblock %}
