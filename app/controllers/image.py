@@ -42,4 +42,9 @@ def image_edit(id):
     return render('image_edit.html', image=image, form=form)
 
 def image_delete(id):
-    return 'IMGDEL'
+    image = db.session.query(Image).filter_by(id=id).one()
+    category = image.category
+
+    db.session.delete(image)
+    db.session.commit()
+    return redirect('/c/{}'.format(category.name))
