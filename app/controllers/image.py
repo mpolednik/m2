@@ -48,3 +48,6 @@ def image_delete(id):
     db.session.delete(image)
     db.session.commit()
     return redirect(url_for('category_one', category=name))
+
+def image_vote(id):
+    return 'VOTING'

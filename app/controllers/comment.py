@@ -54,3 +54,6 @@ def comment_delete(id, cid):
     db.session.commit()
 
     return redirect(url_for('image', id=id))
+
+def comment_vote(id, cid):
+    return 'VOTING'
