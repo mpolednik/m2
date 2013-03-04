@@ -1,8 +1,7 @@
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
-from app.helpers.bootstrap import current_user
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -23,9 +22,11 @@ def comment(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
 
     if request.method == 'POST' and form.validate():
-        comment = Comment(current_user, image, form.text.data, comment.id)
+        comment = Comment(session['user'], image, form.text.data, comment.id)
         db.session.add(comment)
         db.session.commit()
+
+        flash('Komentar ulozen')
         return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments, comment.id)
@@ -42,6 +43,8 @@ def comment_edit(id, cid):
     if request.method == 'POST' and form.validate():
         comment.text = form.text.data
         db.session.commit()
+
+        flash('Komentar editovan')
         return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments, comment.id)
@@ -53,6 +56,7 @@ def comment_delete(id, cid):
     comment.state = 0
     db.session.commit()
 
+    flash('Komentar smazan')
     return redirect(url_for('image', id=id))
 
 def comment_vote(id, cid):

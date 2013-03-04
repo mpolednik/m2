@@ -1,7 +1,6 @@
 from flask import request, session, flash, redirect, url_for
 
 from app.helpers.middleware import db
-from app.helpers.bootstrap import current_user
 from app.helpers.rendering import render
 
 from flask.ext.wtf import Form
@@ -28,9 +27,10 @@ def request_submit(category = None):
     form = RequestForm()
 
     if request.method == 'POST' and form.validate():
-        req = Request(current_user, None, form.type.data, form.name.data, form.text.data)
+        req = Request(session['user'], None, form.type.data, form.name.data, form.text.data)
         db.session.add(req)
         db.session.commit()
+
         flash('request odeslan')
         return redirect(url_for('category_all'))
 
@@ -42,6 +42,7 @@ def request_accept(id):
     request.state = 1
     db.session.commit()
 
+    flash('Request schvalen')
     return redirect(url_for('request_all'))
 
 def request_decline(id):
@@ -49,4 +50,5 @@ def request_decline(id):
     request.state = -1
     db.session.commit()
 
+    flash('Request neschvalen')
     return redirect(url_for('request_all'))

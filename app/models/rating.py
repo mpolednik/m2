@@ -8,8 +8,8 @@ class Rating(db.Model):
     value = db.Column(db.Integer)
     ts = db.Column(db.DateTime)
 
-    def __init__(self, owner, id_target, value):
-        self.owner = owner
+    def __init__(self, id_user, id_target, value):
+        self.id_user = id_user
         self.id_target = name
         self.value = value
 

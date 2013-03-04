@@ -32,8 +32,8 @@ class Image(db.Model):
     exif = db.relationship('Exif', backref='image')
     comments = db.relationship('Comment', backref='image', order_by=Comment.id_father)
 
-    def __init__(self, owner, category, name, text, path):
-        self.owner = owner
+    def __init__(self, id_user, category, name, text, path):
+        self.id_user = id_user
         self.category = category
         self.name = name
         self.text = text

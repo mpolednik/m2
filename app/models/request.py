@@ -12,8 +12,8 @@ class Request(db.Model):
     state = db.Column(db.Integer, default=0)
     ts = db.Column(db.DateTime)
 
-    def __init__(self, owner, category, type, name, text):
-        self.owner = owner
+    def __init__(self, id_user, category, type, name, text):
+        self.id_user = id_user
         self.category = category 
         self.type = type
         self.name = name

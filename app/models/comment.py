@@ -14,8 +14,8 @@ class Comment(db.Model):
 
     father = db.relationship('Comment')
 
-    def __init__(self, owner, image, text, father = None):
-        self.owner = owner
+    def __init__(self, id_user, image, text, father = None):
+        self.id_user = id_user
         self.image = image 
         self.text = text
         self.id_father = father

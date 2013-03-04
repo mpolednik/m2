@@ -1,8 +1,7 @@
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db, app
 from app.helpers.rendering import render
-from app.helpers.bootstrap import current_user
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -36,9 +35,11 @@ def category_submit(name):
     category = db.session.query(Category).filter_by(name=name).one()
 
     if request.method == 'POST' and form.validate():
-        image = Image(current_user, category, form.name.data, form.text.data, form.path.data)
+        image = Image(session['user'], category, form.name.data, form.text.data, form.path.data)
         db.session.add(image)
         db.session.commit()
+
+        flash('Obrazek postnut')
         return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
@@ -51,6 +52,8 @@ def category_edit(name):
     if request.method == 'POST' and form.validate():
         category.text = form.text.data
         db.session.commit()
+
+        flash('Kategorie editovana')
         return redirect(url_for('category_one', name=name))
 
     return render('category_edit.html', title='test', form=form, category=category)
