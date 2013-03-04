@@ -34,9 +34,9 @@ class User(db.Model):
 
     @staticmethod
     def login(mail, password):
-        candidate = db.session.query(User).filter_by(mail=mail).first()
+        candidate = db.session.query(User).filter_by(mail=mail).one()
         if (bcrypt.check_password_hash(candidate.password, password)):
-            session['user'] = candidate
+            session['user'] = candidate.id
             return True
         else:
             return False
