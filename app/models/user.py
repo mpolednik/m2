@@ -3,8 +3,8 @@ from app.helpers.middleware import db, bcrypt
 
 from app.models.image import Image
 from app.models.comment import Comment
-from app.models.rating import Rating
 from app.models.request import Request
+
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -29,7 +29,6 @@ class User(db.Model):
 
     images = db.relationship('Image', backref='owner')
     comments = db.relationship('Comment', backref='owner')
-    ratings = db.relationship('Rating', backref='owner')
     requests = db.relationship('Request', backref='owner')
 
     def changepassword(self, password):

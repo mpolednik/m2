@@ -8,20 +8,24 @@ from wtforms import fields, validators
 
 from app.models.request import Request
 
+
 class RequestForm(Form):
     name = fields.TextField('Jmeno')
     text = fields.TextAreaField('Text')
     type = fields.SelectField('Typ', choices=[('0', 'Category'), ('1', 'Moderator')])
+
 
 def request_all():
     requests = db.session.query(Request).all()
 
     return render('request_list.html', requests=requests)
 
+
 def request_one(id):
     request = db.session.query(Request).filter_by(id=id).one()
 
     return render('request.html', request=request)
+
 
 def request_submit(category = None):
     form = RequestForm()
@@ -37,6 +41,7 @@ def request_submit(category = None):
     return render('request_form.html', form=form)
     return 'In progress...'
 
+
 def request_accept(id):
     request = db.session.query(Request).filter_by(id=id).one()
     request.state = 1
@@ -44,6 +49,7 @@ def request_accept(id):
 
     flash('Request schvalen')
     return redirect(url_for('request_all'))
+
 
 def request_decline(id):
     request = db.session.query(Request).filter_by(id=id).one()

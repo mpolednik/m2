@@ -1,5 +1,6 @@
 from app.helpers.middleware import db
 
+
 class Request(db.Model):
     __tablename__ = 'request'
 

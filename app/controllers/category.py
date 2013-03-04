@@ -8,6 +8,8 @@ from wtforms import fields, validators
 
 from app.models.image import Image
 from app.models.category import Category
+from app.controllers.image import image_vote
+
 
 class SubmitForm(Form):
     name = fields.TextField('Jmeno')
@@ -15,19 +17,23 @@ class SubmitForm(Form):
     path = fields.TextAreaField('Path')
     file = fields.FileField('Image')
 
+
 class EditForm(Form):
     text = fields.TextAreaField('Text')
+
 
 def category_all():
     images = db.session.query(Image).all()
 
     return render('category.html', title='test', images=images)
 
+
 def category_one(name):
     category = db.session.query(Category).filter_by(name=name).one()
     images = db.session.query(Image).filter_by(category=category).all()
 
     return render('category.html', title='test', category=category, images=images)
+
 
 def category_submit(name):
     form = SubmitForm(request.form)
@@ -43,6 +49,7 @@ def category_submit(name):
         return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
+
 
 def category_edit(name):
     form = EditForm()

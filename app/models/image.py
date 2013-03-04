@@ -2,6 +2,7 @@ from app.helpers.middleware import db
 
 from app.models.category import Category
 from app.models.comment import Comment
+from app.models.rating import VotableObject
 
 class Exif(db.Model):
     __tablename__ = 'exif'
@@ -17,7 +18,8 @@ class Exif(db.Model):
     def __repr__(self):
         return '<User({}, {}, {})>'.format(self.image, self.key, self.value)
 
-class Image(db.Model):
+
+class Image(db.Model, VotableObject):
     __tablename__ = 'image'
 
     id = db.Column(db.Integer, primary_key=True)

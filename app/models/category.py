@@ -2,9 +2,11 @@ from app.helpers.middleware import db
 
 from app.models.request import Request
 
+
 moderator = db.Table('moderator',
     db.Column('id_user', db.Integer, db.ForeignKey('user.id'), primary_key = True),
     db.Column('id_category', db.Integer, db.ForeignKey('category.id'), primary_key = True))
+
 
 class Category(db.Model):
     __tablename__ = 'category'

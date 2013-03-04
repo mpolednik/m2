@@ -8,14 +8,17 @@ from wtforms import fields, validators
 
 from app.models.user import User
 
+
 class LoginForm(Form):
     mail = fields.TextField('Mail')
     password = fields.PasswordField('Pass')
+
 
 class RegistrationForm(Form):
     name = fields.TextField('name')
     mail = fields.TextField('Mail')
     password = fields.PasswordField('Pass')
+
 
 class EditForm(Form):
     name = fields.TextField('name')
@@ -23,9 +26,11 @@ class EditForm(Form):
     password = fields.PasswordField('pass')
     phone = fields.TextField('Phone')
 
+
 def user(id):
     user = db.session.query(User).filter_by(id=id).one()
     return render('user.html', user=user)
+
 
 def account():
     user = db.session.query(User).get(session['user'])
@@ -45,6 +50,7 @@ def account():
 
     return render('account.html', form=form)
 
+
 def login():
     form = LoginForm(request.form)
 
@@ -55,6 +61,7 @@ def login():
         return redirect(url_for('category_all'))
 
     return render('login.html', form=form)
+
 
 def register():
     form = RegistrationForm(request.form)
@@ -69,6 +76,7 @@ def register():
         return redirect(url_for('category_all'))
 
     return render('register.html', form=form)
+
 
 def logout():
     User.logout()

@@ -8,12 +8,16 @@ from wtforms import fields, validators
 
 from app.models.comment import Comment, construct_comment_tree
 from app.models.image import Image
+from app.models.rating import CommentRating
+
 
 class CommentForm(Form):
     text = fields.TextAreaField('Text')
 
+
 class EditForm(Form):
     text = fields.TextAreaField('Text')
+
 
 def comment(id, cid):
     form = CommentForm(request.form)
@@ -33,6 +37,7 @@ def comment(id, cid):
 
     return render('comment.html', comments=comments, form=form)
 
+
 def comment_edit(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
 
@@ -51,6 +56,7 @@ def comment_edit(id, cid):
 
     return render('comment.html', comments=comments, form=form)
 
+
 def comment_delete(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.state = 0
@@ -59,5 +65,19 @@ def comment_delete(id, cid):
     flash('Komentar smazan')
     return redirect(url_for('image', id=id))
 
+
 def comment_vote(id, cid):
-    return 'VOTING'
+    comment = db.session.query(Comment).filter_by(id=cid).one()
+    comment.RatingClass = CommentRating
+
+    if 'v' in request.args:
+        if request.args['v'] == 'up':
+            rating = 1
+        else:
+            rating = -1
+
+    comment.vote(rating)
+    db.session.commit()
+
+    flash('Komentar hodnocen')
+    return redirect(url_for('image', id=id))

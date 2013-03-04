@@ -1,6 +1,9 @@
 from app.helpers.middleware import db
 
-class Comment(db.Model):
+from app.models.rating import VotableObject
+
+
+class Comment(db.Model, VotableObject):
     __tablename__ = 'comment'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +26,7 @@ class Comment(db.Model):
     def __repr__(self):
         return '<Comment({}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.id_father, self.id_image, self.text, self.rating, self.state, self.ts)
 
+
 def construct_comment_tree(comments, father = None):
     tree = []
 
@@ -33,6 +37,7 @@ def construct_comment_tree(comments, father = None):
             _find_nodes(2, tree, comment, comments)
 
     return tree
+
 
 def _find_nodes(depth, tree, father, comments):
     for comment in comments:

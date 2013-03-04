@@ -8,10 +8,13 @@ from wtforms import fields, validators
 
 from app.models.image import Image
 from app.models.comment import Comment, construct_comment_tree
+from app.models.rating import ImageRating 
 from app.controllers.comment import CommentForm
+
 
 class EditForm(Form):
     text = fields.TextAreaField('Text')
+
 
 def image(id):
     form = CommentForm(request.form)
@@ -30,6 +33,7 @@ def image(id):
 
     return render('image.html', image=image, form=form, comments=comments)
 
+
 def image_edit(id):
     image = db.session.query(Image).filter_by(id=id).one()
 
@@ -43,15 +47,33 @@ def image_edit(id):
 
     return render('image_edit.html', image=image, form=form)
 
+
 def image_delete(id):
     image = db.session.query(Image).filter_by(id=id).one()
-    category = image.category
+    category = image.category.name
 
     db.session.delete(image)
     db.session.commit()
 
     flash('Image deleted')
-    return redirect(url_for('category_one', category=name))
+    return redirect(url_for('category_one', name=category))
 
-def image_vote(id):
-    return 'VOTING'
+
+def image_vote(id, cname = None):
+    image = db.session.query(Image).filter_by(id=id).one()
+    image.RatingClass = ImageRating
+
+    if 'v' in request.args:
+        if request.args['v'] == 'up':
+            rating = 1
+        else:
+            rating = -1
+
+    image.vote(rating)
+    db.session.commit()
+
+    flash('Obrazek hodnocen')
+    if cname:
+        return redirect(url_for('category', name=name))
+    else:
+        return redirect(url_for('image', id=id))
