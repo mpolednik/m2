@@ -9,7 +9,7 @@ class Request(db.Model):
     type = db.Column(db.Integer)
     name = db.Column(db.String(30))
     text = db.Column(db.String(1000))
-    status = db.Column(db.Integer, default=0)
+    state = db.Column(db.Integer, default=0)
     ts = db.Column(db.DateTime)
 
     def __init__(self, owner, category, type, name, text):
@@ -20,4 +20,4 @@ class Request(db.Model):
         self.text = text
 
     def __repr__(self):
-        return '<Request({}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.category, self.type, self.name, self.text, self.status, self.ts)
+        return '<Request({}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.category, self.type, self.name, self.text, self.state, self.ts)

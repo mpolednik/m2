@@ -32,10 +32,21 @@ def request_submit(category = None):
         db.session.add(req)
         db.session.commit()
         flash('request odeslan')
-        return redirect('/')
+        return redirect(url_for('category_all'))
 
     return render('request_form.html', form=form)
     return 'In progress...'
 
-def request_accept(request):
-    pass
+def request_accept(id):
+    request = db.session.query(Request).filter_by(id=id).one()
+    request.state = 1
+    db.session.commit()
+
+    return redirect(url_for('request_all'))
+
+def request_decline(id):
+    request = db.session.query(Request).filter_by(id=id).one()
+    request.state = -1
+    db.session.commit()
+
+    return redirect(url_for('request_all'))

@@ -16,7 +16,9 @@ views.add('/i/<id>/c/<cid>/delete', 'app.controllers.comment.comment_delete')
 views.add('/i/<id>/c/<cid>/vote', 'app.controllers.comment.comment_vote')
 
 views.add('/r', 'app.controllers.request.request_all')
-views.add('/r/<id>', 'app.controllers.request.request_one')
 views.add('/r/submit', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
+views.add('/r/<id>', 'app.controllers.request.request_one')
+views.add('/r/<id>/accept', 'app.controllers.request.request_accept')
+views.add('/r/<id>/decline', 'app.controllers.request.request_decline')
 
 views.add('/u/<id>', 'app.controllers.user.user')
