@@ -30,7 +30,7 @@ class Image(db.Model):
     ts = db.Column(db.DateTime)
 
     exif = db.relationship('Exif', backref='image')
-    comments = db.relationship('Comment', backref='image')
+    comments = db.relationship('Comment', backref='image', order_by=Comment.id_father)
 
     def __init__(self, owner, category, name, text, path):
         self.owner = owner
