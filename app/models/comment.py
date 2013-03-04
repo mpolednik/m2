@@ -21,7 +21,7 @@ class Comment(db.Model):
         self.id_father = father
 
     def __repr__(self):
-        return '<Comment({}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.id_father, self.id_image, self.text, self.rating, self.ts)
+        return '<Comment({}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.id_father, self.id_image, self.text, self.rating, self.state, self.ts)
 
 def construct_comment_tree(comments, father = None):
     tree = []
