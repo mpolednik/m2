@@ -1,5 +1,3 @@
-from flask.ext.sqlalchemy import SQLAlchemy
-
 from app.helpers.middleware import db
 
 from app.models.request import Request
