@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <br><br>Request<br>
+    <a href="/r/{{ request.id }}/accept">Accept</a>
+    <a href="/r/{{ request.id }}/decline">Decline</a>
     {{ request }}<br>
 {% endblock %}
