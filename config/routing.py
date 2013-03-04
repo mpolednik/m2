@@ -22,3 +22,7 @@ views.add('/r/<id>/accept', 'app.controllers.request.request_accept')
 views.add('/r/<id>/decline', 'app.controllers.request.request_decline')
 
 views.add('/u/<id>', 'app.controllers.user.user')
+views.add('/login', 'app.controllers.user.login', methods=('GET', 'POST'))
+views.add('/register', 'app.controllers.user.register', methods=('GET', 'POST'))
+views.add('/account', 'app.controllers.user.account', methods=('GET', 'POST'))
+views.add('/logout', 'app.controllers.user.logout')

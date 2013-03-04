@@ -12,17 +12,28 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     mail = db.Column(db.String(255))
-    password = db.Column(db.String(32))
+    _password = db.Column('password', db.String(32))
     phone = db.Column(db.String(16))
     rating_image = db.Column(db.Integer, default=0)
     rating_comment = db.Column(db.Integer, default=0)
     ts = db.Column(db.DateTime)
     level = db.Column(db.Integer, default=0)
 
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, password):
+        self._password = bcrypt.generate_password_hash(password)
+
     images = db.relationship('Image', backref='owner')
     comments = db.relationship('Comment', backref='owner')
     ratings = db.relationship('Rating', backref='owner')
     requests = db.relationship('Request', backref='owner')
+
+    def changepassword(self, password):
+        self.password = bcrypt.generate_password_hash(password)
 
     def __init__(self, name, mail, password):
         self.name = name
@@ -35,11 +46,11 @@ class User(db.Model):
     @staticmethod
     def login(mail, password):
         candidate = db.session.query(User).filter_by(mail=mail).one()
+
         if (bcrypt.check_password_hash(candidate.password, password)):
             session['user'] = candidate.id
-            return True
         else:
-            return False
+            raise Exception
 
     @staticmethod
     def logout():

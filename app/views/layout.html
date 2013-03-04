@@ -14,16 +14,27 @@
    
     </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     User<br>
     {% if DEF_user %}
-        <a href="/u/{{ DEF_user.id }}">{{ DEF_user }}</a>
+        <a href="{{ url_for('account') }}">{{ DEF_user }}</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
     {% else %}
-        Login / logout
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
     {% endif %}
     <br><br>Categories<br>
-    <a href="/">All</a><br>
+    <a href="/">All</a>&nbsp;
     {% for category in DEF_categories %}
-        <a href="/c/{{ category.name }}">{{ category }}</a><br>
+        <a href="/c/{{ category.name }}">{{ category.name }}</a>&nbsp;
     {% endfor %}
     {% block body %}{% endblock %}
 </body>
