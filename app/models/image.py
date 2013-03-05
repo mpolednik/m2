@@ -49,7 +49,8 @@ class Image(db.Model, VotableObject):
 
     exif = db.relationship('Exif', backref='image')
     # id.father order desc to optimize tree generating algorithm
-    comments = db.relationship('Comment', backref='image', order_by=(Comment.id_father.desc(), Comment.rating.desc(), Comment.ts.desc()))
+    comments = db.relationship('Comment', backref='image', order_by=(Comment.id_father.desc(), Comment.rating.desc(), Comment.ts.desc()),
+                               cascade='all, delete-orphan', passive_deletes=True)
 
     def __init__(self, id_user, category, name, text, path):
         self.id_user = id_user
