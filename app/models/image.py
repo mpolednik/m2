@@ -48,7 +48,8 @@ class Image(db.Model, VotableObject):
     RatingClass = ImageRating
 
     exif = db.relationship('Exif', backref='image')
-    comments = db.relationship('Comment', backref='image', order_by=Comment.id_father)
+    # id.father order desc to optimize tree generating algorithm
+    comments = db.relationship('Comment', backref='image', order_by=(Comment.id_father.desc(), Comment.rating.desc(), Comment.ts.desc()))
 
     def __init__(self, id_user, category, name, text, path):
         self.id_user = id_user
