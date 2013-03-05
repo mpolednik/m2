@@ -58,7 +58,7 @@ def image_delete(id):
     return redirect(url_for('category_one', name=category))
 
 
-def image_vote(id, cname = None):
+def image_vote(id, name=None):
     image = db.session.query(Image).filter_by(id=id).one()
 
     if 'v' in request.args:
@@ -71,7 +71,9 @@ def image_vote(id, cname = None):
     db.session.commit()
 
     flash('Obrazek hodnocen')
-    if cname:
-        return redirect(url_for('category', name=name))
+    if name:
+        return redirect(url_for('category_one', name=name))
     else:
+        if 'ref' in request.args and request.args['ref'] == 'all':
+            return redirect(url_for('category_all'))
         return redirect(url_for('image', id=id))

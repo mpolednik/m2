@@ -3,8 +3,8 @@
     <br><br>Menu<br>
     {% if category %}
         <a href="/r/submit">Request moderator</a><br>
-        <a href="/c/{{ category.name }}/submit">New image</a><br>
-        <a href="/c/{{ category.name }}/edit">Edit</a><br>
+        <a href="{{ url_for(('category_submit'), name=category.name) }}">New image</a><br>
+        <a href="{{ url_for(('category_edit'), name=category.name) }}">Edit</a><br>
         <br><br>Category<br>
         {{ category }}<br>
     {% else %}
@@ -12,6 +12,13 @@
     {% endif %}
     <br><br>Images<br>
     {% for image in images %}
-        <a href="/i/{{ image.id }}">{{ image }}</a><br>
+        <a href="{{ url_for(('image'), id=image.id) }}">{{ image }}</a>
+        {% if category %}
+            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v="up") }}">Upvote</a>
+            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v="down") }}">Downvote</a><br>
+        {% else %}
+            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v="up") }}">Upvote</a>
+            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v="down") }}">Downvote</a><br>
+        {% endif %}
     {% endfor %}
 {% endblock %}
