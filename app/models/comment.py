@@ -3,6 +3,19 @@ from app.helpers.middleware import db
 from app.models.rating import VotableObject
 
 
+class CommentRating(db.Model):
+    __tablename__ = 'comment_rating'
+
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=False)
+    id_target = db.Column(db.Integer, db.ForeignKey('comment.id'), primary_key=True)
+    value = db.Column(db.Integer)
+
+    def __init__(self, id_user, id_target, value):
+        self.id_user = id_user
+        self.id_target = id_target
+        self.value = value
+
+
 class Comment(db.Model, VotableObject):
     __tablename__ = 'comment'
 
@@ -14,6 +27,8 @@ class Comment(db.Model, VotableObject):
     rating = db.Column(db.Integer, default=0)
     state = db.Column(db.Integer, default=1)
     ts = db.Column(db.DateTime)
+
+    RatingClass = CommentRating
 
     father = db.relationship('Comment')
 

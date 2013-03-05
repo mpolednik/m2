@@ -23,14 +23,14 @@ class EditForm(Form):
 
 
 def category_all():
-    images = db.session.query(Image).all()
+    images = sorted(db.session.query(Image).all(), key=lambda image: image.score, reverse=True)
 
     return render('category.html', title='test', images=images)
 
 
 def category_one(name):
     category = db.session.query(Category).filter_by(name=name).one()
-    images = db.session.query(Image).filter_by(category=category).all()
+    images = sorted(db.session.query(Image).filter_by(category=category).all(), key=lambda image: image.score, reverse=True)
 
     return render('category.html', title='test', category=category, images=images)
 

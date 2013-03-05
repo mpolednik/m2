@@ -1,32 +1,9 @@
+from datetime import datetime, timedelta
+from math import log, sqrt
+
 from flask import session
 
 from app.helpers.middleware import db
-
-
-class CommentRating(db.Model):
-    __tablename__ = 'comment_rating'
-
-    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=False)
-    id_target = db.Column(db.Integer, db.ForeignKey('comment.id'), primary_key=True)
-    value = db.Column(db.Integer)
-
-    def __init__(self, id_user, id_target, value):
-        self.id_user = id_user
-        self.id_target = id_target
-        self.value = value
-
-
-class ImageRating(db.Model):
-    __tablename__ = 'image_rating'
-
-    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=False)
-    id_target = db.Column(db.Integer, db.ForeignKey('image.id'), primary_key=True)
-    value = db.Column(db.Integer)
-
-    def __init__(self, id_user, id_target, value):
-        self.id_user = id_user
-        self.id_target = id_target
-        self.value = value
 
 
 class VotableObject(object):
@@ -45,3 +22,20 @@ class VotableObject(object):
             change = rating
 
         self.rating += change
+
+    @property
+    def score(self):
+        return calculate_score(self.rating, self.ts)
+
+
+epoch = datetime(1970, 1, 1)
+
+def _epoch_seconds(date):
+    td = date - epoch
+    return td.days * 86400 + td.seconds + (float(td.microseconds) / 1000000)
+
+def calculate_score(rating, date):
+    order = log(max(rating, 1), 10)
+    sign = 1 if rating > 0 else -1 if rating < 0 else 0
+    seconds = _epoch_seconds(date) - 1134028003
+    return round(order + sign * seconds / 45000, 7)

@@ -8,7 +8,6 @@ from wtforms import fields, validators
 
 from app.models.image import Image
 from app.models.comment import Comment, construct_comment_tree
-from app.models.rating import ImageRating 
 from app.controllers.comment import CommentForm
 
 
@@ -61,7 +60,6 @@ def image_delete(id):
 
 def image_vote(id, cname = None):
     image = db.session.query(Image).filter_by(id=id).one()
-    image.RatingClass = ImageRating
 
     if 'v' in request.args:
         if request.args['v'] == 'up':

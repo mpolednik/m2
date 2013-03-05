@@ -2,7 +2,21 @@ from app.helpers.middleware import db
 
 from app.models.category import Category
 from app.models.comment import Comment
-from app.models.rating import VotableObject
+from app.models.rating import VotableObject, calculate_score
+
+
+class ImageRating(db.Model):
+    __tablename__ = 'image_rating'
+
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=False)
+    id_target = db.Column(db.Integer, db.ForeignKey('image.id'), primary_key=True)
+    value = db.Column(db.Integer)
+
+    def __init__(self, id_user, id_target, value):
+        self.id_user = id_user
+        self.id_target = id_target
+        self.value = value
+
 
 class Exif(db.Model):
     __tablename__ = 'exif'
@@ -30,6 +44,8 @@ class Image(db.Model, VotableObject):
     path = db.Column(db.String(200))
     rating = db.Column(db.Integer, default=0)
     ts = db.Column(db.DateTime)
+
+    RatingClass = ImageRating
 
     exif = db.relationship('Exif', backref='image')
     comments = db.relationship('Comment', backref='image', order_by=Comment.id_father)
