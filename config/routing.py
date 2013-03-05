@@ -4,6 +4,7 @@ views.add('/', 'app.controllers.category.category_all')
 views.add('/c/<name>', 'app.controllers.category.category_one')
 views.add('/c/<name>/submit', 'app.controllers.category.category_submit', methods=('GET', 'POST'))
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
+views.add('/c/<name>/i<id>/vote', 'app.controllers.image.image_vote')
 
 views.add('/i/<id>', 'app.controllers.image.image', methods=('GET', 'POST'))
 views.add('/i/<id>/edit', 'app.controllers.image.image_edit', methods=('GET', 'POST'))
