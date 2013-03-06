@@ -31,9 +31,6 @@ class User(db.Model):
     comments = db.relationship('Comment', backref='owner')
     requests = db.relationship('Request', backref='owner')
 
-    def changepassword(self, password):
-        self.password = bcrypt.generate_password_hash(password)
-
     def __init__(self, name, mail, password):
         self.name = name
         self.mail = mail
@@ -41,6 +38,14 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.name, self.mail, self.password, self.phone, self.rating_image, self.rating_comment, self.ts, self.level)
+
+    def already_commented(self, image):
+        # Check if top-level comment for current image already exists
+        cnt = db.session.query(Comment).filter_by(image=image, id_user=self.id, id_father=None).count()
+        if cnt > 0:
+            return True
+        else:
+            return False
 
     @staticmethod
     def login(mail, password):

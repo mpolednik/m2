@@ -1,4 +1,5 @@
 from flask import redirect, url_for, request, session, flash
+import sqlalchemy.exc
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
@@ -44,8 +45,11 @@ def account():
             user.password = form.password.data
         user.phone = form.phone.data
 
-        flash('User editovan', 'success')
-        return redirect(url_for('account'))
+        try:
+            db.session.commit()
+            flash('User editovan', 'success')
+        except sqlalchemy.exc.IntegrityError:
+            flash('User needitovan', 'error')
 
     return render('account.html', form=form)
 
@@ -68,10 +72,15 @@ def register():
     if request.method == 'POST' and form.validate():
         user = User(form.name.data, form.mail.data, form.password.data)
         db.session.add(user)
-        User.login(form.mail.data, form.password.data)
 
-        flash('User registrovan a nalogovan', 'success')
-        return redirect(url_for('category_all'))
+        try:
+            db.session.commit()
+            User.login(form.mail.data, form.password.data)
+            flash('User registrovan a nalogovan', 'success')
+
+            return redirect(url_for('category_all'))
+        except:
+            flash('neregistrovan', 'error')
 
     return render('register.html', form=form)
 

@@ -44,21 +44,23 @@ def category_submit(name):
         image = Image(session['user'], category, form.name.data, form.text.data, form.path.data)
         db.session.add(image)
 
+        db.session.commit()
         flash('Obrazek postnut', 'success')
-        return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
 
 
 def category_edit(name):
-    form = EditForm()
-
     category = db.session.query(Category).filter_by(name=name).one()
+
+    form = EditForm(request.form, category)
 
     if request.method == 'POST' and form.validate():
         category.text = form.text.data
 
+        db.session.commit()
         flash('Kategorie editovana', 'success')
+
         return redirect(url_for('category_one', name=name))
 
     return render('category_edit.html', title='test', form=form, category=category)

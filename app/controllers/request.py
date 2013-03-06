@@ -34,7 +34,9 @@ def request_submit(category = None):
         req = Request(session['user'], None, form.type.data, form.name.data, form.text.data)
         db.session.add(req)
 
+        db.session.commit()
         flash('request odeslan', 'success')
+
         return redirect(url_for('category_all'))
 
     return render('request_form.html', form=form)
@@ -45,7 +47,9 @@ def request_accept(id):
     request = db.session.query(Request).filter_by(id=id).one()
     request.state = 1
 
+    db.session.commit()
     flash('Request schvalen', 'success')
+
     return redirect(url_for('request_all'))
 
 
@@ -53,5 +57,7 @@ def request_decline(id):
     request = db.session.query(Request).filter_by(id=id).one()
     request.state = -1
 
+    db.session.commit()
     flash('Request neschvalen', 'success')
+
     return redirect(url_for('request_all'))

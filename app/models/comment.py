@@ -1,3 +1,5 @@
+import sqlalchemy.exc
+
 from app.helpers.middleware import db
 
 from app.models.rating import VotableObject

@@ -1,4 +1,5 @@
-from app.helpers.middleware import views
+from app.helpers.middleware import views, app
+from app.helpers.rendering import render
 
 views.add('/', 'app.controllers.category.category_all')
 views.add('/c/<name>', 'app.controllers.category.category_one')
@@ -27,3 +28,11 @@ views.add('/login', 'app.controllers.user.login', methods=('GET', 'POST'))
 views.add('/register', 'app.controllers.user.register', methods=('GET', 'POST'))
 views.add('/account', 'app.controllers.user.account', methods=('GET', 'POST'))
 views.add('/logout', 'app.controllers.user.logout')
+
+@app.errorhandler(404)
+def page_error(error):
+    return render('errors/404.html')
+
+@app.errorhandler(500)
+def page_error(error):
+    return render('errors/500.html', error=error)
