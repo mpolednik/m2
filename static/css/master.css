@@ -1,0 +1,25 @@
+.flashes {
+    position: absolute;
+    width: 30%;
+    left: 35%;
+    right: 35%;
+    top: 50px;
+}
+
+.flashes li {
+    height: 40px;
+    margin: 0 auto;
+    line-height: 40px;
+    text-align: center;
+    list-style: none;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.success {
+    background-color: green;
+}
+
+.error {
+    background-color: red;
+}

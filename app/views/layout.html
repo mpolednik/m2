@@ -14,11 +14,11 @@
    
     </head>
 <body>
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-                <li>{{ message }}</li>
+            <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
             {% endfor %}
             </ul>
         {% endif %}
@@ -38,5 +38,9 @@
         <a href="/c/{{ category.name }}">{{ category.name }}</a>&nbsp;
     {% endfor %}
     {% block body %}{% endblock %}
+
+    <!-- Scripts -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/static/js/generic.js"></script>
 </body>
-</html
+</html>

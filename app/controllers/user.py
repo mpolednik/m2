@@ -44,7 +44,7 @@ def account():
             user.password = form.password.data
         user.phone = form.phone.data
 
-        flash('User editovan')
+        flash('User editovan', 'success')
         return redirect(url_for('account'))
 
     return render('account.html', form=form)
@@ -56,7 +56,7 @@ def login():
     if request.method == 'POST' and form.validate():
         User.login(form.mail.data, form.password.data)
 
-        flash('User nalogovan')
+        flash('User nalogovan', 'success')
         return redirect(url_for('category_all'))
 
     return render('login.html', form=form)
@@ -70,7 +70,7 @@ def register():
         db.session.add(user)
         User.login(form.mail.data, form.password.data)
 
-        flash('User registrovan a nalogovan')
+        flash('User registrovan a nalogovan', 'success')
         return redirect(url_for('category_all'))
 
     return render('register.html', form=form)
@@ -79,5 +79,5 @@ def register():
 def logout():
     User.logout()
 
-    flash('User odlogovan')
+    flash('User odlogovan', 'success')
     return redirect(url_for('category_all'))

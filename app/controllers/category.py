@@ -44,7 +44,7 @@ def category_submit(name):
         image = Image(session['user'], category, form.name.data, form.text.data, form.path.data)
         db.session.add(image)
 
-        flash('Obrazek postnut')
+        flash('Obrazek postnut', 'success')
         return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
@@ -58,7 +58,7 @@ def category_edit(name):
     if request.method == 'POST' and form.validate():
         category.text = form.text.data
 
-        flash('Kategorie editovana')
+        flash('Kategorie editovana', 'success')
         return redirect(url_for('category_one', name=name))
 
     return render('category_edit.html', title='test', form=form, category=category)

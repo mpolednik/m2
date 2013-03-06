@@ -28,7 +28,7 @@ def comment(id, cid):
         comment = Comment(session['user'], image, form.text.data, comment.id)
         db.session.add(comment)
 
-        flash('Komentar ulozen')
+        flash('Komentar ulozen', 'success')
         return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments, comment.id)
@@ -46,7 +46,7 @@ def comment_edit(id, cid):
     if request.method == 'POST' and form.validate():
         comment.text = form.text.data
 
-        flash('Komentar editovan')
+        flash('Komentar editovan', 'success')
         return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments, comment.id)
@@ -58,7 +58,7 @@ def comment_delete(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.state = 0
 
-    flash('Komentar smazan')
+    flash('Komentar smazan', 'success')
     return redirect(url_for('image', id=id))
 
 
@@ -73,5 +73,5 @@ def comment_vote(id, cid):
 
     comment.vote(rating)
 
-    flash('Komentar hodnocen')
+    flash('Komentar hodnocen', 'success')
     return redirect(url_for('image', id=id))

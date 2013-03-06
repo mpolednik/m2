@@ -24,7 +24,7 @@ def image(id):
         comment = Comment(session['user'], image, form.text.data)
         db.session.add(comment)
 
-        flash('Comment added')
+        flash('Comment added', 'success')
         return redirect(url_for('image', id=id))
 
     comments = construct_comment_tree(image.comments)
@@ -39,7 +39,7 @@ def image_edit(id):
 
     if request.method == 'POST' and form.validate():
         image.text = form.text.data
-        flash('Image dited')
+        flash('Image dited', 'success')
         return redirect(url_for('image', id=id))
 
     return render('image_edit.html', image=image, form=form)
@@ -51,7 +51,7 @@ def image_delete(id):
 
     db.session.delete(image)
 
-    flash('Image deleted')
+    flash('Image deleted', 'success')
     return redirect(url_for('category_one', name=category))
 
 
@@ -66,7 +66,7 @@ def image_vote(id, name=None):
 
     image.vote(rating)
 
-    flash('Obrazek hodnocen')
+    flash('Obrazek hodnocen', 'success')
     if name:
         return redirect(url_for('category_one', name=name))
     else:
