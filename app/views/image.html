@@ -12,7 +12,7 @@
     <br><br>Category<br>
     <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
     <br><br>Comments<br>
-    <form action="" method="POST">
+    <form action="{{ url_for(('comment'), id=image.id, ref='img') }}" method="POST">
         {{ form.text }}
         {{ form.hidden_tag() }}
         <input type="submit" value="Komentovat">

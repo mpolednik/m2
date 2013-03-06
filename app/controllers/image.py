@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, session, flash
+from flask import request, redirect, url_for, flash
 import sqlalchemy.exc
 
 from app.helpers.middleware import db
@@ -21,22 +21,6 @@ def image(id):
     form = CommentForm(request.form)
 
     image = db.session.query(Image).filter_by(id=id).one()
-
-    if request.method == 'POST' and form.validate():
-        user = db.session.query(User).get(session['user'])
-        comment = Comment(session['user'], image, form.text.data)
-
-        if user.already_commented(image): 
-            flash('Komentar neulozen', 'error')
-            return redirect(url_for('image', id=id))
-        else:
-            db.session.add(comment)
-
-            db.session.commit()
-            flash('Komentar ulozen', 'success')
-
-            return redirect(url_for('image', id=id))
-
     comments = construct_comment_tree(image.comments)
 
     return render('image.html', image=image, form=form, comments=comments)
@@ -87,6 +71,6 @@ def image_vote(id, name=None):
     if name:
         return redirect(url_for('category_one', name=name))
     else:
-        if 'ref' in request.args and request.args['ref'] == 'all':
+        if 'ref' in request.args:
             return redirect(url_for('category_all'))
         return redirect(url_for('image', id=id))

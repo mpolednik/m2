@@ -39,9 +39,13 @@ class User(db.Model):
     def __repr__(self):
         return '<User({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.name, self.mail, self.password, self.phone, self.rating_image, self.rating_comment, self.ts, self.level)
 
-    def already_commented(self, image):
+    def already_commented(self, image, top = False):
         # Check if top-level comment for current image already exists
-        cnt = db.session.query(Comment).filter_by(image=image, id_user=self.id, id_father=None).count()
+        if top:
+            cnt = 0
+        else:
+            cnt = db.session.query(Comment).filter_by(image=image, id_user=self.id, id_father=None).count()
+
         if cnt > 0:
             return True
         else:

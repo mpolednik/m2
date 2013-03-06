@@ -8,6 +8,7 @@ from wtforms import fields, validators
 
 from app.models.comment import Comment, construct_comment_tree
 from app.models.image import Image
+from app.models.user import User
 
 
 class CommentForm(Form):
@@ -18,23 +19,29 @@ class EditForm(Form):
     text = fields.TextAreaField('Text')
 
 
-def comment(id, cid):
+def comment(id, cid = None):
     form = CommentForm(request.form)
 
+    user = db.session.query(User).get(session['user'])
     image = db.session.query(Image).filter_by(id=id).one()
-    comment = db.session.query(Comment).filter_by(id=cid).one()
 
     if request.method == 'POST' and form.validate():
-        comment = Comment(session['user'], image, form.text.data, comment.id)
-        db.session.add(comment)
+        comment = Comment(session['user'], image, form.text.data, cid)
 
-        db.session.commit()
-        flash('Komentar ulozen', 'success')
+        if user.already_commented(image, cid): 
+            flash('Komentar neulozen', 'error')
+        else:
+            db.session.add(comment)
+            db.session.commit()
+            flash('Komentar ulozen', 'success')
 
-        return redirect(url_for('image', id=id))
+        # Return user to image or comment controllers depending on ref
+        if 'ref' in request.args:
+            return redirect(url_for('image', id=image.id))
+        else:
+            return redirect(url_for('comment', id=image.id, cid=cid))
 
-    comments = construct_comment_tree(image.comments, comment.id)
-
+    comments = construct_comment_tree(image.comments, cid)
     return render('comment.html', comments=comments, form=form)
 
 

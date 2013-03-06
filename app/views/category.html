@@ -14,11 +14,11 @@
     {% for image in images %}
         <a href="{{ url_for(('image'), id=image.id) }}">{{ image }}</a>
         {% if category %}
-            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v="up") }}">Upvote</a>
-            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v="down") }}">Downvote</a><br>
+            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v='up') }}">Upvote</a>
+            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v='down') }}">Downvote</a><br>
         {% else %}
-            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v="up") }}">Upvote</a>
-            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v="down") }}">Downvote</a><br>
+            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">Upvote</a>
+            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a><br>
         {% endif %}
     {% endfor %}
 {% endblock %}
