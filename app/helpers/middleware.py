@@ -17,6 +17,10 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(dbconf['user'], dbconf['pass'], dbconf['host'], dbconf['name'])
 db = SQLAlchemy(app, session_options={'expire_on_commit': False})
 
+@app.teardown_request
+def commit_db_changes(Exception = None):
+    db.session.commit()
+
 # KVSession
 app.config['SECRET_KEY'] = '1234'
 store = SQLAlchemyStore(db.engine, db.metadata, 'session')

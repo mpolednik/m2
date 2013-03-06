@@ -33,7 +33,6 @@ def request_submit(category = None):
     if request.method == 'POST' and form.validate():
         req = Request(session['user'], None, form.type.data, form.name.data, form.text.data)
         db.session.add(req)
-        db.session.commit()
 
         flash('request odeslan')
         return redirect(url_for('category_all'))
@@ -45,7 +44,6 @@ def request_submit(category = None):
 def request_accept(id):
     request = db.session.query(Request).filter_by(id=id).one()
     request.state = 1
-    db.session.commit()
 
     flash('Request schvalen')
     return redirect(url_for('request_all'))
@@ -54,7 +52,6 @@ def request_accept(id):
 def request_decline(id):
     request = db.session.query(Request).filter_by(id=id).one()
     request.state = -1
-    db.session.commit()
 
     flash('Request neschvalen')
     return redirect(url_for('request_all'))

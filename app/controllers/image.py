@@ -23,7 +23,6 @@ def image(id):
     if request.method == 'POST' and form.validate():
         comment = Comment(session['user'], image, form.text.data)
         db.session.add(comment)
-        db.session.commit()
 
         flash('Comment added')
         return redirect(url_for('image', id=id))
@@ -40,7 +39,6 @@ def image_edit(id):
 
     if request.method == 'POST' and form.validate():
         image.text = form.text.data
-        db.session.commit()
         flash('Image dited')
         return redirect(url_for('image', id=id))
 
@@ -52,7 +50,6 @@ def image_delete(id):
     category = image.category.name
 
     db.session.delete(image)
-    db.session.commit()
 
     flash('Image deleted')
     return redirect(url_for('category_one', name=category))
@@ -68,7 +65,6 @@ def image_vote(id, name=None):
             rating = -1
 
     image.vote(rating)
-    db.session.commit()
 
     flash('Obrazek hodnocen')
     if name:

@@ -43,7 +43,6 @@ def account():
         if form.password.data:
             user.password = form.password.data
         user.phone = form.phone.data
-        db.session.commit()
 
         flash('User editovan')
         return redirect(url_for('account'))
@@ -69,7 +68,6 @@ def register():
     if request.method == 'POST' and form.validate():
         user = User(form.name.data, form.mail.data, form.password.data)
         db.session.add(user)
-        db.session.commit()
         User.login(form.mail.data, form.password.data)
 
         flash('User registrovan a nalogovan')

@@ -27,7 +27,6 @@ def comment(id, cid):
     if request.method == 'POST' and form.validate():
         comment = Comment(session['user'], image, form.text.data, comment.id)
         db.session.add(comment)
-        db.session.commit()
 
         flash('Komentar ulozen')
         return redirect(url_for('image', id=id))
@@ -46,7 +45,6 @@ def comment_edit(id, cid):
 
     if request.method == 'POST' and form.validate():
         comment.text = form.text.data
-        db.session.commit()
 
         flash('Komentar editovan')
         return redirect(url_for('image', id=id))
@@ -59,7 +57,6 @@ def comment_edit(id, cid):
 def comment_delete(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.state = 0
-    db.session.commit()
 
     flash('Komentar smazan')
     return redirect(url_for('image', id=id))
@@ -75,7 +72,6 @@ def comment_vote(id, cid):
             rating = -1
 
     comment.vote(rating)
-    db.session.commit()
 
     flash('Komentar hodnocen')
     return redirect(url_for('image', id=id))
