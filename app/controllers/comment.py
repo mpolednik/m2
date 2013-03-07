@@ -36,7 +36,7 @@ def comment(id, cid = None):
             flash('Komentar ulozen', 'success')
 
         # Return user to image or comment controllers depending on ref
-        if 'ref' in request.args:
+        if cid is None:
             return redirect(url_for('image', id=image.id))
         else:
             return redirect(url_for('comment', id=image.id, cid=cid))

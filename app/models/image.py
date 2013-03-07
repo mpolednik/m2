@@ -43,6 +43,7 @@ class Image(db.Model, VotableObject):
     text = db.Column(db.String(1024))
     path = db.Column(db.String(200))
     rating = db.Column(db.Integer, default=0)
+    score = db.Column(db.Integer, default=0)
     ts = db.Column(db.DateTime)
 
     RatingClass = ImageRating

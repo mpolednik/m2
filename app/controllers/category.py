@@ -23,14 +23,14 @@ class EditForm(Form):
 
 
 def category_all():
-    images = sorted(db.session.query(Image).all(), key=lambda image: image.score, reverse=True)
+    images = db.session.query(Image).order_by(Image.score.desc()).all()
 
     return render('category.html', title='test', images=images)
 
 
 def category_one(name):
     category = db.session.query(Category).filter_by(name=name).one()
-    images = sorted(db.session.query(Image).filter_by(category=category).all(), key=lambda image: image.score, reverse=True)
+    images = db.session.query(Image).filter_by(category=category).order_by(Image.score.desc()).all()
 
     return render('category.html', title='test', category=category, images=images)
 
@@ -46,6 +46,8 @@ def category_submit(name):
 
         db.session.commit()
         flash('Obrazek postnut', 'success')
+
+        return redirect(url_for('category_one', name=name))
 
     return render('category_submit.html', title='test', form=form)
 

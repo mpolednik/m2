@@ -22,10 +22,7 @@ class VotableObject(object):
             change = rating
 
         self.rating += change
-
-    @property
-    def score(self):
-        return calculate_score(self.rating, self.ts)
+        self.score = calculate_score(self.rating, self.ts)
 
 
 epoch = datetime(1970, 1, 1)
