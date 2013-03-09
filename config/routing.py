@@ -2,10 +2,13 @@ from app.helpers.middleware import views, app
 from app.helpers.rendering import render
 
 views.add('/', 'app.controllers.category.category_all')
+views.add('/<int:page>', 'app.controllers.category.category_all')
 views.add('/c/<name>', 'app.controllers.category.category_one')
+views.add('/c/<name>/<int:page>', 'app.controllers.category.category_one')
+
 views.add('/c/<name>/submit', 'app.controllers.category.category_submit', methods=('GET', 'POST'))
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
-views.add('/c/<name>/i<int:id>/vote', 'app.controllers.image.image_vote')
+views.add('/c/<name>/i<int:id>/vote/<int:page>', 'app.controllers.image.image_vote')
 
 views.add('/i/<int:id>', 'app.controllers.image.image')
 views.add('/i/<int:id>/edit', 'app.controllers.image.image_edit', methods=('GET', 'POST'))
