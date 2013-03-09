@@ -15,7 +15,7 @@ app = Flask('m2', template_folder=tmpl_dir)
 # SQLAlchemy
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(dbconf['user'], dbconf['pass'], dbconf['host'], dbconf['name'])
-db = SQLAlchemy(app, session_options={'expire_on_commit': False})
+db = SQLAlchemy(app)
 
 # KVSession
 app.config['SECRET_KEY'] = '1234'

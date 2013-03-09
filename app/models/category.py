@@ -1,6 +1,7 @@
 from app.helpers.middleware import db
 
 from app.models.request import Request
+from app.models.image import Image
 
 
 moderator = db.Table('moderator',
@@ -18,7 +19,7 @@ class Category(db.Model):
     ts = db.Column(db.DateTime)
 
     moderators = db.relationship('User', secondary=moderator)
-    images = db.relationship('Image', backref='category')
+    images = db.relationship('Image', backref='category', order_by=(Image.score.desc(), Image.ts.desc()))
     requests = db.relationship('Request', backref='category')
 
     def __init__(self, name, text):

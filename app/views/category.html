@@ -12,6 +12,7 @@
     {% endif %}
     <br><br>Images<br>
     {% for image in images %}
+        <img src="/static/img/thumb/{{ image.filename }}">
         <a href="{{ url_for(('image'), id=image.id) }}">{{ image }}</a>
         {% if category %}
             <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, v='up') }}">Upvote</a>
