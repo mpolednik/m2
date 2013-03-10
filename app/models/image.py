@@ -22,7 +22,7 @@ class ImageRating(db.Model):
     def __init__(self, id_user, id_target, value):
         self.id_user = id_user
         self.id_target = id_target
-        self.value = value
+        self.value = pickle.dumps(value)
 
 
 class Exif(db.Model):
@@ -30,7 +30,16 @@ class Exif(db.Model):
 
     id_image = db.Column(db.Integer, db.ForeignKey('image.id'), primary_key=True, autoincrement=False)
     key = db.Column(db.String(40), primary_key=True)
-    value = db.Column(db.String(200))
+    _value = db.Column('value', db.String(200))
+
+    @property
+    def value(self):
+        return pickle.loads(self._value)
+
+    @value.setter
+    def value(self, v):
+        print v
+        self._value = pickle.dumps(v)
 
     def __init__(self, image, key, value):
         self.image = image
@@ -100,4 +109,4 @@ class Image(db.Model, VotableObject):
     def save_exif(self):
         if self.kind in app.config['EXIF_EXTENSIONS']:
             for (k, v) in Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))._getexif().iteritems():
-                db.session.add(Exif(self, TAGS.get(k), pickle.dumps(v)))
+                db.session.add(Exif(self, TAGS.get(k), v))

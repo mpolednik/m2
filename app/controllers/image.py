@@ -12,6 +12,8 @@ from app.models.user import User
 from app.models.comment import Comment, construct_comment_tree
 from app.controllers.comment import CommentForm
 
+exif_template = ('FNumber', 'Copyright', 'Make', 'ISOSpeedRatings', 'FocalLength', 'Model', 'ExposureTime', 'Author')
+
 
 class EditForm(Form):
     text = fields.TextAreaField('Text')

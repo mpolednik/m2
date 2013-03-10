@@ -8,6 +8,9 @@
     <br><br>Image<br>
     <img src="/static/img/upload/{{ image.filename }}">
     {{ image }}<br>
+    {% for exif in image.exif %}
+        <strong>{{ exif.key }}</strong>: {{ exif.value }}<br>
+    {% endfor %}
     <br><br>Owner<br>
     <a href="/u/{{ image.owner.id }}">{{ image.owner }}</a><br>
     <br><br>Category<br>
