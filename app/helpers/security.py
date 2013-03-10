@@ -42,3 +42,20 @@ def req_mod(f):
         else:
             raise SecurityException
     return inner
+
+
+def req_owner(f, Object=None):
+    @req_login
+    def inner(*args, **kwargs):
+        if 'cid' in kwargs:
+            id = kwargs['cid']
+        elif 'id' in kwargs:
+            id = kwargs['id']
+
+        obj = Object.query.filter_by(id=id).one()
+        user = User.query.get(session['user'])
+        if user == Object.owner or user.level > 1:
+            return f(*args, **kwargs)
+        else:
+            raise SecurityException
+    return inner
