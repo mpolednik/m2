@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-    <form action="" method="POST">
-        {{ form.name }}
-        {{ form.mail }}
-        {{ form.phone }}
-        {{ form.password }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="Editovat">
-    </form>
+    {% if DEF_user %}
+        <form action="" method="POST">
+            {{ form.name }}
+            {{ form.mail }}
+            {{ form.phone }}
+            {{ form.password }}
+            {{ form.hidden_tag() }}
+            <input type="submit" value="Editovat">
+        </form>
+    {% endif %}
 {% endblock %}

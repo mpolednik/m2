@@ -2,6 +2,7 @@ from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
+from app.helpers import security
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -20,6 +21,16 @@ class EditForm(Form):
 
 
 def comment(id, cid = None):
+    form = CommentForm(request.form)
+
+    image = db.session.query(Image).get(id)
+
+    comments = construct_comment_tree(image.comments, cid)
+    return render('comment.html', id=id, cid=cid, comments=comments, form=form)
+
+
+@security.req_login
+def comment_submit(id, cid = None):
     form = CommentForm(request.form)
 
     user = db.session.query(User).get(session['user'])
@@ -41,9 +52,6 @@ def comment(id, cid = None):
         else:
             return redirect(url_for('comment', id=image.id, cid=cid))
 
-    comments = construct_comment_tree(image.comments, cid)
-    return render('comment.html', comments=comments, form=form)
-
 
 def comment_edit(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
@@ -62,7 +70,7 @@ def comment_edit(id, cid):
 
     comments = construct_comment_tree(image.comments, comment.id)
 
-    return render('comment.html', comments=comments, form=form)
+    return render('comment.html', edit=True, id=id, cid=cid, comments=comments, form=form)
 
 
 def comment_delete(id, cid):
@@ -75,6 +83,7 @@ def comment_delete(id, cid):
     return redirect(url_for('image', id=id))
 
 
+@security.req_login
 def comment_vote(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.vote()

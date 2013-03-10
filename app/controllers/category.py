@@ -1,8 +1,8 @@
-
 from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db, app
 from app.helpers.rendering import render
+from app.helpers import security
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -35,6 +35,7 @@ def category_one(name, page = 1):
     return render('category.html', title='test', category=category, images=images)
 
 
+@security.req_login
 def category_submit(name):
     form = SubmitForm(request.form)
 
@@ -70,6 +71,7 @@ def category_submit(name):
     return render('category_submit.html', title='test', form=form)
 
 
+@security.req_mod
 def category_edit(name):
     category = db.session.query(Category).filter_by(name=name).one()
 

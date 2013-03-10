@@ -2,6 +2,7 @@ from flask import request, session, flash, redirect, url_for
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
+from app.helpers import security
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators

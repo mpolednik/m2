@@ -3,6 +3,7 @@ import sqlalchemy.exc
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
+from app.helpers import security
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -57,6 +58,7 @@ def image_delete(id):
     return redirect(url_for('category_one', name=category))
 
 
+@security.req_login
 def image_vote(id, name=None, page=1):
     image = db.session.query(Image).get(id)
 

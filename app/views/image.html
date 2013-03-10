@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
     <br><br>Menu<br>
-    <a href="/i/{{ image.id }}/edit">Edit</a><br>
-    <a href="/i/{{ image.id }}/delete">Delete</a><br>
-    <a href="/i/{{ image.id }}/vote?v=up">Upvote</a><br>
-    <a href="/i/{{ image.id }}/vote?v=down">Downvote</a><br>
+    {% if DEF_user == image.owner %}
+        <a href="{{ url_for('image_edit', id=image.id) }}">Edit</a><br>
+        <a href="{{ url_for('image_delete', id=image.id) }}">Delete</a><br>
+    {% elif DEF_user %}
+        <a href="{{ url_for('image_vote', id=image.id, v='up') }}">Upvote</a><br>
+        <a href="{{ url_for('image_vote', id=image.id, v='down') }}">Downvote</a><br>
+    {% endif %}
     <br><br>Image<br>
     <img src="/static/img/upload/{{ image.filename }}">
     {{ image }}<br>
@@ -16,20 +19,27 @@
     <br><br>Category<br>
     <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
     <br><br>Comments<br>
-    <form action="{{ url_for(('comment'), id=image.id) }}" method="POST">
-        {{ form.text }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="Komentovat">
-    </form>
+    {% if DEF_user %}
+        <form action="{{ url_for(('comment_submit'), id=image.id) }}" method="POST">
+            {{ form.text }}
+            {{ form.hidden_tag() }}
+            <input type="submit" value="Komentovat">
+        </form>
+    {% endif %}
     {% for comment in comments %}
         {% for delim in range(1, comment.depth) %}
             >
         {% endfor  %}
         {{ comment.depth }}
-        <a href="/i/{{ image.id }}/c/{{ comment.id }}">{{ comment }}</a>
-        <a href="/i/{{ image.id }}/c/{{ comment.id }}/vote?v=up">Upvote</a>
-        <a href="/i/{{ image.id }}/c/{{ comment.id }}/vote?v=down">Downvote</a>
-        <a href="/i/{{ image.id }}/c/{{ comment.id }}/edit">Edit</a>
-        <a href="/i/{{ image.id }}/c/{{ comment.id }}/delete">Delete</a><br>
+        <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment }}</a>
+        {% if DEF_user %}
+            <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up') }}">Upvote</a>
+            <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='down') }}">Downvote</a>
+            {% if DEF_user == comment.owner or DEF_user.level > 1 %}
+                <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
+                <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id) }}">Delete</a>
+            {% endif  %}
+        {% endif %}
+        <br>
     {% endfor %}
 {% endblock %}

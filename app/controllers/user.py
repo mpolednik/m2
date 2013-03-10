@@ -3,6 +3,7 @@ import sqlalchemy.exc
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
+from app.helpers import security
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -33,6 +34,7 @@ def user(id):
     return render('user.html', user=user)
 
 
+@security.req_login
 def account():
     user = db.session.query(User).get(session['user'])
 
@@ -54,6 +56,7 @@ def account():
     return render('account.html', form=form)
 
 
+@security.req_nologin
 def login():
     form = LoginForm(request.form)
 
@@ -66,6 +69,7 @@ def login():
     return render('login.html', form=form)
 
 
+@security.req_nologin
 def register():
     form = RegistrationForm(request.form)
 
@@ -85,6 +89,7 @@ def register():
     return render('register.html', form=form)
 
 
+@security.req_login
 def logout():
     User.logout()
 

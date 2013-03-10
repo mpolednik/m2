@@ -1,25 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
     <br><br>Menu<br>
-    {% if category %}
-        <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
-        <a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br>
-        <a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br>
+        {% if category and DEF_user %}
+            <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
+            <a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br>
+        {% if DEF_user in category.moderators %}
+            <a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br>
+        {% endif %}
         <br><br>Category<br>
         {{ category }}<br>
-    {% else %}
-        <a href="/r/submit">Request new category</a><br>
+    {% elif DEF_user %}
+        <a href="{{ url_for('request_submit') }}">Request new category</a><br>
     {% endif %}
     <br><br>Images<br>
     {% for image in images.items %}
         <img src="/static/img/thumb/{{ image.filename }}">
         <a href="{{ url_for(('image'), id=image.id) }}">{{ image }}</a>
-        {% if category %}
-            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">Upvote</a>
-            <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">Downvote</a><br>
-        {% else %}
-            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">Upvote</a>
-            <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a><br>
+        {% if DEF_user %}
+            {% if category %}
+                <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">Upvote</a>
+                <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">Downvote</a><br>
+            {% else %}
+                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">Upvote</a>
+                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a><br>
+            {% endif %}
         {% endif %}
     {% endfor %}
     {% if category %}

@@ -1,10 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
-    <form action="" method="POST">
-        {{ form.text }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="reply">
-    </form>
+    {% if DEF_user %}
+        {% if edit %}
+            <form action="{{ url_for('comment_edit', id=id, cid=cid) }}" method="POST">
+        {% else %}
+            <form action="{{ url_for('comment_submit', id=id, cid=cid) }}" method="POST">
+        {% endif %}
+            {{ form.text }}
+            {{ form.hidden_tag() }}
+            <input type="submit" value="reply">
+        </form>
+    {% endif %}
     <br><br>Comment<br>
     {% for comment in comments %}
         {% for delim in range(1, comment.depth) %}
