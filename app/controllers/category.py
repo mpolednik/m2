@@ -63,6 +63,7 @@ def category_submit(name):
             return redirect(url_for('category_submit', name=name))
 
         image.save_thumbnail()
+        image.save_exif()
         db.session.commit()
         flash('Obrazek postnut', 'success')
 

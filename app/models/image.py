@@ -1,6 +1,8 @@
 import os
 import urllib
-import Image as Img
+from PIL import Image as Img
+from PIL.ExifTags import TAGS
+import pickle
 
 import config.upload
 
@@ -30,7 +32,8 @@ class Exif(db.Model):
     key = db.Column(db.String(40), primary_key=True)
     value = db.Column(db.String(200))
 
-    def __init__(self, key, value):
+    def __init__(self, image, key, value):
+        self.image = image
         self.key = key
         self.value = value
 
@@ -93,3 +96,8 @@ class Image(db.Model, VotableObject):
         im = Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
         im.thumbnail(app.config['THUMBNAIL_SIZE'], Img.ANTIALIAS)
         im.save(os.path.join(app.config['THUMB_UPLOAD_FOLDER'], self.filename))
+
+    def save_exif(self):
+        if self.kind in app.config['EXIF_EXTENSIONS']:
+            for (k, v) in Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))._getexif().iteritems():
+                db.session.add(Exif(self, TAGS.get(k), pickle.dumps(v)))
