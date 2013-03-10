@@ -22,7 +22,7 @@ views.add('/i/<int:id>/c/<int:cid>/delete', 'app.controllers.comment.comment_del
 views.add('/i/<int:id>/c/<int:cid>/vote', 'app.controllers.comment.comment_vote')
 
 views.add('/r', 'app.controllers.request.request_all')
-views.add('/r/submit', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
+views.add('/r/submit/<name>', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
 views.add('/r/<int:id>', 'app.controllers.request.request_one')
 views.add('/r/<int:id>/accept', 'app.controllers.request.request_accept')
 views.add('/r/<int:id>/decline', 'app.controllers.request.request_decline')

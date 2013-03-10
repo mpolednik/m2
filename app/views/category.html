@@ -2,9 +2,9 @@
 {% block body %}
     <br><br>Menu<br>
     {% if category %}
-        <a href="/r/submit">Request moderator</a><br>
-        <a href="{{ url_for(('category_submit'), name=category.name) }}">New image</a><br>
-        <a href="{{ url_for(('category_edit'), name=category.name) }}">Edit</a><br>
+        <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
+        <a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br>
+        <a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br>
         <br><br>Category<br>
         {{ category }}<br>
     {% else %}
