@@ -29,7 +29,7 @@ def image(id):
     return render('image.html', image=image, form=form, comments=comments)
 
 
-@security.req_owner
+@security.req_owner(Image)
 def image_edit(id):
     image = db.session.query(Image).filter_by(id=id).one()
 
@@ -46,7 +46,7 @@ def image_edit(id):
     return render('image_edit.html', image=image, form=form)
 
 
-@security.req_owner
+@security.req_owner(Image)
 def image_delete(id):
     image = db.session.query(Image).filter_by(id=id).one()
     category = image.category.name

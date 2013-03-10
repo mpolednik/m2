@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
     <br><br>Menu<br>
-    {% if DEF_user == image.owner %}
+    {% if DEF_user == image.owner or DEF_user.level > 1 %}
         <a href="{{ url_for('image_edit', id=image.id) }}">Edit</a><br>
         <a href="{{ url_for('image_delete', id=image.id) }}">Delete</a><br>
-    {% elif DEF_user %}
+    {% endif %}
+    {% if DEF_user %}
         <a href="{{ url_for('image_vote', id=image.id, v='up') }}">Upvote</a><br>
         <a href="{{ url_for('image_vote', id=image.id, v='down') }}">Downvote</a><br>
     {% endif %}

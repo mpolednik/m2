@@ -53,7 +53,7 @@ def comment_submit(id, cid = None):
             return redirect(url_for('comment', id=image.id, cid=cid))
 
 
-@security.req_owner
+@security.req_owner(Comment)
 def comment_edit(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
 
@@ -74,7 +74,7 @@ def comment_edit(id, cid):
     return render('comment.html', edit=True, id=id, cid=cid, comments=comments, form=form)
 
 
-@security.req_owner
+@security.req_owner(Comment)
 def comment_delete(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.state = 0

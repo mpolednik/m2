@@ -37,25 +37,34 @@ def req_mod(f):
     def inner(*args, **kwargs):
         category = Category.query.filter_by(name=kwargs['name']).one()
         user = User.query.get(session['user'])
-        if user in category.moderators or user.level > 1:
+        if user.level > 1 or user in category.moderators:
             return f(*args, **kwargs)
         else:
             raise SecurityException
     return inner
 
 
-def req_owner(f, Object=None):
-    @req_login
-    def inner(*args, **kwargs):
-        if 'cid' in kwargs:
-            id = kwargs['cid']
-        elif 'id' in kwargs:
-            id = kwargs['id']
+def req_owner(Object):
+    def decorator(f):
+        @req_login
+        def inner(*args, **kwargs):
+            if 'cid' in kwargs:
+                id = kwargs['cid']
+            elif 'id' in kwargs:
+                id = kwargs['id']
 
-        obj = Object.query.filter_by(id=id).one()
-        user = User.query.get(session['user'])
-        if user == Object.owner or user.level > 1:
-            return f(*args, **kwargs)
-        else:
-            raise SecurityException
-    return inner
+            obj = Object.query.filter_by(id=id).one()
+
+            # Get parent object's moderators (assuming object is either comment or image)
+            try:
+                mod = obj.category.moderators
+            except:
+                mod = obj.image.category.moderators
+
+            user = User.query.get(session['user'])
+            if user.level > 1 or user == mod  or user == obj.owner:
+                return f(*args, **kwargs)
+            else:
+                raise SecurityException
+        return inner
+    return decorator
