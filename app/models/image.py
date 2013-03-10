@@ -108,5 +108,8 @@ class Image(db.Model, VotableObject):
 
     def save_exif(self):
         if self.kind in app.config['EXIF_EXTENSIONS']:
-            for (k, v) in Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))._getexif().iteritems():
-                db.session.add(Exif(self, TAGS.get(k), v))
+            try:
+                for (k, v) in Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))._getexif().iteritems():
+                    db.session.add(Exif(self, TAGS.get(k), v))
+            except:
+                return
