@@ -1,17 +1,23 @@
 from datetime import datetime, timedelta
 from math import log, sqrt
 
-from flask import session
+from flask import session, request
 
 from app.helpers.middleware import db
 
 
 class VotableObject(object):
 
-    def vote(self, rating):
+    def vote(self):
+        if 'v' in request.args:
+            if request.args['v'] == 'up':
+                rating = 1
+            else:
+                rating = -1
+
         try:
             rate = db.session.query(self.RatingClass).get((session['user'], self.id))
-            if (rate.value + rating) > 1 or (rate.value + rating < -1):
+            if (rate.value + rating) > 1 or (rate.value + rating) < -1:
                 change = 0
             else:
                 change = rating
@@ -20,6 +26,11 @@ class VotableObject(object):
             rate = self.RatingClass(session['user'], self.id, rating)
             db.session.add(rate)
             change = rating
+
+        if self.RatingClass.__tablename__ == 'comment':
+            self.owner.rating_comment += change
+        else:
+            self.owner.rating_image += change
 
         self.rating += change
         self.score = calculate_score(self.rating, self.ts)

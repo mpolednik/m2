@@ -48,6 +48,7 @@ def image_delete(id):
     image = db.session.query(Image).filter_by(id=id).one()
     category = image.category.name
 
+    image.delete_files()
     db.session.delete(image)
 
     db.session.commit()
@@ -56,16 +57,10 @@ def image_delete(id):
     return redirect(url_for('category_one', name=category))
 
 
-def image_vote(id, name=None, page=None):
-    image = db.session.query(Image).filter_by(id=id).one()
+def image_vote(id, name=None, page=1):
+    image = db.session.query(Image).get(id)
 
-    if 'v' in request.args:
-        if request.args['v'] == 'up':
-            rating = 1
-        else:
-            rating = -1
-
-    image.vote(rating)
+    image.vote()
 
     db.session.commit()
     flash('Obrazek hodnocen', 'success')
@@ -74,5 +69,5 @@ def image_vote(id, name=None, page=None):
         return redirect(url_for('category_one', name=name, page=page))
     else:
         if 'ref' in request.args:
-            return redirect(url_for('category_all'))
+            return redirect(url_for('category_all', page=page))
         return redirect(url_for('image', id=id))

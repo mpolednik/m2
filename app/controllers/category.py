@@ -9,8 +9,6 @@ from wtforms import fields, validators
 
 from app.models.image import Image
 from app.models.category import Category
-from app.controllers.image import image_vote
-from app.models.rating import calculate_score
 
 
 class SubmitForm(Form):

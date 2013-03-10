@@ -77,14 +77,7 @@ def comment_delete(id, cid):
 
 def comment_vote(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
-
-    if 'v' in request.args:
-        if request.args['v'] == 'up':
-            rating = 1
-        else:
-            rating = -1
-
-    comment.vote(rating)
+    comment.vote()
 
     db.session.commit()
     flash('Komentar hodnocen', 'success')

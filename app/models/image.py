@@ -9,7 +9,7 @@ import config.upload
 from app.helpers.middleware import db, app
 
 from app.models.comment import Comment
-from app.models.rating import VotableObject, calculate_score
+from app.models.rating import VotableObject
 
 
 class ImageRating(db.Model):
@@ -22,7 +22,7 @@ class ImageRating(db.Model):
     def __init__(self, id_user, id_target, value):
         self.id_user = id_user
         self.id_target = id_target
-        self.value = pickle.dumps(value)
+        self.value = value
 
 
 class Exif(db.Model):
@@ -113,3 +113,7 @@ class Image(db.Model, VotableObject):
                     db.session.add(Exif(self, TAGS.get(k), v))
             except:
                 return
+
+    def delete_files(self):
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
+        os.remove(os.path.join(app.config['THUMB_UPLOAD_FOLDER'], self.filename))
