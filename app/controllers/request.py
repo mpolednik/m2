@@ -9,6 +9,7 @@ from wtforms import fields, validators
 
 from app.models.request import Request
 from app.models.category import Category
+from app.models.user import User
 
 
 class RequestForm(Form):
@@ -52,6 +53,7 @@ def request_submit(name = None):
 
 def request_accept(id):
     request = db.session.query(Request).get(id)
+    user = User.query.get(request.owner.id)
     if request.state == 0:
         request.state = 1
     
@@ -60,6 +62,8 @@ def request_accept(id):
             category = Category(request.name)
         # Type: new moderator
         elif request.type == 1:
+            if user.level < 2:
+                user.level = 1
             category = db.session.query(Category).get(request.category.id)
             category.moderators.append(request.owner)
 
