@@ -38,7 +38,6 @@ class Exif(db.Model):
 
     @value.setter
     def value(self, v):
-        print v
         self._value = pickle.dumps(v)
 
     def __init__(self, image, key, value):
@@ -89,7 +88,7 @@ class Image(db.Model, VotableObject):
     @property
     def allowed(self):
         return '.' in self.filename and \
-            self.kind in app.config['ALLOWED_EXTENSIONS']
+            self.kind.lower() in app.config['ALLOWED_EXTENSIONS']
 
     @staticmethod
     def _extension(filename):
