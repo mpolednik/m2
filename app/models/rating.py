@@ -43,7 +43,7 @@ def _epoch_seconds(date):
     return td.days * 86400 + td.seconds + (float(td.microseconds) / 1000000)
 
 def calculate_score(rating, date):
-    order = log(max(rating, 1), 10)
+    order = log(max(abs(rating), 1), 10)
     sign = 1 if rating > 0 else -1 if rating < 0 else 0
     seconds = _epoch_seconds(date) - 1134028003
     return round(order + sign * seconds / 45000, 7)

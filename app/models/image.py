@@ -60,7 +60,7 @@ class Image(db.Model, VotableObject):
     link = db.Column(db.String(200))
     kind = db.Column(db.String(4))
     rating = db.Column(db.Integer, default=0)
-    score = db.Column(db.Integer, default=0)
+    score = db.Column(db.Float, default=0)
     ts = db.Column(db.DateTime)
 
     RatingClass = ImageRating

@@ -59,7 +59,8 @@ def request_accept(id):
     
         # Type: new category
         if request.type == 0:
-            category = Category(request.name)
+            category = Category(request.name, request.text)
+            db.session.add(category)
         # Type: new moderator
         elif request.type == 1:
             if user.level < 2:
