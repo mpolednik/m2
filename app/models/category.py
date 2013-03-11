@@ -13,7 +13,6 @@ class Category(db.Model):
     __tablename__ = 'category'
 
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.Integer, default=0)
     name = db.Column(db.String(30))
     text = db.Column(db.Text)
     ts = db.Column(db.DateTime)
@@ -27,4 +26,4 @@ class Category(db.Model):
         self.text = text
 
     def __repr__(self):
-        return '<Category({}, {}, {}, {}, {})>'.format(self.id, self.rating, self.name, self.text, self.ts)
+        return '<Category({}, {}, {}, {})>'.format(self.id, self.name, self.text, self.ts)
