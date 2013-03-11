@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, flash
+from flask import request, redirect, url_for, flash, session
 import sqlalchemy.exc
 
 from app.helpers.middleware import db
@@ -26,7 +26,12 @@ def image(id):
     image = db.session.query(Image).filter_by(id=id).one()
     comments = construct_comment_tree(image.comments)
 
-    return render('image.html', image=image, form=form, comments=comments)
+    try:
+        commented = Comment.query.filter_by(id_user=session['user'], image=image, id_father=None).one()
+    except:
+        commented = False
+
+    return render('image.html', commented=commented, image=image, form=form, comments=comments)
 
 
 @security.req_owner(Image)

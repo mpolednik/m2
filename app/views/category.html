@@ -22,9 +22,10 @@
                 <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">Downvote</a><br>
             {% else %}
                 <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">Upvote</a>
-                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a><br>
+                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a>
             {% endif %}
         {% endif %}
+        <br>
     {% endfor %}
     {% if category %}
         {% if images.has_next %}

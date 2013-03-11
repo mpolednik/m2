@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <br><br>Menu<br>
-    {% if DEF_user == image.owner or DEF_user.level > 1 %}
+    {% if DEF_user and (DEF_user == image.owner or DEF_user.level > 1) %}
         <a href="{{ url_for('image_edit', id=image.id) }}">Edit</a><br>
         <a href="{{ url_for('image_delete', id=image.id) }}">Delete</a><br>
     {% endif %}
@@ -20,7 +20,7 @@
     <br><br>Category<br>
     <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
     <br><br>Comments<br>
-    {% if DEF_user %}
+    {% if DEF_user and not commented %}
         <form action="{{ url_for(('comment_submit'), id=image.id) }}" method="POST">
             {{ form.text }}
             {{ form.hidden_tag() }}
