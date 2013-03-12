@@ -17,12 +17,14 @@ class RequestForm(Form):
     text = fields.TextAreaField('Text')
 
 
+@security.req_level(1)
 def request_all():
     requests = db.session.query(Request).all()
 
     return render('request_list.html', requests=requests)
 
 
+@security.req_level(1)
 def request_one(id):
     request = db.session.query(Request).filter_by(id=id).one()
 
@@ -51,6 +53,7 @@ def request_submit(name = None):
     return 'In progress...'
 
 
+@security.req_requested_category_mod
 def request_accept(id):
     request = db.session.query(Request).get(id)
     user = User.query.get(request.owner.id)
@@ -59,7 +62,10 @@ def request_accept(id):
     
         # Type: new category
         if request.type == 0:
+            if user.level < 2:
+                user.level = 1
             category = Category(request.name, request.text)
+            category.moderators.append(request.owner)
             db.session.add(category)
         # Type: new moderator
         elif request.type == 1:
@@ -74,6 +80,7 @@ def request_accept(id):
     return redirect(url_for('request_all'))
 
 
+@security.req_requested_category_mod
 def request_decline(id):
     request = db.session.query(Request).get(id)
     if request.state == 0:

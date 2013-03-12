@@ -9,6 +9,10 @@
         {% endif %}
         <br><br>Category<br>
         {{ category }}<br>
+        <br><br>Moderator(s)<br>
+        {% for moderator in category.moderators %}
+            {{ moderator }}<br>
+        {% endfor %}
     {% elif DEF_user %}
         <a href="{{ url_for('request_submit') }}">Request new category</a><br>
     {% endif %}

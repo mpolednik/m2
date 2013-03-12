@@ -3,6 +3,7 @@ from flask import session
 from app.helpers.middleware import app
 from app.models.user import User
 from app.models.category import Category
+from app.models.request import Request
 
 class SecurityException(Exception):
     pass
@@ -23,14 +24,16 @@ def req_nologin(f):
             raise SecurityException
     return inner
 
-def req_level(f, level):
-    def inner(*args, **kwargs):
-        user = User.query.get(session['user'])
-        if user.level > level:
-            return f(*args, **kwargs)
-        else:
-            raise SecurityException
-    return inner
+def req_level(level):
+    def decorator(f):
+        def inner(*args, **kwargs):
+            user = User.query.get(session['user'])
+            if user.level >= level:
+                return f(*args, **kwargs)
+            else:
+                raise SecurityException
+        return inner
+    return decorator
 
 def req_mod(f):
     @req_login
@@ -68,3 +71,16 @@ def req_owner(Object):
                 raise SecurityException
         return inner
     return decorator
+
+def req_requested_category_mod(f):
+    def inner(*args, **kwargs):
+        try:
+            request = Request.query.get(kwargs['id'])
+            user = User.query.get(session['user'])
+            if user.level > 1 or user in request.category.moderators:
+                return f(*args, **kwargs)
+            else:
+                raise SecurityException
+        except:
+            return f(*args, **kwargs)
+    return inner
