@@ -26,6 +26,7 @@ def req_nologin(f):
 
 def req_level(level):
     def decorator(f):
+        @req_login
         def inner(*args, **kwargs):
             user = User.query.get(session['user'])
             if user.level >= level:

@@ -4,6 +4,7 @@ from app.helpers.middleware import db, bcrypt
 from app.models.image import Image
 from app.models.comment import Comment
 from app.models.request import Request
+from app.models.category import moderator 
 
 
 class User(db.Model):
@@ -30,6 +31,7 @@ class User(db.Model):
     images = db.relationship('Image', backref='owner')
     comments = db.relationship('Comment', backref='owner')
     requests = db.relationship('Request', backref='owner')
+    categories = db.relationship('Category', secondary=moderator)
 
     def __init__(self, name, mail, password):
         self.name = name
@@ -50,6 +52,12 @@ class User(db.Model):
             return True
         else:
             return False
+
+    def already_requested(self, category):
+        for request in self.requests:
+            if request.type and not request.state and request.category == category:
+                return True
+        return False
 
     @staticmethod
     def login(mail, password):

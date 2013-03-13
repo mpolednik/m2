@@ -19,25 +19,40 @@ class RequestForm(Form):
 
 @security.req_level(1)
 def request_all():
-    requests = db.session.query(Request).all()
+    # Display every request visible to user (admin or moderator of categories)
+    user = User.query.get(session['user'])
+    if user.level > 1:
+        requests = db.session.query(Request).all()
+    else:
+        keys = [cat.id for cat in user.categories]
+        requests = db.session.query(Request).filter(Request.id_category.in_(keys))
 
     return render('request_list.html', requests=requests)
 
 
-@security.req_level(1)
+@security.req_requested_category_mod
 def request_one(id):
     request = db.session.query(Request).filter_by(id=id).one()
 
     return render('request.html', request=request)
 
 
+@security.req_login
 def request_submit(name = None):
     form = RequestForm()
 
     if request.method == 'POST' and form.validate():
         if name:
             category = db.session.query(Category).filter_by(name=name).one()
-            type = 1
+            # Only allow single unaccepted request for moderator of category
+            try: 
+                test = Request.query.filter_by(type=1, id_user=session['user'], category=category, state=0).one()
+            except:
+                category = db.session.query(Category).filter_by(name=name).one()
+                type = 1
+            else:
+                flash('O moderatorstvi v kategorii jste uz zazadal!', 'error')
+                return render('request_submit.html', form=form)
         else:
             category = None
             type = 0
@@ -49,8 +64,7 @@ def request_submit(name = None):
 
         return redirect(url_for('category_all'))
 
-    return render('request_form.html', form=form)
-    return 'In progress...'
+    return render('request_submit.html', form=form)
 
 
 @security.req_requested_category_mod
