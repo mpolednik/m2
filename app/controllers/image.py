@@ -69,7 +69,13 @@ def image_delete(id):
 def image_vote(id, name=None, page=1):
     image = db.session.query(Image).get(id)
 
-    image.vote()
+    if 'v' in request.args:
+        if request.args['v'] == 'up':
+            rating = 1
+        else:
+            rating = -1
+
+    image.vote(rating)
 
     db.session.commit()
     flash('Obrazek hodnocen', 'success')

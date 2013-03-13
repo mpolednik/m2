@@ -8,13 +8,7 @@ from app.helpers.middleware import db
 
 class VotableObject(object):
 
-    def vote(self):
-        if 'v' in request.args:
-            if request.args['v'] == 'up':
-                rating = 1
-            else:
-                rating = -1
-
+    def vote(self, rating):
         try:
             rate = db.session.query(self.RatingClass).get((session['user'], self.id))
             if (rate.value + rating) > 1 or (rate.value + rating) < -1:
@@ -33,7 +27,9 @@ class VotableObject(object):
             self.owner.rating_image += change
 
         self.rating += change
-        self.score = calculate_score(self.rating, self.ts)
+        time = datetime.now() if not self.ts else self.ts
+
+        self.score = calculate_score(self.rating, time)
 
 
 epoch = datetime(1970, 1, 1)

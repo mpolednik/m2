@@ -88,7 +88,14 @@ def comment_delete(id, cid):
 @security.req_login
 def comment_vote(id, cid):
     comment = db.session.query(Comment).filter_by(id=cid).one()
-    comment.vote()
+
+    if 'v' in request.args:
+        if request.args['v'] == 'up':
+            rating = 1
+        else:
+            rating = -1
+
+    comment.vote(rating)
 
     db.session.commit()
     flash('Komentar hodnocen', 'success')

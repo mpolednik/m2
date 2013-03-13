@@ -63,6 +63,8 @@ def category_submit(name):
 
         image.save_thumbnail()
         image.save_exif()
+        # Self upvote 
+        image.vote(1)
         db.session.commit()
         flash('Obrazek postnut', 'success')
 
