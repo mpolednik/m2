@@ -86,3 +86,11 @@ def category_edit(name):
         return redirect(url_for('category_one', name=name))
 
     return render('category_edit.html', title='test', form=form, category=category)
+
+@security.req_mod
+def category_pass_mod(name):
+    category = db.session.query(Category).filter_by(name=name).one()
+    # TODO
+    # remove the moderator
+    # check if user moderates something, demote him if not
+    return redirect(url_for('category_one', name=name))

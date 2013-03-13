@@ -2,12 +2,12 @@
 {% block body %}
     <br><br>Menu<br>
         {% if category and DEF_user %}
-            {% if not DEF_user.already_requested(category) %}
-                <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
-            {% endif %}
             <a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br>
         {% if DEF_user in category.moderators %}
+            <a href="{{ url_for('category_pass_mod', name=category.name) }}">Vzdat se moderatorstvi</a><br>
             <a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br>
+        {% elif not DEF_user.already_requested(category) %}
+            <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
         {% endif %}
         <br><br>Category<br>
         {{ category }}<br>
