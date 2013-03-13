@@ -43,6 +43,8 @@ def comment_submit(id, cid = None):
             flash('Komentar neulozen', 'error')
         else:
             db.session.add(comment)
+            db.session.flush()
+            comment.vote(1)
             db.session.commit()
             flash('Komentar ulozen', 'success')
 

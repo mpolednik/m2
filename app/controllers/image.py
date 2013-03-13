@@ -56,8 +56,12 @@ def image_delete(id):
     image = db.session.query(Image).filter_by(id=id).one()
     category = image.category.name
 
-    image.delete_files()
-    db.session.delete(image)
+    try:
+        db.session.delete(image)
+    except:
+        pass
+    else:
+        image.delete_files()
 
     db.session.commit()
     flash('Image deleted', 'success')
