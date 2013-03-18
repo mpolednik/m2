@@ -4,34 +4,51 @@ import sqlalchemy.exc
 from app.helpers.middleware import db
 from app.helpers.rendering import render
 from app.helpers import security
+from app.helpers.forms import flash_errors
 
 from flask.ext.wtf import Form
-from wtforms import fields, validators
+from wtforms import fields, validators, ValidationError
 
 from app.models.user import User
+from app.models.image import Image
+
+from translation import local
 
 
 class LoginForm(Form):
-    mail = fields.TextField('Mail')
-    password = fields.PasswordField('Pass')
+    mail = fields.TextField(local.MAIL, [validators.Email(local.user['INVALID_MAIL'])])
+    password = fields.PasswordField(local.PASS, [validators.Length(min=4, message=local.user['INVALID_PASS'])])
+
+    def validate_name(form, field):
+        if form.data['name'] != field.data:
+            try:
+                User.query.filter_by(name=field.data).one()
+            except:
+                pass
+            else:
+                raise ValidationError(local.user['EXISTS_NAME'])
+
+    def validate_mail(form, field):
+        if form.data['mail'] != field.data:
+            try:
+                User.query.filter_by(mail=field.data).one()
+            except:
+                pass
+            else:
+                raise ValidationError(local.user['EXISTS_MAIL'])
 
 
-class RegistrationForm(Form):
-    name = fields.TextField('name')
-    mail = fields.TextField('Mail')
-    password = fields.PasswordField('Pass')
+class RegistrationForm(LoginForm):
+    name = fields.TextField(local.UNAME, [validators.Length(4, 50, local.user['INVALID_NAME'])])
+
+class EditForm(RegistrationForm):
+    phone = fields.TextField(local.PHONE)
 
 
-class EditForm(Form):
-    name = fields.TextField('name')
-    mail = fields.TextField('Mail')
-    password = fields.PasswordField('pass')
-    phone = fields.TextField('Phone')
-
-
-def user(id):
+def user(id, page=1):
     user = db.session.query(User).filter_by(id=id).one()
-    return render('user.html', user=user)
+    images = Image.query.filter_by(id_user=user.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
+    return render('user.html', user=user, images=images)
 
 
 @security.req_login
@@ -53,6 +70,7 @@ def account():
         except sqlalchemy.exc.IntegrityError:
             flash('User needitovan', 'error')
 
+    flash_errors(form)
     return render('account.html', form=form)
 
 
@@ -66,6 +84,7 @@ def login():
         flash('User nalogovan', 'success')
         return redirect(url_for('category_all'))
 
+    flash_errors(form)
     return render('login.html', form=form)
 
 
@@ -86,6 +105,7 @@ def register():
         except:
             flash('neregistrovan', 'error')
 
+    flash_errors(form)
     return render('register.html', form=form)
 
 

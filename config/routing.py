@@ -9,6 +9,7 @@ views.add('/c/<name>/<int:page>', 'app.controllers.category.category_one')
 views.add('/c/<name>/submit', 'app.controllers.category.category_submit', methods=('GET', 'POST'))
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
 views.add('/c/<name>/pass', 'app.controllers.category.category_pass_mod')
+views.add('/c/<name>/become_mod', 'app.controllers.category.category_become_mod')
 views.add('/c/<name>/i/<int:id>/vote/<int:page>', 'app.controllers.image.image_vote')
 
 views.add('/i/<int:id>', 'app.controllers.image.image')

@@ -1,7 +1,8 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "layout.html" %}
 {% block body %}
     <form method="POST" action="">
-        {{ form.text }}
+        {{ render_field(form.text) }}
         {{ form.hidden_tag() }}
         <input type="submit" value="Send">
     </form>

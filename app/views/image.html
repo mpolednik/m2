@@ -1,28 +1,39 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "layout.html" %}
-{% block body %}
-    <br><br>Menu<br>
+
+{% set actionbar=True %}
+{% block actionbar %}
     {% if DEF_user and (DEF_user == image.owner or DEF_user.level > 1) %}
-        <a href="{{ url_for('image_edit', id=image.id) }}">Edit</a><br>
-        <a href="{{ url_for('image_delete', id=image.id) }}">Delete</a><br>
+        <li><a href="{{ url_for('image_edit', id=image.id) }}">Edit</a><br></li>
+        <li><a href="{{ url_for('image_delete', id=image.id) }}">Delete</a><br></li>
     {% endif %}
     {% if DEF_user %}
-        <a href="{{ url_for('image_vote', id=image.id, v='up') }}">Upvote</a><br>
-        <a href="{{ url_for('image_vote', id=image.id, v='down') }}">Downvote</a><br>
+        <li><a href="{{ url_for('image_vote', id=image.id, v='up') }}">Upvote</a><br></li>
+        <li><a href="{{ url_for('image_vote', id=image.id, v='down') }}">Downvote</a><br></li>
     {% endif %}
-    <br><br>Image<br>
+{% endblock %}
+
+{% set widget=True %}
+{% block widget %}
+    <ul>
+        <li><h1>Informace</h1></li>
+        <li>Vlasník:&nbsp;<a href="/u/{{ image.owner.id }}">{{ image.owner.name }}</a></li>
+        <li>Kategorie:&nbsp;<a href="/c/{{ image.category.name }}">{{ image.category.name }}</a></li>
+        <li>Hodnocení:&nbsp;{{ image.rating }}</li>
+        <li><h1>Exif data</h1></li>
+        <ul>
+        {% for exif in image.exif %}
+            <li><strong>{{ exif.key }}</strong>: {{ exif.value }}</li>
+        {% endfor %}
+        </ul>
+{% endblock %}
+
+{% block body %}
     <img src="/static/img/upload/{{ image.filename }}">
-    {{ image }}<br>
-    {% for exif in image.exif %}
-        <strong>{{ exif.key }}</strong>: {{ exif.value }}<br>
-    {% endfor %}
-    <br><br>Owner<br>
-    <a href="/u/{{ image.owner.id }}">{{ image.owner }}</a><br>
-    <br><br>Category<br>
-    <a href="/c/{{ image.category.name }}">{{ image.category }}</a><br>
     <br><br>Comments<br>
     {% if DEF_user and not commented %}
         <form action="{{ url_for(('comment_submit'), id=image.id) }}" method="POST">
-            {{ form.text }}
+            {{ render_field(form.text) }}
             {{ form.hidden_tag() }}
             <input type="submit" value="Komentovat">
         </form>
@@ -31,8 +42,9 @@
         {% for delim in range(1, comment.depth) %}
             >
         {% endfor  %}
-        {{ comment.depth }}
-        <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment }}</a>
+        <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
+        Napsal <a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a>
+        ({{ comment.ts.strftime('%d. %m. %Y') }})
         {% if DEF_user %}
             <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up') }}">Upvote</a>
             <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='down') }}">Downvote</a>

@@ -1,8 +1,9 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "layout.html" %}
 {% block body %}
     <form action="" method="POST">
-        {{ form.mail }}
-        {{ form.password }}
+        {{ render_field(form.mail) }}
+        {{ render_field(form.password) }}
         {{ form.hidden_tag() }}
         <input type="submit" value="Login">
     </form>

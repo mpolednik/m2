@@ -4,6 +4,7 @@ import sqlalchemy.exc
 from app.helpers.middleware import db
 from app.helpers.rendering import render
 from app.helpers import security
+from app.helpers.forms import flash_errors
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -48,6 +49,7 @@ def image_edit(id):
 
         return redirect(url_for('image', id=id))
 
+    flash_errors(form)
     return render('image_edit.html', image=image, form=form)
 
 

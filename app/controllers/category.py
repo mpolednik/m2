@@ -3,32 +3,36 @@ from flask import redirect, url_for, request, session, flash
 from app.helpers.middleware import db, app
 from app.helpers.rendering import render
 from app.helpers import security
+from app.helpers.forms import flash_errors
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
 
 from app.models.image import Image
 from app.models.category import Category
+from app.models.user import User
+
+from translation import local
 
 
 class SubmitForm(Form):
-    name = fields.TextField('Jmeno')
-    text = fields.TextAreaField('Text')
-    link = fields.TextAreaField('link')
-    image = fields.FileField('Image')
+    name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
+    text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category_submit['INVALID_TEXT'])])
+    link = fields.TextAreaField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
+    image = fields.FileField(local.IMAGE, [validators.Optional()])
 
 
 class EditForm(Form):
-    text = fields.TextAreaField('Text')
+    text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category_submit['INVALID_TEXT'])])
 
 
-def category_all(page = 1):
+def category_all(page=1):
     images = Image.query.order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
 
     return render('category.html', title='test', images=images)
 
 
-def category_one(name, page = 1):
+def category_one(name, page=1):
     category = Category.query.filter_by(name=name).one()
     images = Image.query.filter_by(id_category=category.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
 
@@ -70,6 +74,7 @@ def category_submit(name):
 
         return redirect(url_for('category_one', name=name))
 
+    flash_errors(form)
     return render('category_submit.html', title='test', form=form)
 
 
@@ -87,12 +92,21 @@ def category_edit(name):
 
         return redirect(url_for('category_one', name=name))
 
+    flash_errors(form)
     return render('category_edit.html', title='test', form=form, category=category)
 
 @security.req_mod
 def category_pass_mod(name):
     category = db.session.query(Category).filter_by(name=name).one()
-    # TODO
-    # remove the moderator
-    # check if user moderates something, demote him if not
+    user = User.query.get(session['user'])
+    category.moderators.remove(user)
+    db.session.commit()
+    return redirect(url_for('category_one', name=name))
+
+@security.req_level(2)
+def category_become_mod(name):
+    category = db.session.query(Category).filter_by(name=name).one()
+    user = User.query.get(session['user'])
+    category.moderators.append(user)
+    db.session.commit()
     return redirect(url_for('category_one', name=name))

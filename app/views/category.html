@@ -1,38 +1,52 @@
+{% from "_images.html" import list_images %}
 {% extends "layout.html" %}
-{% block body %}
-    <br><br>Menu<br>
-        {% if category and DEF_user %}
-            <a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br>
-        {% if DEF_user in category.moderators %}
-            <a href="{{ url_for('category_pass_mod', name=category.name) }}">Vzdat se moderatorstvi</a><br>
-            <a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br>
-        {% elif not DEF_user.already_requested(category) %}
-            <a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br>
-        {% endif %}
-        <br><br>Category<br>
-        {{ category }}<br>
-        <br><br>Moderator(s)<br>
-        {% for moderator in category.moderators %}
-            {{ moderator }}<br>
-        {% endfor %}
-    {% elif DEF_user %}
-        <a href="{{ url_for('request_submit') }}">Request new category</a><br>
-    {% endif %}
-    <br><br>Images<br>
-    {% for image in images.items %}
-        <img src="/static/img/thumb/{{ image.filename }}">
-        <a href="{{ url_for(('image'), id=image.id) }}">{{ image }}</a>
-        {% if DEF_user %}
-            {% if category %}
-                <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">Upvote</a>
-                <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">Downvote</a><br>
-            {% else %}
-                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">Upvote</a>
-                <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">Downvote</a>
+
+{% if DEF_user %}
+    {% set actionbar=True %}
+    {% block actionbar %}
+            {% if category and DEF_user %}
+                <li><a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br></li>
+            {% if DEF_user in category.moderators %}
+                <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">Vzdat se moderatorstvi</a><br></li>
+                <li><a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br></li>
+            {% elif DEF_user.level > 1 %}
+                <li><a href="{{ url_for('category_become_mod', name=category.name) }}">Become moderator</a><br></li>
+                <li><a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br></li>
+            {% elif not DEF_user.already_requested(category) %}
+                <li><a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br></li>
             {% endif %}
+            {% for moderator in category.moderators %}
+            <li>{{ moderator.name }}</li>
+            {% endfor %}
+        {% elif DEF_user %}
+            <li><a href="{{ url_for('request_submit') }}">Request new category</a><br></li>
         {% endif %}
-        <br>
-    {% endfor %}
+    {% endblock %}
+{% endif %}
+
+{% if category and category.text %}
+    {% set widget=True %}
+    {% block widget %}
+        <h1>Informace</h1>
+        {{ category.text }}
+    {% endblock %}
+{% endif %}
+
+{% block body %}
+    <div class="row cf gallery">
+
+        <header class="unit gallery__header">
+            <h1 class="gallery__header__h">
+                {% if category %}
+                    {{ category.name }}
+                {% else %}
+                    Všechny fotografie
+                {% endif %}
+            </h1>
+        </header> <!-- /gallery__header -->
+
+        {{ list_images(images, DEF_user, category) }}
+
     {% if category %}
         {% if images.has_next %}
             <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
@@ -48,4 +62,6 @@
             <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
         {% endif %}
     {% endif %}
+
+    </div> <!-- /row -->
 {% endblock %}

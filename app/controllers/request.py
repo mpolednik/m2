@@ -3,6 +3,7 @@ from flask import request, session, flash, redirect, url_for
 from app.helpers.middleware import db
 from app.helpers.rendering import render
 from app.helpers import security
+from app.helpers.forms import flash_errors
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -64,6 +65,7 @@ def request_submit(name = None):
 
         return redirect(url_for('category_all'))
 
+    flash_errors(form)
     return render('request_submit.html', form=form)
 
 

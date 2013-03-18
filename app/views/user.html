@@ -1,9 +1,15 @@
+{% from "_images.html" import list_images %}
 {% extends "layout.html" %}
+
+{% set widget=True %}
+{% block widget %}
+    <ul>
+        <li><h1>Informace</h1></li>
+        <li>Skóre obrázků:&nbsp;{{ user.rating_image }}
+        <li>Skóre komentářů:&nbsp;{{ user.rating_comment }}
+        <li>Vytvořen:&nbsp;{{ user.ts.strftime('%d. %m. %Y') }}</li>
+{% endblock %}
+
 {% block body %}
-    <br><br>User<br>
-    {{ user }}
-    <br><br>Images<br>
-    {% for image in user.images %}
-        <a href="/i/{{ image.id }}">{{ image }}</a><br>
-    {% endfor %}
+    {{ list_images(images, DEF_user) }}
 {% endblock %}

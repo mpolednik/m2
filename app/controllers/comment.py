@@ -3,6 +3,7 @@ from flask import redirect, url_for, request, session, flash
 from app.helpers.middleware import db
 from app.helpers.rendering import render
 from app.helpers import security
+from app.helpers.forms import flash_errors
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -11,13 +12,15 @@ from app.models.comment import Comment, construct_comment_tree
 from app.models.image import Image
 from app.models.user import User
 
+from translation import local
+
 
 class CommentForm(Form):
-    text = fields.TextAreaField('Text')
+    text = fields.TextAreaField(local.CONTENT, [validators.Length(10, 1000, local.comment['INVALID_TEXT'])])
 
 
-class EditForm(Form):
-    text = fields.TextAreaField('Text')
+class EditForm(CommentForm):
+    pass
 
 
 def comment(id, cid = None):
@@ -54,6 +57,17 @@ def comment_submit(id, cid = None):
         else:
             return redirect(url_for('comment', id=image.id, cid=cid))
 
+    flash_errors(form)
+    comments = construct_comment_tree(image.comments)
+    if cid is None:
+        try:
+            commented = Comment.query.filter_by(id_user=session['user'], image=image, id_father=None).one()
+        except:
+            commented = False
+        return render('image.html', commented=commented, image=image, form=form, comments=comments)
+    else:
+        return render('comment.html', id=id, cid=cid, comments=comments, form=form)
+
 
 @security.req_owner(Comment)
 def comment_edit(id, cid):
@@ -71,6 +85,7 @@ def comment_edit(id, cid):
 
         return redirect(url_for('image', id=id))
 
+    flash_errors(form)
     comments = construct_comment_tree(image.comments, comment.id)
 
     return render('comment.html', edit=True, id=id, cid=cid, comments=comments, form=form)

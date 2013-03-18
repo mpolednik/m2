@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
 
         <!-- Charset & Title -->
@@ -7,6 +7,7 @@
         <title>{{ title }}</title>
 
         <!-- Meta tags -->
+        <meta name="description" content="A nice description of your page">
         <meta name="author" content="Martin Polednik">
 
         <!-- Stylesheets -->
@@ -14,35 +15,83 @@
    
     </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <ul class="flashes">
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+    <nav class="top-bar">
+        <ul class="nav nav--inline">
+            <li><a href="/">Vše</a></li>
+            {% for category in DEF_categories %}
+                <li><a href="/c/{{ category.name }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav> <!-- /top-bar -->
+
+    <div class="top-header">
+        <h1 class="top-header__h">Fotogalerie</h1>
+
+        <nav class="top-header__nav">
+            <ul class="nav nav--inline">
+                {% if DEF_user %}
+                    <li><a href="{{ url_for('account') }}">Nastavení</a></li>
+                    <li><a href="{{ url_for('logout') }}">Odhlásit se</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div> <!-- /top-header -->
+</header> <!-- /page-header -->
+
+<!-- PAGE CONTENT -->
+<div class="container">
+<div class="row cf">
+    <aside class="sidebar sidebar--fixed">
+        {% if DEF_user and DEF_user.level > 0 %}
+            <div class="widget widget__admin">
+                <h1>Admin</h1>
+                <ul>
+                    <li><a href="/r">Uživatelské požadavky</a></li>
+                    <li><a href="/admin">Administrace</a></li>
+                </ul>
+            </div> <!-- /widget -->
+        {% endif %}
+
+        {% if widget %}
+            <div class="widget">
+                {% block widget %}{% endblock %}
+            </div> <!-- /widget -->
+        {% endif %}
+
+        {% if actionbar %}
+            <div class="widget widget__action">
+                <h1>Actionbar</h1>
+                <ul>
+                    {% block actionbar %}{% endblock %}
+                </ul>
+            </div> <!-- /widget -->
+        {% endif %}
+    </aside> <!-- /sidebar -->
+    <div class="content">
+        {% block body %}{% endblock %}
+    </div> <!-- /content -->
+</div> <!-- /row -->
+</div> <!-- /container -->
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <ul class="flashes">
             {% for category, message in messages %}
             <li class="{{ category }}">{{ message }}</li>
             {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    User<br>
-    {% if DEF_user %}
-        <a href="{{ url_for('account') }}">{{ DEF_user }}</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
-        {% if DEF_user.level > 0 %}
-            <a href="{{ url_for('request_all') }}">Requests</a>
-        {% endif %}
-    {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('register') }}">Register</a>
+        </ul>
     {% endif %}
-    <br><br>Categories<br>
-    <a href="/">All</a>&nbsp;
-    {% for category in DEF_categories %}
-        <a href="/c/{{ category.name }}">{{ category.name }}</a>&nbsp;
-    {% endfor %}
-    {% block body %}{% endblock %}
-
-    <!-- Scripts -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/static/js/generic.js"></script>
+{% endwith %}
 </body>
+
+<!-- Scripts -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/static/js/generic.js"></script>
+
 </html>
