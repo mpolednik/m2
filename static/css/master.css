@@ -739,3 +739,11 @@ textarea {
     margin: 0 5px 0 5px;
     font-size: 2rem;
 }
+
+.accepted {
+    background: #cdffcd;
+}
+
+.declined {
+    background: #ffcdcd;
+}

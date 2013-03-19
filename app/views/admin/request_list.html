@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+    <header class="unit gallery__header">
+        <h1 class="gallery__header__h">
+            {{ local.REQUESTS }}
+        </h1>
+    </header> <!-- /gallery__header -->
+    <table>
+    {% for request in requests %}
+        {% if request.state == 1 %}
+            <tr class="accepted">
+        {% elif request.state == -1 %}
+            <tr class="declined">
+        {% else %}
+            <tr>
+        {% endif %}
+            <td>
+                <a href="/r/{{ request.id }}">{{ request.name }}</a><br>
+            </td>
+            <td>
+                {{ request.type }}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

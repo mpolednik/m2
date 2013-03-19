@@ -27,12 +27,12 @@ views.add('/i/<int:id>/comment/<int:cid>/edit', 'app.controllers.comment.comment
 views.add('/i/<int:id>/comment/<int:cid>/delete', 'app.controllers.comment.comment_delete')
 views.add('/i/<int:id>/comment/<int:cid>/vote', 'app.controllers.comment.comment_vote')
 
-views.add('/r', 'app.controllers.request.request_all')
-views.add('/r/submit', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
+views.add('/r', 'app.controllers.admin.request.request_all')
+views.add('/r/submit', 'app.controllers.admin.request.request_submit', methods=('GET', 'POST'))
 views.add('/r/submit/<name>', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
-views.add('/r/<int:id>', 'app.controllers.request.request_one')
-views.add('/r/<int:id>/accept', 'app.controllers.request.request_accept')
-views.add('/r/<int:id>/decline', 'app.controllers.request.request_decline')
+views.add('/r/<int:id>', 'app.controllers.admin.request.request_one')
+views.add('/r/<int:id>/accept', 'app.controllers.admin.request.request_accept')
+views.add('/r/<int:id>/decline', 'app.controllers.admin.request.request_decline')
 
 views.add('/u/<int:id>', 'app.controllers.user.user')
 views.add('/login', 'app.controllers.user.login', methods=('GET', 'POST'))

@@ -1,7 +1,0 @@
-{% extends "layout.html" %}
-{% block body %}
-    <br><br>Requests<br>
-    {% for request in requests %}
-        <a href="/r/{{ request.id }}">{{ request }}</a><br>
-    {% endfor %}
-{% endblock %}

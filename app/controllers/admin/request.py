@@ -28,14 +28,14 @@ def request_all():
         keys = [cat.id for cat in user.categories]
         requests = db.session.query(Request).filter(Request.id_category.in_(keys))
 
-    return render('request_list.html', requests=requests)
+    return render('admin/request_list.html', requests=requests)
 
 
 @security.req_requested_category_mod
 def request_one(id):
     request = db.session.query(Request).filter_by(id=id).one()
 
-    return render('request.html', request=request)
+    return render('admin/request.html', request=request)
 
 
 @security.req_login

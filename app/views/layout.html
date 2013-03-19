@@ -20,7 +20,7 @@
 <header class="page-header">
     <nav class="top-bar">
         <ul class="nav nav--inline">
-            <li><a href="/">Vše</a></li>
+            <li><a href="/">{{ local.ALL }}</a></li>
             {% for category in DEF_categories %}
                 <li><a href="/c/{{ category.name }}">{{ category.name }}</a></li>
             {% endfor %}
@@ -33,11 +33,11 @@
         <nav class="top-header__nav">
             <ul class="nav nav--inline">
                 {% if DEF_user %}
-                    <li><a href="{{ url_for('account') }}">Nastavení</a></li>
-                    <li><a href="{{ url_for('logout') }}">Odhlásit se</a></li>
+                    <li><a href="{{ url_for('account') }}">{{ local.ACCOUNT }}</a></li>
+                    <li><a href="{{ url_for('logout') }}">{{ local.LOGOUT }}</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">{{ local.LOGIN }}</a></li>
+                    <li><a href="{{ url_for('register') }}">{{ local.REGISTER }}</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -49,27 +49,27 @@
 <div class="row cf">
     <aside class="sidebar sidebar--fixed">
         <div class="widget widget__search">
-            <h1>Search</h1>
+            <h1>{{ local.search['SEARCH'] }}</h1>
             <form action="{{ url_for('search') }}" method="GET">
-                <input type="search" name="q" placeholder="Hledat...">
+                <input type="search" name="q" placeholder="{{ local.search['HINT_SEARCH'] }}">
             </form>
         </div> <!-- /widget -->
 
         {% if DEF_user and DEF_user.level > 0 %}
             <div class="widget widget__admin">
                 {% if DEF_user.level > 1 %}
-                    <h1>Administrátor</h1>
+                    <h1>{{ local.ADMIN }}</h1>
                 {% else %}
-                    <h1>Moderátor</h1>
+                    <h1>{{ local.MOD }}</h1>
                 {% endif %}
                 <ul>
-                    <li><a href="/r">Uživatelské požadavky</a></li>
+                    <li><a href="/r">{{ local.adminmenu['REQUESTS'] }}</a></li>
                     {% if DEF_user.level > 1 %}
-                        <li><a href="/admin">Statistika</a></li>
-                        <li><a href="{{ url_for('admin_category', page=1) }}">Kategorie</a></li>
-                        <li><a href="{{ url_for('admin_user', page=1) }}">Uživatelé</a></li>
-                        <li><a href="{{ url_for('admin_image', page=1) }}">Obázky</a></li>
-                        <li><a href="{{ url_for('admin_comment', page=1) }}">Komentáře</a></li>
+                        <li><a href="/admin">{{ local.adminmenu['STATISTICS'] }}</a></li>
+                        <li><a href="{{ url_for('admin_category', page=1) }}">{{ local.adminmenu['CATEGORIES'] }}</a></li>
+                        <li><a href="{{ url_for('admin_user', page=1) }}">{{ local.adminmenu['USERS'] }}</a></li>
+                        <li><a href="{{ url_for('admin_image', page=1) }}">{{ local.adminmenu['IMAGES'] }}</a></li>
+                        <li><a href="{{ url_for('admin_comment', page=1) }}">{{ local.adminmenu['COMMENTS'] }}</a></li>
                     {% endif %}
                 </ul>
             </div> <!-- /widget -->
@@ -83,7 +83,7 @@
 
         {% if actionbar %}
             <div class="widget widget__action">
-                <h1>Actionbar</h1>
+                <h1>{{ local.ACTIONS }}</h1>
                 <ul>
                     {% block actionbar %}{% endblock %}
                 </ul>

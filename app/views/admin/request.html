@@ -1,0 +1,17 @@
+{% from "_general.html" import header %}
+{% extends "layout.html" %}
+
+{% if request.state == 0 %}
+    {% set actionbar=True %}
+    {% block actionbar %}
+        <a href="/r/{{ request.id }}/accept">Accept</a><br>
+        <a href="/r/{{ request.id }}/decline">Decline</a><br>
+    {% endblock %}
+{% endif %}
+
+{% block body %}
+    {{ header(local.REQUEST) }}
+    {{ request.name }}
+    {{ request.text }}
+    {{ request.type }}
+{% endblock %}

@@ -8,6 +8,16 @@ MAIL=u'E-mail'
 UNAME=u'Přezdívka'
 PHONE=u'Telefonní číslo'
 CONTENT=u'Obsah'
+ACCOUNT=u'Účet'
+LOGOUT=u'Odhlásit se'
+LOGIN=u'Přihlásit se'
+REGISTER=u'Registrace'
+ALL=u'Vše'
+ADMIN=u'Administrátor'
+MOD=u'Moderátor'
+ACTIONS=u'Akce'
+REQUESTS=u'Požadavky'
+REQUEST=u'Požadavek'
 
 category = {
     'NEW': u'Nová kategorie',
@@ -31,4 +41,18 @@ user = {
 
 comment = {
     'INVALID_TEXT': u'Délka obsahu musí být mezi %(min)d a %(max)d znaky!',
+}
+
+search = {
+    'HINT_SEARCH': u'Hledat...',
+    'SEARCH': u'Vyhledávání',
+}
+
+adminmenu = {
+    'REQUESTS': u'Požadavky',
+    'STATISTICS': u'Statistika',
+    'CATEGORIES': u'Kategorie',
+    'USERS': u'Uživatelé',
+    'IMAGES': u'Obrázky',
+    'COMMENTS': u'Komentáře',
 }
