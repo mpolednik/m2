@@ -9,6 +9,12 @@ UNAME=u'Přezdívka'
 PHONE=u'Telefonní číslo'
 CONTENT=u'Obsah'
 
+category = {
+    'NEW': u'Nová kategorie',
+    'INVALID_NAME': u'Délka názvu kategorie musí být mezi %(min)d a %(max)d znaky!',
+    'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',
+}
+
 category_submit = {
     'INVALID_NAME': u'Délka názvu obrázku musí být mezi %(min)d a %(max)d znaky!',
     'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',

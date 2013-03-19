@@ -6,6 +6,7 @@
                     <img src="/static/img/thumb/{{ image.filename }}">
                 </a>
             </figure>
+            {{ image.name }}
             <a href="{{ url_for('user', id=image.owner.id) }}">{{ image.owner.name }}</a>
             {% if DEF_user %}
                 {% if category %}

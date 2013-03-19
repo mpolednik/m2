@@ -1,0 +1,37 @@
+{% from "_images.html" import list_images %}
+{% extends "layout.html" %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Název</th>
+            <th>Moderátoři</th>
+            <th>Smazat</th>
+        </tr>
+    {% for category in categories.items %}
+        <tr>
+            <td>
+                {{ category.name }}
+            </td>
+            <td>
+                {% for moderator in category.moderators %}
+                    {% if loop.last %}
+                        {{ moderator.name }}
+                    {% else %}
+                        {{ moderator.name }}, 
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                <a href="{{ url_for('admin_category_delete', id=category.id, page=categories.page) }}">Smazat</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% if categories.has_next %}
+        <a href="{{ url_for('admin_category', page=images.next_num) }}">Další</a>
+    {% endif %}
+    {% if categories.has_prev %}
+        <a href="{{ url_for('admin_category', page=images.prev_num) }}">Předchozí</a>
+    {% endif %}
+{% endblock %}

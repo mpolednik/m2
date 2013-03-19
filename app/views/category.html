@@ -4,8 +4,8 @@
 {% if DEF_user %}
     {% set actionbar=True %}
     {% block actionbar %}
-            {% if category and DEF_user %}
-                <li><a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br></li>
+        {% if category and DEF_user %}
+            <li><a href="{{ url_for('category_submit', name=category.name) }}">New image</a><br></li>
             {% if DEF_user in category.moderators %}
                 <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">Vzdat se moderatorstvi</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">Edit</a><br></li>
@@ -16,10 +16,12 @@
                 <li><a href="{{ url_for('request_submit', name=category.name) }}">Request moderator</a><br></li>
             {% endif %}
             {% for moderator in category.moderators %}
-            <li>{{ moderator.name }}</li>
+                <li>{{ moderator.name }}</li>
             {% endfor %}
-        {% elif DEF_user %}
+        {% elif DEF_user and DEF_user.level < 2 %}
             <li><a href="{{ url_for('request_submit') }}">Request new category</a><br></li>
+        {% else %}
+            <li><a href="{{ url_for('category_create') }}">Vytvořit novou kategorií</a><br></li>
         {% endif %}
     {% endblock %}
 {% endif %}

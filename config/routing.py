@@ -3,8 +3,11 @@ from app.helpers.rendering import render
 
 views.add('/', 'app.controllers.category.category_all')
 views.add('/<int:page>', 'app.controllers.category.category_all')
+views.add('/create', 'app.controllers.category.category_create', methods=('GET', 'POST'))
 views.add('/c/<name>', 'app.controllers.category.category_one')
 views.add('/c/<name>/<int:page>', 'app.controllers.category.category_one')
+views.add('/search', 'app.controllers.search.search')
+views.add('/search/<int:ipage>/<int:upage>', 'app.controllers.search.search')
 
 views.add('/c/<name>/submit', 'app.controllers.category.category_submit', methods=('GET', 'POST'))
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
@@ -36,6 +39,14 @@ views.add('/login', 'app.controllers.user.login', methods=('GET', 'POST'))
 views.add('/register', 'app.controllers.user.register', methods=('GET', 'POST'))
 views.add('/account', 'app.controllers.user.account', methods=('GET', 'POST'))
 views.add('/logout', 'app.controllers.user.logout')
+
+views.add('/admin', 'app.controllers.admin.statistics.statistics')
+views.add('/admin/categories/<int:page>', 'app.controllers.admin.category.admin_category')
+views.add('/admin/categories/<int:page>/<int:id>/delete', 'app.controllers.admin.category.admin_category_delete')
+views.add('/admin/users/<int:page>', 'app.controllers.admin.user.admin_user')
+views.add('/admin/images/<int:page>', 'app.controllers.admin.image.admin_image')
+views.add('/admin/comments/<int:page>', 'app.controllers.admin.comment.admin_comment')
+views.add('/admin/comments/<int:page>/<int:id>/delete', 'app.controllers.admin.comment.admin_comment_delete')
 
 @app.errorhandler(404)
 def page_error(error):

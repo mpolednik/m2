@@ -1,13 +1,10 @@
 {% from "_formhelpers.html" import render_field %}
 {% extends "layout.html" %}
-
-{% set actionbar=None %}
-{% set widget=None %}
-
 {% block body %}
-    <form action="" method="POST">
+    <form method="POST" action="">
+        {{ render_field(form.name) }}
         {{ render_field(form.text) }}
         {{ form.hidden_tag() }}
-        <input type="submit" value="editovat">
+        <input type="submit" value="Vytvořit">
     </form>
 {% endblock %}

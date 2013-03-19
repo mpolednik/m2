@@ -577,6 +577,10 @@ h6, .zeta {
     background: #cdcdff;
 }
 
+.widget__search form {
+    margin: 0px;
+}
+
 
 /* -------------------------------------------------------------------------- *
     ### Modules
@@ -634,6 +638,17 @@ input[type="text"] {
     border: 1px solid #ccc;
     padding: 6px;
     width: 400px;
+
+    /* 1. Removes rounded corners on iOS*/
+    border-radius: 0;
+    /* 2. Removes inner shadow on iOS*/
+    -webkit-appearance: none; 
+}
+
+input[type="search"] {
+    border: 1px solid #ccc;
+    padding: 6px;
+    width: 240px;
 
     /* 1. Removes rounded corners on iOS*/
     border-radius: 0;

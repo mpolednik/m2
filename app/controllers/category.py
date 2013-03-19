@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db, app
@@ -14,6 +15,10 @@ from app.models.user import User
 
 from translation import local
 
+
+class CreateForm(Form):
+    name = fields.TextField(local.NAME, [validators.Length(min=2, max=30, message=local.category['INVALID_NAME'])])
+    text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category['INVALID_TEXT'])])
 
 class SubmitForm(Form):
     name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
@@ -110,3 +115,18 @@ def category_become_mod(name):
     category.moderators.append(user)
     db.session.commit()
     return redirect(url_for('category_one', name=name))
+
+@security.req_level(2)
+def category_create():
+    form = CreateForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        category = Category(form.name.data, form.text.data)
+        db.session.add(category)
+        db.session.commit()
+        flash(u'Kategorie vytvořena', 'success')
+
+        return redirect(url_for('category_all'))
+
+    flash_errors(form)
+    return render('category_create.html', title=local.category['NEW'], form=form)

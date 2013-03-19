@@ -48,12 +48,26 @@
 <div class="container">
 <div class="row cf">
     <aside class="sidebar sidebar--fixed">
+        <div class="widget widget__search">
+            <h1>Search</h1>
+            <form action="{{ url_for('search') }}", method="GET">
+                <input type="search" name="q" placeholder="Hledat...">
+            </form>
+        </div> <!-- /widget -->
+
         {% if DEF_user and DEF_user.level > 0 %}
             <div class="widget widget__admin">
-                <h1>Admin</h1>
                 <ul>
+                    <h1>Moderátor</h1>
                     <li><a href="/r">Uživatelské požadavky</a></li>
-                    <li><a href="/admin">Administrace</a></li>
+                    {% if DEF_user.level > 1 %}
+                        <h1>Administrátor</h1>
+                        <li><a href="/admin">Statistika</a></li>
+                        <li><a href="{{ url_for('admin_category', page=1) }}">Kategorie</a></li>
+                        <li><a href="{{ url_for('admin_user', page=1) }}">Uživatelé</a></li>
+                        <li><a href="{{ url_for('admin_image', page=1) }}">Obázky</a></li>
+                        <li><a href="{{ url_for('admin_comment', page=1) }}">Komentáře</a></li>
+                    {% endif %}
                 </ul>
             </div> <!-- /widget -->
         {% endif %}

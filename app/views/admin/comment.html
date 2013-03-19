@@ -1,0 +1,31 @@
+{% from "_images.html" import list_images %}
+{% extends "layout.html" %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Text</th>
+            <th>Vlastník</th>
+            <th>Smazat</th>
+        </tr>
+    {% for comment in comments.items %}
+        <tr>
+            <td>
+                {{ comment.text }}
+            </td>
+            <td>
+                {{ comment.owner.name }}
+            </td>
+            <td>
+                <a href="{{ url_for('admin_comment_delete', id=comment.id, page=comments.page) }}">Smazat</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% if comments.has_next %}
+        <a href="{{ url_for('admin_comment', page=comments.next_num) }}">Další</a>
+    {% endif %}
+    {% if comments.has_prev %}
+        <a href="{{ url_for('admin_comment', page=comments.prev_num) }}">Předchozí</a>
+    {% endif %}
+{% endblock %}

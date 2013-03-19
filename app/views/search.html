@@ -1,0 +1,73 @@
+{% from "_images.html" import list_images %}
+{% extends "layout.html" %}
+
+{% block body %}
+    <header class="unit gallery__header">
+        <h1 class="gallery__header__h">
+            Kategorie
+        </h1>
+    </header> <!-- /gallery__header -->
+    {% for category in categories.items %}
+        <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+        {% if not loop.last %}
+            , 
+        {% endif %}
+    {% endfor %}
+    <header class="unit gallery__header">
+        <h1 class="gallery__header__h">
+            Uživatelé
+        </h1>
+    </header> <!-- /gallery__header -->
+    <table>
+    {% for user in users.items %}
+        <tr>
+            <td>
+                <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
+            </td>
+            <td>
+                Obrázků:&nbsp;
+                {{ user.images|count }}
+            </td>
+            <td>
+                Komentářů:&nbsp;
+                {{ user.comments|count }}
+            </td>
+            <td>
+                Moderuje:&nbsp
+                {% for category in user.categories %}
+                    <a href=" {{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+                    {% if not loop.last %}
+                        , 
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                Hodnocení&nbsp;obrázků:&nbsp;
+                {{ user.rating_image }}
+            </td>
+            <td>
+                Hodnocení&nbsp;komentářů:&nbsp;
+                {{ user.rating_comment }}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% if users.has_next %}
+        <a href="{{ url_for('search', q=q, ipage=images.page, upage=users.next_num) }}">Next</a>
+    {% endif %}
+    {% if users.has_prev %}
+        <a href="{{ url_for('search', q=q, ipage=images.page, upage=users.prev_num) }}">Prev</a>
+    {% endif %}
+    <header class="unit gallery__header">
+        <h1 class="gallery__header__h">
+            Obrázky
+        </h1>
+    </header> <!-- /gallery__header -->
+    {{ list_images(images, DEF_user, category) }}
+    {% if images.has_next %}
+        <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
+    {% endif %}
+    {% if images.has_prev %}
+        <a href="{{ url_for('search', q=q, ipage=images.prev_num, upage=users.page) }}">Prev</a>
+    {% endif %}
+{% endblock %}
