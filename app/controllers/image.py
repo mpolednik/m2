@@ -14,7 +14,7 @@ from app.models.user import User
 from app.models.comment import Comment, construct_comment_tree
 from app.controllers.comment import CommentForm
 
-exif_template = ('FNumber', 'Copyright', 'Make', 'ISOSpeedRatings', 'FocalLength', 'Model', 'ExposureTime', 'Author')
+from translation import local
 
 
 class EditForm(Form):
@@ -45,7 +45,7 @@ def image_edit(id):
         image.text = form.text.data
 
         db.session.commit()
-        flash('Image dited', 'success')
+        flash(local.image['EDITTED'], 'success')
 
         return redirect(url_for('image', id=id))
 
@@ -66,7 +66,7 @@ def image_delete(id, ref=None):
         image.delete_files()
 
     db.session.commit()
-    flash('Image deleted', 'success')
+    flash(local.image['DELETED'], 'success')
 
     if ref:
         return redirect(ref)
@@ -87,7 +87,7 @@ def image_vote(id, name=None, page=1):
     image.vote(rating)
 
     db.session.commit()
-    flash('Obrazek hodnocen', 'success')
+    flash(local.image['VOTED'], 'success')
 
     if name:
         return redirect(url_for('category_one', name=name, page=page))

@@ -1,6 +1,6 @@
 # coding=utf-8
 from flask import render_template, session
-from app.helpers.middleware import db
+from app.helpers.middleware import db, cache
 
 from app.models.category import Category
 from app.models.user import User
@@ -8,7 +8,11 @@ from app.models.user import User
 from translation import local
 
 def render(template, **context):
-    categories = db.session.query(Category).all()
+    categories = cache.get('categories')
+    if not categories:
+        categories = db.session.query(Category).all()
+        cache.set('categories', categories)
+
     try:
         user = db.session.query(User).get(session['user'])
     except:

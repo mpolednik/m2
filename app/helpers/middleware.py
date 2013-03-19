@@ -5,6 +5,7 @@ from flask.ext.bcrypt import Bcrypt
 from flask.ext.kvsession import KVSessionExtension
 from simplekv.db.sql import SQLAlchemyStore
 from flask.ext.lazyviews import LazyViews
+from werkzeug.contrib.cache import MemcachedCache
 
 from config.database import dbconf
 
@@ -17,13 +18,16 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(dbconf['user'], dbconf['pass'], dbconf['host'], dbconf['name'])
 db = SQLAlchemy(app)
 
-# KVSession
-app.config['SECRET_KEY'] = '1234'
-store = SQLAlchemyStore(db.engine, db.metadata, 'session')
-KVSessionExtension(store, app)
-
 # Bcrypt
 bcrypt = Bcrypt(app)
 
 # Lazyviews
 views = LazyViews(app)
+
+# Memcached
+cache = MemcachedCache(['127.0.0.1:11211'])
+
+# KVSession
+app.config['SECRET_KEY'] = '1234'
+store = SQLAlchemyStore(db.engine, db.metadata, 'session')
+KVSessionExtension(store, app)

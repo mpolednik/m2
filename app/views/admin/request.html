@@ -4,13 +4,13 @@
 {% if request.state == 0 %}
     {% set actionbar=True %}
     {% block actionbar %}
-        <a href="/r/{{ request.id }}/accept">Accept</a><br>
-        <a href="/r/{{ request.id }}/decline">Decline</a><br>
+        <a href="{{ url_for('request_accept', id=request.id) }}">{{ local.actions['ACCEPT'] }}</a><br>
+        <a href="{{ url_for('request_decline', id=request.id) }}">{{ local.actions['DECLINE'] }}</a><br>
     {% endblock %}
 {% endif %}
 
 {% block body %}
-    {{ header(local.REQUEST) }}
+    {{ header(local.admin['REQUEST']) }}
     {{ request.name }}
     {{ request.text }}
     {{ request.type }}

@@ -59,6 +59,13 @@ class User(db.Model):
                 return True
         return False
 
+    def voted(self, obj):
+        try:
+            rate = obj.RatingClass.query.filter_by(id_user=self.id, id_target=obj.id).one()
+            return rate.value
+        except:
+            return 0
+
     @staticmethod
     def login(mail, password):
         candidate = db.session.query(User).filter_by(mail=mail).one()

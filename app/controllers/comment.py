@@ -43,13 +43,13 @@ def comment_submit(id, cid = None):
         comment = Comment(session['user'], image, form.text.data, cid)
 
         if user.already_commented(image, cid): 
-            flash('Komentar neulozen', 'error')
+            flash(local.comment['ALREADY_COMMENTED'], 'error')
         else:
             db.session.add(comment)
             db.session.flush()
             comment.vote(1)
             db.session.commit()
-            flash('Komentar ulozen', 'success')
+            flash(local.comment['POSTED'], 'success')
 
         # Return user to image or comment controllers depending on ref
         if cid is None:
@@ -81,7 +81,7 @@ def comment_edit(id, cid):
         comment.text = form.text.data
 
         db.session.commit()
-        flash('Komentar editovan', 'success')
+        flash(local.comment['EDITTED'], 'success')
 
         return redirect(url_for('image', id=id))
 
@@ -97,7 +97,7 @@ def comment_delete(cid, id=None, ref=None):
     comment.state = 0
 
     db.session.commit()
-    flash('Komentar smazan', 'success')
+    flash(local.comment['DELETED'], 'success')
 
     if ref:
         return redirect(ref)
@@ -118,6 +118,6 @@ def comment_vote(id, cid):
     comment.vote(rating)
 
     db.session.commit()
-    flash('Komentar hodnocen', 'success')
+    flash(local.comment['VOTED'], 'success')
 
     return redirect(url_for('image', id=id))

@@ -1,10 +1,8 @@
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
+
 {% block body %}
-    <header class="unit gallery__header">
-        <h1 class="gallery__header__h">
-            {{ local.REQUESTS }}
-        </h1>
-    </header> <!-- /gallery__header -->
+    {{ header(local.adminmenu['REQUESTS']) }}
     <table>
     {% for request in requests %}
         {% if request.state == 1 %}

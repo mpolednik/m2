@@ -596,7 +596,7 @@ h6, .zeta {
 
 .gallery__header__h {
     text-align: center;
-    margin: 0 0 0 315px;
+    margin: 0 0 0 285px;
 }
 
 .gallery__cell {
@@ -746,4 +746,12 @@ textarea {
 
 .declined {
     background: #ffcdcd;
+}
+
+.upvoted {
+    color: orange;
+}
+
+.downvoted {
+    color: lightblue;
 }

@@ -43,6 +43,7 @@ class RegistrationForm(LoginForm):
 
 class EditForm(RegistrationForm):
     phone = fields.TextField(local.PHONE)
+    password = fields.PasswordField(local.PASS, [validators.Optional(), validators.Length(min=4, message=local.user['INVALID_PASS'])])
 
 
 def user(id, page=1):
@@ -66,9 +67,9 @@ def account():
 
         try:
             db.session.commit()
-            flash('User editovan', 'success')
+            flash(local.user['EDITTED'], 'success')
         except sqlalchemy.exc.IntegrityError:
-            flash('User needitovan', 'error')
+            flash(local.user['NOT_EDITTED'], 'error')
 
     flash_errors(form)
     return render('account.html', form=form)
@@ -79,12 +80,13 @@ def login():
     form = LoginForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        User.login(form.mail.data, form.password.data)
+        try:
+            User.login(form.mail.data, form.password.data)
+            flash(local.user['LOGIN'], 'success')
+            return redirect(url_for('category_all'))
+        except:
+            flash(local.user['NOT_LOGIN'], 'error')
 
-        flash('User nalogovan', 'success')
-        return redirect(url_for('category_all'))
-
-    flash_errors(form)
     return render('login.html', form=form)
 
 
@@ -99,11 +101,11 @@ def register():
         try:
             db.session.commit()
             User.login(form.mail.data, form.password.data)
-            flash('User registrovan a nalogovan', 'success')
+            flash(local.user['REGISTERED'], 'success')
 
             return redirect(url_for('category_all'))
         except:
-            flash('neregistrovan', 'error')
+            flash(local.user['NOT_REGISTERED'], 'error')
 
     flash_errors(form)
     return render('register.html', form=form)
@@ -113,5 +115,5 @@ def register():
 def logout():
     User.logout()
 
-    flash('User odlogovan', 'success')
+    flash(local.user['LOGOUT'], 'success')
     return redirect(url_for('category_all'))

@@ -10,13 +10,29 @@
             <a href="{{ url_for('user', id=image.owner.id) }}">{{ image.owner.name }}</a>
             {% if voting and DEF_user %}
                 {% if category %}
-                    <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">+</a>
+                    {% if DEF_user.voted(image) == 1 %}
+                        +
+                    {% else %}
+                        <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">+</a>
+                    {% endif %}
                     {{ image.rating }}
-                    <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">-</a><br>
+                    {% if DEF_user.voted(image) == -1 %}
+                        <span class="downvoted">-</span>
+                    {% else %}
+                        <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">-</a><br>
+                    {% endif %}
                 {% else %}
-                    <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">+</a>
+                    {% if DEF_user.voted(image) == 1 %}
+                        <span class="downvoted">-</span>
+                    {% else %}
+                        <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">+</a>
+                    {% endif %}
                     {{ image.rating }}
-                    <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">-</a>
+                    {% if DEF_user.voted(image) == -1 %}
+                        <span class="downvoted">-</span>
+                    {% else %}
+                        <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">-</a>
+                    {% endif %}
                 {% endif %}
             {% endif %}
             {% if not category %}

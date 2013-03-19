@@ -1,6 +1,6 @@
 from flask import redirect, url_for
 
-from app.helpers.middleware import db
+from app.helpers.middleware import db, cache
 
 from app.helpers.rendering import render
 
@@ -15,5 +15,6 @@ def admin_category_delete(id, page):
     category = db.session.query(Category).get(id)
     db.session.delete(category)
     db.session.commit()
+    cache.delete('categories')
 
     return redirect(url_for('admin_category', page=page))

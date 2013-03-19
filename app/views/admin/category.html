@@ -1,7 +1,9 @@
 {% from "_images.html" import list_images %}
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
 
 {% block body %}
+    {{ header(local.adminmenu['CATEGORIES']) }}
     <table>
         <tr>
             <th>Název</th>

@@ -1,5 +1,8 @@
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
+
 {% block body %}
+    {{ header(local.adminmenu['STATISTICS']) }}
     <table>
         {% for k, v in stats.items() %}
         <tr>

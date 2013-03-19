@@ -1,7 +1,7 @@
 # coding=utf-8
 from flask import redirect, url_for, request, session, flash
 
-from app.helpers.middleware import db, app
+from app.helpers.middleware import db, app, cache
 from app.helpers.rendering import render
 from app.helpers import security
 from app.helpers.forms import flash_errors
@@ -20,22 +20,21 @@ class CreateForm(Form):
     name = fields.TextField(local.NAME, [validators.Length(min=2, max=30, message=local.category['INVALID_NAME'])])
     text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category['INVALID_TEXT'])])
 
-class SubmitForm(Form):
-    name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
-    text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category_submit['INVALID_TEXT'])])
-    link = fields.TextAreaField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
-    image = fields.FileField(local.IMAGE, [validators.Optional()])
-
 
 class EditForm(Form):
     text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.category_submit['INVALID_TEXT'])])
+
+
+class SubmitForm(EditForm):
+    name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
+    link = fields.TextAreaField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
+    image = fields.FileField(local.IMAGE, [validators.Optional()])
 
 
 def category_all(page=1):
     images = Image.query.order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
 
     return render('category.html', title='test', images=images)
-
 
 def category_one(name, page=1):
     category = Category.query.filter_by(name=name).one()
@@ -67,7 +66,7 @@ def category_submit(name):
             image.save()
         else:
             db.session.rollback()
-            flash('Spatny format obrazku', 'error')
+            flash(local.category_submit['INVALID_IMAGE'], 'error')
             return redirect(url_for('category_submit', name=name))
 
         image.save_thumbnail()
@@ -75,7 +74,7 @@ def category_submit(name):
         # Self upvote 
         image.vote(1)
         db.session.commit()
-        flash('Obrazek postnut', 'success')
+        flash(local.category_submit['IMAGE_POSTED'], 'success')
 
         return redirect(url_for('category_one', name=name))
 
@@ -93,7 +92,7 @@ def category_edit(name):
         category.text = form.text.data
 
         db.session.commit()
-        flash('Kategorie editovana', 'success')
+        flash(local.category['EDITTED'], 'success')
 
         return redirect(url_for('category_one', name=name))
 
@@ -124,7 +123,8 @@ def category_create():
         category = Category(form.name.data, form.text.data)
         db.session.add(category)
         db.session.commit()
-        flash(u'Kategorie vytvořena', 'success')
+        cache.delete('categories')
+        flash(local.category['CREATED'], 'success')
 
         return redirect(url_for('category_all'))
 
