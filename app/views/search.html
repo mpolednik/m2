@@ -7,11 +7,11 @@
             Kategorie
         </h1>
     </header> <!-- /gallery__header -->
-    {% for category in categories.items %}
+    {% for category in categories %}
+        <a href="{{ url_for('category_one', name=category.name) }}" class="exact">{{ category.name }}</a>
+    {% endfor %}
+    {% for category in categories_related %}
         <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
-        {% if not loop.last %}
-            , 
-        {% endif %}
     {% endfor %}
     <header class="unit gallery__header">
         <h1 class="gallery__header__h">
@@ -33,7 +33,7 @@
                 {{ user.comments|count }}
             </td>
             <td>
-                Moderuje:&nbsp
+                Moderuje:&nbsp;
                 {% for category in user.categories %}
                     <a href=" {{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
                     {% if not loop.last %}
@@ -63,7 +63,7 @@
             Obrázky
         </h1>
     </header> <!-- /gallery__header -->
-    {{ list_images(images, DEF_user, category) }}
+    {{ list_images(images, DEF_user, category, False) }}
     {% if images.has_next %}
         <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
     {% endif %}

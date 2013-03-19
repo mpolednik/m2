@@ -50,18 +50,21 @@
     <aside class="sidebar sidebar--fixed">
         <div class="widget widget__search">
             <h1>Search</h1>
-            <form action="{{ url_for('search') }}", method="GET">
+            <form action="{{ url_for('search') }}" method="GET">
                 <input type="search" name="q" placeholder="Hledat...">
             </form>
         </div> <!-- /widget -->
 
         {% if DEF_user and DEF_user.level > 0 %}
             <div class="widget widget__admin">
-                <ul>
+                {% if DEF_user.level > 1 %}
+                    <h1>Administrátor</h1>
+                {% else %}
                     <h1>Moderátor</h1>
+                {% endif %}
+                <ul>
                     <li><a href="/r">Uživatelské požadavky</a></li>
                     {% if DEF_user.level > 1 %}
-                        <h1>Administrátor</h1>
                         <li><a href="/admin">Statistika</a></li>
                         <li><a href="{{ url_for('admin_category', page=1) }}">Kategorie</a></li>
                         <li><a href="{{ url_for('admin_user', page=1) }}">Uživatelé</a></li>
@@ -102,10 +105,10 @@
         </ul>
     {% endif %}
 {% endwith %}
-</body>
 
 <!-- Scripts -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/static/js/generic.js"></script>
 
+</body>
 </html>

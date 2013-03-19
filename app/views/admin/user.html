@@ -7,21 +7,21 @@
             <td>Název</td>
             <td>Smazat</td>
         </th>
-    {% for category in categories.items %}
+    {% for user in users.items %}
         <tr>
             <td>
-                {{ category.name }}
+                {{ user.name }}
             </td>
             <td>
-                <a href="{{ url_for('admin_category_delete', id=category.id, page=categories.page) }}">Smazat</a>
+                <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>
             </td>
         </tr>
-        {% if categories.has_next %}
-            <a href="{{ url_for('admin_category', page=images.next_num) }}">Další</a>
-        {% endif %}
-        {% if categories.has_prev %}
-            <a href="{{ url_for('admin_category', page=images.prev_num) }}">Předchozí</a>
-        {% endif %}
     {% endfor %}
     </table>
+    {% if users.has_next %}
+        <a href="{{ url_for('admin_user', page=users.next_num) }}">Další</a>
+    {% endif %}
+    {% if users.has_prev %}
+        <a href="{{ url_for('admin_user', page=users.prev_num) }}">Předchozí</a>
+    {% endif %}
 {% endblock %}

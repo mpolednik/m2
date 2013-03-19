@@ -6,7 +6,12 @@ from app.helpers.rendering import render
 
 from app.models.image import Image
 
-def admin_image(page=1):
-    categories = Image.query.paginate(page, 20)
+from app.controllers.image import image_delete
 
-    return render('admin/category.html', categories=categories)
+def admin_image(page=1):
+    images = Image.query.paginate(page, 20)
+
+    return render('admin/image.html', images=images)
+
+def admin_image_delete(id, page):
+    return image_delete(id=id, ref=url_for('admin_image', page=page))

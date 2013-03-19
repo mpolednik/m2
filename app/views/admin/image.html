@@ -7,20 +7,20 @@
             <td>Název</td>
             <td>Smazat</td>
         </th>
-    {% for category in categories.items %}
+    {% for image in images.items %}
         <tr>
             <td>
-                {{ category.name }}
+                {{ image.name }}
             </td>
             <td>
-                <a href="{{ url_for('admin_category_delete', id=category.id, page=categories.page) }}">Smazat</a>
+                <a href="{{ url_for('admin_image_delete', id=image.id, page=images.page) }}">Smazat</a>
             </td>
         </tr>
-        {% if categories.has_next %}
-            <a href="{{ url_for('admin_category', page=images.next_num) }}">Další</a>
+        {% if images.has_next %}
+            <a href="{{ url_for('admin_image', page=images.next_num) }}">Další</a>
         {% endif %}
-        {% if categories.has_prev %}
-            <a href="{{ url_for('admin_category', page=images.prev_num) }}">Předchozí</a>
+        {% if images.has_prev %}
+            <a href="{{ url_for('admin_image', page=images.prev_num) }}">Předchozí</a>
         {% endif %}
     {% endfor %}
     </table>

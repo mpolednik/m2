@@ -54,7 +54,7 @@ def image_edit(id):
 
 
 @security.req_owner(Image)
-def image_delete(id):
+def image_delete(id, ref=None):
     image = db.session.query(Image).filter_by(id=id).one()
     category = image.category.name
 
@@ -68,7 +68,10 @@ def image_delete(id):
     db.session.commit()
     flash('Image deleted', 'success')
 
-    return redirect(url_for('category_one', name=category))
+    if ref:
+        return redirect(ref)
+    else:
+        return redirect(url_for('category_one', name=category))
 
 
 @security.req_login

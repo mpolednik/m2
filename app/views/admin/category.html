@@ -29,9 +29,9 @@
     {% endfor %}
     </table>
     {% if categories.has_next %}
-        <a href="{{ url_for('admin_category', page=images.next_num) }}">Další</a>
+        <a href="{{ url_for('admin_category', page=categories.next_num) }}">Další</a>
     {% endif %}
     {% if categories.has_prev %}
-        <a href="{{ url_for('admin_category', page=images.prev_num) }}">Předchozí</a>
+        <a href="{{ url_for('admin_category', page=categories.prev_num) }}">Předchozí</a>
     {% endif %}
 {% endblock %}

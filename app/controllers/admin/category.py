@@ -15,4 +15,5 @@ def admin_category_delete(id, page):
     category = db.session.query(Category).get(id)
     db.session.delete(category)
     db.session.commit()
+
     return redirect(url_for('admin_category', page=page))

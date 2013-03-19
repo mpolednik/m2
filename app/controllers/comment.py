@@ -92,14 +92,17 @@ def comment_edit(id, cid):
 
 
 @security.req_owner(Comment)
-def comment_delete(id, cid):
+def comment_delete(cid, id=None, ref=None):
     comment = db.session.query(Comment).filter_by(id=cid).one()
     comment.state = 0
 
     db.session.commit()
     flash('Komentar smazan', 'success')
 
-    return redirect(url_for('image', id=id))
+    if ref:
+        return redirect(ref)
+    else:
+        return redirect(url_for('image', id=id))
 
 
 @security.req_login

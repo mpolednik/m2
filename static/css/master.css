@@ -734,3 +734,8 @@ textarea {
 .error {
     background-color: red;
 }
+
+.exact {
+    margin: 0 5px 0 5px;
+    font-size: 2rem;
+}

@@ -9,8 +9,10 @@ from app.models.category import Category
 
 def search(upage=1, ipage=1):
     q = request.args.get('q')
-    categories = Category.query.filter(Category.name.like('%{}%'.format(q))).paginate(upage, 20)
+    categories = Category.query.filter(Category.name.like('%{}%'.format(q))).all()
+    categories_related = Category.query.filter(Category.text.like('%{}%'.format(q))).all()
     users = User.query.filter(User.name.like('%{}%'.format(q))).paginate(upage, 20)
-    images = Image.query.filter(Image.name.like('%{}%'.format(q))).paginate(ipage, 20)
+    images = Image.query.filter(db.or_(Image.name.like('%{}%'.format(q)), 
+                                       Image.text.like('%{}%'.format(q)))).paginate(ipage, 20)
 
-    return render('search.html', q=q, categories=categories, users=users, images=images)
+    return render('search.html', q=q, categories=categories, categories_related=categories_related, users=users, images=images)

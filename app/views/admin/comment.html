@@ -6,6 +6,7 @@
         <tr>
             <th>Text</th>
             <th>Vlastník</th>
+            <th>Stav</th>
             <th>Smazat</th>
         </tr>
     {% for comment in comments.items %}
@@ -17,7 +18,12 @@
                 {{ comment.owner.name }}
             </td>
             <td>
-                <a href="{{ url_for('admin_comment_delete', id=comment.id, page=comments.page) }}">Smazat</a>
+                {{ comment.state }}
+            </td>
+            <td>
+                {% if comment.state == 1 %}
+                    <a href="{{ url_for('admin_comment_delete', id=comment.id, page=comments.page) }}">Smazat</a>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}
