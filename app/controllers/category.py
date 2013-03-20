@@ -32,13 +32,13 @@ class SubmitForm(EditForm):
 
 
 def category_all(page=1):
-    images = Image.query.order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
+    images = Image.query.order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 100)
 
     return render('category.html', title='test', images=images)
 
 def category_one(name, page=1):
     category = Category.query.filter_by(name=name).one()
-    images = Image.query.filter_by(id_category=category.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
+    images = Image.query.filter_by(id_category=category.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 100)
 
     return render('category.html', title='test', category=category, images=images)
 
