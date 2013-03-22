@@ -33,16 +33,16 @@
         <nav class="top-header__nav">
             <ul class="nav nav--inline">
                 {% if DEF_user %}
-                    <li><a href="{{ url_for('account') }}">{{ local.ACCOUNT }}</a></li>
-                    <li><a href="{{ url_for('logout') }}">{{ local.LOGOUT }}</a></li>
+                    <li><a href="{{ url_for('account') }}">{{ local.user['ACCOUNT'] }}</a></li>
+                    <li><a href="{{ url_for('logout') }}">{{ local.user['LOGOUT'] }}</a></li>
                     {% if DEF_user.level > 1 and 'admin' not in session %}
-                        <li><a href="{{ url_for('superlogin') }}">{{ local.SUPERLOGIN }}</a></li>
+                        <li><a href="{{ url_for('superlogin') }}">{{ local.admin['SUPERLOGIN'] }}</a></li>
                     {% elif 'admin' in session %}
-                        <li><a href="{{ url_for('superlogout') }}">{{ local.SUPERLOGOUT }}</a></li>
+                        <li><a href="{{ url_for('superlogout') }}">{{ local.admin['SUPERLOGOUT'] }}</a></li>
                     {% endif %}
                 {% else %}
-                    <li><a href="{{ url_for('login') }}">{{ local.LOGIN }}</a></li>
-                    <li><a href="{{ url_for('register') }}">{{ local.REGISTER }}</a></li>
+                    <li><a href="{{ url_for('login') }}">{{ local.user['LOGIN'] }}</a></li>
+                    <li><a href="{{ url_for('register') }}">{{ local.user['REGISTER'] }}</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -63,7 +63,7 @@
         {% if DEF_user and DEF_user.level > 0 %}
             <div class="widget widget__admin">
                 {% if DEF_user.level > 1 %}
-                    <h1>{{ local.ADMIN }}</h1>
+                    <h1>{{ local.admin['ADMIN'] }}</h1>
                 {% else %}
                     <h1>{{ local.MOD }}</h1>
                 {% endif %}

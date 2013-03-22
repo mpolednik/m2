@@ -107,7 +107,7 @@ def category_pass_mod(name):
     db.session.commit()
     return redirect(url_for('category_one', name=name))
 
-@security.req_level(2)
+@security.req_admin
 def category_become_mod(name):
     category = db.session.query(Category).filter_by(name=name).one()
     user = User.query.get(session['user'])
@@ -115,7 +115,7 @@ def category_become_mod(name):
     db.session.commit()
     return redirect(url_for('category_one', name=name))
 
-@security.req_level(2)
+@security.req_admin
 def category_create():
     form = CreateForm(request.form)
 

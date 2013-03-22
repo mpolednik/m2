@@ -8,14 +8,8 @@ MAIL=u'E-mail'
 UNAME=u'Přezdívka'
 PHONE=u'Telefonní číslo'
 CONTENT=u'Obsah'
-ACCOUNT=u'Účet'
-LOGOUT=u'Odhlásit se'
-LOGIN=u'Přihlásit se'
-SUPERLOGIN=u'Zapnout administraci'
-SUPERLOGOUT=u'Vypnout administraci'
-REGISTER=u'Registrace'
 ALL=u'Vše'
-ADMIN=u'Administrátor'
+ADMIN=u'Po aktivaci administrace získáte další práva...'
 MOD=u'Moderátor'
 ACTIONS=u'Akce'
 SEND=u'Odeslat'
@@ -47,9 +41,13 @@ user = {
     'EXISTS_NAME': u'Tato přezdívka je již zaregistrována!',
     'EDITTED': u'Uživatelské nastavení změněno.',
     'NOT_EDITTED': u'Uživatelské nastavení se nepovedlo změnit.',
-    'LOGIN': u'Přihlášen. Nepropadejte panice!',
-    'LOGOUT': u'Odhlášen. Možná.',
-    'NOT_LOGIN': u'Přihlášení se nezdařilo.',
+    'LOGGED_IN': u'Přihlášen. Nepropadejte panice!',
+    'LOGGED_OUT': u'Odhlášen. Možná.',
+    'LOGIN': u'Přihlášení',
+    'LOGOUT': u'Odhlášení',
+    'REGISTER': u'Registrace',
+    'ACCOUNT': u'Účet',
+    'NOT_LOGGED_IN': u'Přihlášení se nezdařilo.',
     'REGISTERED': u'Registrace a přihlášení v pořádku. Vítejte!',
     'NOT_REGISTERED': u'Registrace se nezdařila.',
     'EDIT': u'Editovat',
@@ -100,6 +98,9 @@ admin = {
     'NOT_LOGGED_IN': u'Přihlášení se nezdařilo.',
     'LOGIN': u'Přihlásit',
     'SMS_TEXT': u'Vas jednorazovy prihlasovaci kod je {} (platnost 2 minuty).',
+    'SUPERLOGIN': u'Zapnout administraci',
+    'SUPERLOGOUT': u'Vypnout administraci',
+    'ADMIN': u'Administrátor',
 }
 
 statistics = {

@@ -82,10 +82,10 @@ def login():
     if request.method == 'POST' and form.validate():
         try:
             User.login(form.mail.data, form.password.data)
-            flash(local.user['LOGIN'], 'success')
+            flash(local.user['LOGGED_IN'], 'success')
             return redirect(url_for('category_all'))
         except:
-            flash(local.user['NOT_LOGIN'], 'error')
+            flash(local.user['NOT_LOGGED_IN'], 'error')
 
     return render('login.html', form=form)
 
@@ -115,5 +115,5 @@ def register():
 def logout():
     User.logout()
 
-    flash(local.user['LOGOUT'], 'success')
+    flash(local.user['LOGGED_OUT'], 'success')
     return redirect(url_for('category_all'))

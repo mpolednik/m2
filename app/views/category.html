@@ -9,7 +9,7 @@
             {% if DEF_user in category.moderators %}
                 <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">{{ local.actions['PASS_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
-            {% elif DEF_user.level > 1 %}
+            {% elif 'admin' in session  %}
                 <li><a href="{{ url_for('category_become_mod', name=category.name) }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif not DEF_user.already_requested(category) %}
@@ -18,10 +18,13 @@
             {% for moderator in category.moderators %}
                 <li>{{ moderator.name }}</li>
             {% endfor %}
-        {% elif DEF_user and DEF_user.level < 2 %}
+        {% elif DEF_user and 'admin' not in session %}
             <li><a href="{{ url_for('request_submit') }}">Request new category</a><br></li>
         {% else %}
             <li><a href="{{ url_for('category_create') }}">Vytvořit novou kategorií</a><br></li>
+        {% endif %}
+        {% if DEF_user.level > 1 and 'admin' not in session %}
+            <li><a href="{{ url_for('superlogin') }}" class="note">{{ local.ADMIN }}</a></li>
         {% endif %}
     {% endblock %}
 {% endif %}

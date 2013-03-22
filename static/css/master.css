@@ -801,3 +801,8 @@ textarea {
 .downvoted {
     color: lightblue;
 }
+
+.note {
+    color: red;
+    text-decoration: underline;
+}
