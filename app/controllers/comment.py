@@ -29,7 +29,7 @@ def comment(id, cid = None):
     image = db.session.query(Image).get(id)
 
     comments = construct_comment_tree(image.comments, cid)
-    return render('comment.html', id=id, cid=cid, comments=comments, form=form)
+    return render('comment.html', id=id, cid=cid, image=image, comments=comments, form=form)
 
 
 @security.req_login

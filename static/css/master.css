@@ -704,6 +704,41 @@ textarea {
     padding: 1px;
 }
 
+/* -------------------------------------------------------------------------- *
+    ### Comments
+ * -------------------------------------------------------------------------- */
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-wrap .comment-list {
+    padding-left: 3em;
+    margin-left: 3em;
+    border-left: 1px dotted #bebebe;
+}
+
+.comment-wrap .comment-list .comment-wrap {
+    position: relative;
+}
+
+.comment-wrap .comment-list .comment-wrap::before {
+    content: '';
+    width: 1em;
+    height: 1px;
+    border-bottom: 1px dotted #bebebe;
+    position: absolute;
+    left: -2em;
+    top: 2.5em;
+}
+
+.comment-wrap .comment {
+    background: white;
+    border: 1px solid #d7d7d7;
+    padding: 1.5em 2em;
+    margin-bottom: 1.5em;
+}
 
 /* -------------------------------------------------------------------------- *
     ### Misc

@@ -65,7 +65,7 @@ image = {
     'COMMENT': u'Komentovat',
     'COMMENTS': u'Komentáře',
     'INFO': u'Informace',
-    'COMMENTED_BY': u'napsal',
+    'REPLIED': u'Napsáno',
 }
 
 search = {

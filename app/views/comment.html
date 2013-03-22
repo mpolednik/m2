@@ -1,4 +1,5 @@
 {% from "_formhelpers.html" import render_field %}
+{% from "_comments.html" import list_comments %}
 {% extends "layout.html" %}
 {% block body %}
     {% if DEF_user %}
@@ -12,11 +13,5 @@
             <input type="submit" value="reply">
         </form>
     {% endif %}
-    <br><br>Comment<br>
-    {% for comment in comments %}
-        {% for delim in range(1, comment.depth) %}
-            >
-        {% endfor  %}
-        {{ comment }}<br>
-    {% endfor %}
+    {{ list_comments(comments, DEF_user, image, local) }}
 {% endblock %}

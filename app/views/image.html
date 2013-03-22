@@ -1,4 +1,5 @@
 {% from "_formhelpers.html" import render_field %}
+{% from "_comments.html" import list_comments %}
 {% extends "layout.html" %}
 
 {% set actionbar=True %}
@@ -20,17 +21,19 @@
         <li>Vlasník:&nbsp;<a href="/u/{{ image.owner.id }}">{{ image.owner.name }}</a></li>
         <li>Kategorie:&nbsp;<a href="/c/{{ image.category.name }}">{{ image.category.name }}</a></li>
         <li>Hodnocení:&nbsp;{{ image.rating }}</li>
+        {% if image.exif %}
         <li><h1>{{ local.image['EXIF'] }}</h1></li>
-        <ul>
-        {% for exif in image.exif %}
-            <li><strong>{{ exif.key }}</strong>: {{ exif.value }}</li>
-        {% endfor %}
-        </ul>
+            <ul>
+            {% for exif in image.exif %}
+                <li><strong>{{ exif.key }}</strong>: {{ exif.value }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </ul>
 {% endblock %}
 
 {% block body %}
     <img src="/static/img/upload/{{ image.filename }}" alt="">
-    <br><br>{{ local.image['COMMENTS'] }}<br>
     {% if DEF_user and not commented %}
         <form action="{{ url_for(('comment_submit'), id=image.id) }}" method="POST">
             {{ render_field(form.text) }}
@@ -38,21 +41,10 @@
             <input type="submit" value="{{ local.image['COMMENT'] }}">
         </form>
     {% endif %}
-    {% for comment in comments %}
-        {% for delim in range(1, comment.depth) %}
-            >
-        {% endfor  %}
-        <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
-        {{ local.image['COMMENTED_BY'] }} <a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a>
-        ({{ comment.ts.strftime('%d. %m. %Y') }})
-        {% if DEF_user %}
-            <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up') }}">Upvote</a>
-            <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='down') }}">Downvote</a>
-            {% if DEF_user == comment.owner or DEF_user.level > 1 %}
-                <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
-                <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id) }}">Delete</a>
-            {% endif  %}
-        {% endif %}
-        <br>
-    {% endfor %}
+
+<div class="comments-area" id="comments">
+
+    <h3>Comments on this article</h3>
+    {{ list_comments(comments, DEF_user, image, local) }}
+</div>
 {% endblock %}

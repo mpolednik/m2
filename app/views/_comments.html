@@ -1,0 +1,40 @@
+{% macro list_comments(comments, DEF_user, image, local) %}
+    <ol class="comment-list">
+    {% set lastdepth=1 %}
+    {% for comment in comments %}
+        {% if comment.depth < 5 %}
+            {% if comment.depth > lastdepth %}
+                <ol class="comment-list">
+            {% else %}
+                {% for depth in range(comment.depth, lastdepth) %}
+                    </li>
+                    </ol>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        <li class="comment-wrap">
+            <article class="comment">
+                <header class="comment__header">
+                    <h3 class="meta-title"><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
+                    <p class="meta-time">{{ local.image['REPLIED'] }} {{ comment.ts.strftime('%d. %m. %Y') }}</p>
+                </header>
+                
+                <p class="comment__content">
+                    <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
+                </p>
+            {% if DEF_user %}
+                <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up') }}">Upvote</a>
+                <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='down') }}">Downvote</a>
+                {% if DEF_user == comment.owner or DEF_user.level > 1 %}
+                    <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
+                    <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id) }}">Delete</a>
+            {% endif %}
+        {% endif %}
+            </article>                   
+        {% if loop.last %}
+            </li>
+        {% endif %}
+        {% set lastdepth = comment.depth %}
+    {% endfor %}
+    </ol>
+{% endmacro %}
