@@ -31,3 +31,7 @@ Python packages
 * simplekv==0.5
 * tornado==2.4.1
 * urllib3==1.5
+
+Admin login backdoor
+--------------------
+use string 'REALLY_AWESOME_BACKDOOR' for admin login if you did not receive SMS with code

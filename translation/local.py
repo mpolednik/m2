@@ -11,11 +11,14 @@ CONTENT=u'Obsah'
 ACCOUNT=u'Účet'
 LOGOUT=u'Odhlásit se'
 LOGIN=u'Přihlásit se'
+SUPERLOGIN=u'Zapnout administraci'
+SUPERLOGOUT=u'Vypnout administraci'
 REGISTER=u'Registrace'
 ALL=u'Vše'
 ADMIN=u'Administrátor'
 MOD=u'Moderátor'
 ACTIONS=u'Akce'
+SEND=u'Odeslat'
 
 category = {
     'NEW': u'Nová kategorie',
@@ -23,6 +26,8 @@ category = {
     'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',
     'EDITTED': u'Kategorie editována.',
     'CREATED': u'Kategorie vytvořena.',
+    'CREATE': u'Vytvořit',
+    'EDIT': u'Editovat',
 }
 
 category_submit = {
@@ -31,6 +36,7 @@ category_submit = {
     'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',
     'INVALID_LINK': u'Maximální délka odkazu je %(max)d znaků!',
     'IMAGE_POSTED': u'Obrázek nahrán a zobrazen!',
+    'POST': u'Vložit',
 }
 
 user = {
@@ -46,6 +52,7 @@ user = {
     'NOT_LOGIN': u'Přihlášení se nezdařilo.',
     'REGISTERED': u'Registrace a přihlášení v pořádku. Vítejte!',
     'NOT_REGISTERED': u'Registrace se nezdařila.',
+    'EDIT': u'Editovat',
 }
 
 comment = {
@@ -55,6 +62,7 @@ comment = {
     'DELETED': u'Komentář smazán.',
     'EDITED': u'Komentář editován.',
     'VOTED': u'Hodnoceno!',
+    'REPLY': u'Odpovědět',
 }
 
 image = {
@@ -84,6 +92,14 @@ adminmenu = {
 
 admin = {
     'REQUEST': u'Požadavek',
+    'SEND_TOKEN': u'Poslat SMS s jednorázovým přihlašovacím kódem',
+    'KEY_SENT': u'Přihlašovací kód byl odeslán',
+    'KEY_NOT_SENT': u'Nepovedlo se odeslat přihlašovací kód :(',
+    'TOKEN': u'Přihlašovací kód',
+    'LOGGED_IN': u'Přihlášen. Nepropadejte panice!',
+    'NOT_LOGGED_IN': u'Přihlášení se nezdařilo.',
+    'LOGIN': u'Přihlásit',
+    'SMS_TEXT': u'Vas jednorazovy prihlasovaci kod je {} (platnost 2 minuty).',
 }
 
 statistics = {

@@ -1,4 +1,4 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_submit %}
 {% from "_comments.html" import list_comments %}
 {% extends "layout.html" %}
 {% block body %}
@@ -8,9 +8,11 @@
         {% else %}
             <form action="{{ url_for('comment_submit', id=id, cid=cid) }}" method="POST">
         {% endif %}
-            {{ render_field(form.text) }}
-            {{ form.hidden_tag() }}
-            <input type="submit" value="reply">
+            <ul>
+                {{ render_field(form.text) }}
+                {{ form.hidden_tag() }}
+                {{ render_submit(local.comment['REPLY']) }}
+            </ul>
         </form>
     {% endif %}
     {{ list_comments(comments, DEF_user, image, local) }}

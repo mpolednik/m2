@@ -35,6 +35,11 @@
                 {% if DEF_user %}
                     <li><a href="{{ url_for('account') }}">{{ local.ACCOUNT }}</a></li>
                     <li><a href="{{ url_for('logout') }}">{{ local.LOGOUT }}</a></li>
+                    {% if DEF_user.level > 1 and 'admin' not in session %}
+                        <li><a href="{{ url_for('superlogin') }}">{{ local.SUPERLOGIN }}</a></li>
+                    {% elif 'admin' in session %}
+                        <li><a href="{{ url_for('superlogout') }}">{{ local.SUPERLOGOUT }}</a></li>
+                    {% endif %}
                 {% else %}
                     <li><a href="{{ url_for('login') }}">{{ local.LOGIN }}</a></li>
                     <li><a href="{{ url_for('register') }}">{{ local.REGISTER }}</a></li>
@@ -64,7 +69,7 @@
                 {% endif %}
                 <ul>
                     <li><a href="/r">{{ local.adminmenu['REQUESTS'] }}</a></li>
-                    {% if DEF_user.level > 1 %}
+                    {% if DEF_user.level > 1 and 'admin' in session %}
                         <li><a href="/admin">{{ local.adminmenu['STATISTICS'] }}</a></li>
                         <li><a href="{{ url_for('admin_category', page=1) }}">{{ local.adminmenu['CATEGORIES'] }}</a></li>
                         <li><a href="{{ url_for('admin_user', page=1) }}">{{ local.adminmenu['USERS'] }}</a></li>

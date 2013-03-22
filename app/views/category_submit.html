@@ -1,12 +1,14 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
 {% block body %}
     <form method="POST" action="" enctype="multipart/form-data">
-        {{ render_field(form.name) }}
-        {{ render_field(form.text) }}
-        {{ render_field(form.link) }}
-        {{ render_field(form.image) }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="Send">
+        <ul>
+            {{ render_field(form.name) }}
+            {{ render_field(form.text) }}
+            {{ render_field(form.link) }}
+            {{ render_field(form.image) }}
+            {{ form.hidden_tag() }}
+            {{ render_submit(local.category_submit['POST']) }}
+        </ul>
     </form>
 {% endblock %}

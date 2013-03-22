@@ -1,11 +1,13 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
+
 {% block body %}
+    <a href="{{ url_for('send_token') }}">{{ local.admin['SEND_TOKEN'] }}</a>
     <form method="POST" action="">
         <ul>
-            {{ render_field(form.text) }}
+            {{ render_field(form.token) }}
             {{ form.hidden_tag() }}
-            {{ render_submit(local.category['EDIT']) }}
+            {{ render_submit(local.admin['LOGIN']) }}
         </ul>
     </form>
 {% endblock %}

@@ -1,3 +1,5 @@
+import random
+
 from flask import session
 from app.helpers.middleware import db, bcrypt
 
@@ -65,6 +67,9 @@ class User(db.Model):
             return rate.value
         except:
             return 0
+        
+    def gen_token(self):
+        return random.randint(100000, 999999)
 
     @staticmethod
     def login(mail, password):

@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, redirect, url_for
 
 from app.helpers.middleware import app
 from app.models.user import User
@@ -22,6 +22,14 @@ def req_nologin(f):
             return f(*args, **kwargs)
         else:
             raise SecurityException
+    return inner
+
+def req_admin(f):
+    def inner(*args, **kwargs):
+        if 'admin' in session and session['admin']:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('superlogin'))
     return inner
 
 def req_level(level):

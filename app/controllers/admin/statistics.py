@@ -3,6 +3,7 @@ import os, psutil, time, collections, datetime
 
 from app.helpers.middleware import db, cache
 from app.helpers.rendering import render
+from app.helpers import security
 
 from app.models.category import Category
 from app.models.user import User
@@ -19,6 +20,7 @@ def timeformat(seconds):
     seconds %= 60
     return "%02i:%02i:%02i" % (hours, minutes, seconds)
 
+@security.req_admin
 def statistics():
     stats = cache.get('statistics')
     if not stats:

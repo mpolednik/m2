@@ -1,4 +1,4 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_submit %}
 {% from "_comments.html" import list_comments %}
 {% extends "layout.html" %}
 
@@ -36,9 +36,11 @@
     <img src="/static/img/upload/{{ image.filename }}" alt="">
     {% if DEF_user and not commented %}
         <form action="{{ url_for(('comment_submit'), id=image.id) }}" method="POST">
+            <ul>
             {{ render_field(form.text) }}
             {{ form.hidden_tag() }}
-            <input type="submit" value="{{ local.image['COMMENT'] }}">
+            {{ render_submit(local.image['COMMENT']) }}
+        </ul>
         </form>
     {% endif %}
 

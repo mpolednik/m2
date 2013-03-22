@@ -625,13 +625,14 @@ h6, .zeta {
 form {
 }
 
-form table td {
+form li {
     padding: 0 0 5px;
+    list-style: none;
 }
 
 label {
     display: block;
-    margin: 0 15px;
+    margin: 0 20px;
 }
 
 input[type="text"] {
@@ -643,6 +644,8 @@ input[type="text"] {
     border-radius: 0;
     /* 2. Removes inner shadow on iOS*/
     -webkit-appearance: none; 
+
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
 input[type="search"] {
@@ -654,6 +657,8 @@ input[type="search"] {
     border-radius: 0;
     /* 2. Removes inner shadow on iOS*/
     -webkit-appearance: none; 
+
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
 input[type="password"] {
@@ -665,13 +670,17 @@ input[type="password"] {
     border-radius: 0;
     /* 2. Removes inner shadow on iOS*/
     -webkit-appearance: none; 
+
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
-button[type="submit"] {
-    border: 1px solid black;
+input[type="submit"] {
+    border: 1px solid #ccc;
     padding: 6px 12px;
-    background: #444444;
-    color: white;
+    background: #fff;
+    color: black;
+
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
 button[type="submit"]:hover {
@@ -684,6 +693,8 @@ textarea {
     resize: none;
     width: 400px;
     height: 300px;
+
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
 
