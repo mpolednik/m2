@@ -54,7 +54,6 @@
 <div class="row cf">
     <aside class="sidebar sidebar--fixed">
         <div class="widget widget__search">
-            <h1>{{ local.search['SEARCH'] }}</h1>
             <form action="{{ url_for('search') }}" method="GET">
                 <input type="search" name="q" placeholder="{{ local.search['HINT_SEARCH'] }}">
             </form>
@@ -65,7 +64,7 @@
                 {% if DEF_user.level > 1 %}
                     <h1>{{ local.admin['ADMIN'] }}</h1>
                 {% else %}
-                    <h1>{{ local.MOD }}</h1>
+                    <h1>{{ local.admin['MOD'] }}</h1>
                 {% endif %}
                 <ul>
                     <li><a href="/r">{{ local.adminmenu['REQUESTS'] }}</a></li>
@@ -113,7 +112,9 @@
 
 <!-- Scripts -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/static/js/jquery.masonry.min.js"></script>
 <script src="/static/js/generic.js"></script>
+{% block js %}{% endblock %}
 
 </body>
 </html>

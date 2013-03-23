@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import request, redirect, url_for, flash, session
 import sqlalchemy.exc
 
@@ -32,7 +33,7 @@ def image(id):
     except:
         commented = False
 
-    return render('image.html', commented=commented, image=image, form=form, comments=comments)
+    return render('image.html', title=image.name, commented=commented, image=image, form=form, comments=comments)
 
 
 @security.req_owner(Image)
@@ -50,7 +51,7 @@ def image_edit(id):
         return redirect(url_for('image', id=id))
 
     flash_errors(form)
-    return render('image_edit.html', image=image, form=form)
+    return render('image_edit.html', title=local.image['TITLE_EDIT'], image=image, form=form)
 
 
 @security.req_owner(Image)

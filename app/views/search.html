@@ -1,23 +1,17 @@
 {% from "_images.html" import list_images %}
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
 
+
 {% block body %}
-    <header class="unit gallery__header">
-        <h1 class="gallery__header__h">
-            Kategorie
-        </h1>
-    </header> <!-- /gallery__header -->
+    {{ header(local.search['CATEGORIES']) }}
     {% for category in categories %}
         <a href="{{ url_for('category_one', name=category.name) }}" class="exact">{{ category.name }}</a>
     {% endfor %}
     {% for category in categories_related %}
         <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
     {% endfor %}
-    <header class="unit gallery__header">
-        <h1 class="gallery__header__h">
-            Uživatelé
-        </h1>
-    </header> <!-- /gallery__header -->
+    {{ header(local.search['USERS']) }}
     <table>
     {% for user in users.items %}
         <tr>
@@ -58,11 +52,7 @@
     {% if users.has_prev %}
         <a href="{{ url_for('search', q=q, ipage=images.page, upage=users.prev_num) }}">Prev</a>
     {% endif %}
-    <header class="unit gallery__header">
-        <h1 class="gallery__header__h">
-            Obrázky
-        </h1>
-    </header> <!-- /gallery__header -->
+    {{ header(local.search['IMAGES']) }}
     {{ list_images(images, DEF_user, category, False) }}
     {% if images.has_next %}
         <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>

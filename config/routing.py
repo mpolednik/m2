@@ -29,7 +29,7 @@ views.add('/i/<int:id>/comment/<int:cid>/vote', 'app.controllers.comment.comment
 
 views.add('/r', 'app.controllers.admin.request.request_all')
 views.add('/r/submit', 'app.controllers.admin.request.request_submit', methods=('GET', 'POST'))
-views.add('/r/submit/<name>', 'app.controllers.request.request_submit', methods=('GET', 'POST'))
+views.add('/r/submit/<name>', 'app.controllers.admin.request.request_submit', methods=('GET', 'POST'))
 views.add('/r/<int:id>', 'app.controllers.admin.request.request_one')
 views.add('/r/<int:id>/accept', 'app.controllers.admin.request.request_accept')
 views.add('/r/<int:id>/decline', 'app.controllers.admin.request.request_decline')
@@ -52,6 +52,8 @@ views.add('/admin/images/<int:page>', 'app.controllers.admin.image.admin_image')
 views.add('/admin/images/<int:page>/<int:id>/delete', 'app.controllers.admin.image.admin_image_delete')
 views.add('/admin/comments/<int:page>', 'app.controllers.admin.comment.admin_comment')
 views.add('/admin/comments/<int:page>/<int:id>/delete', 'app.controllers.admin.comment.admin_comment_delete')
+
+views.add('/ajax/smsstate', 'app.controllers.admin.login.get_sms_state')
 
 @app.errorhandler(404)
 def page_error(error):

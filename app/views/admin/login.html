@@ -1,7 +1,11 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
 
+
 {% block body %}
+    {% if 'id' in session %}
+        {{ local.sms['STATE'] }}:&nbsp;<span class="state"></span><br>
+    {% endif %}
     <a href="{{ url_for('send_token') }}">{{ local.admin['SEND_TOKEN'] }}</a>
     <form method="POST" action="">
         <ul>
@@ -10,4 +14,9 @@
             {{ render_submit(local.admin['LOGIN']) }}
         </ul>
     </form>
+{% endblock %}
+
+
+{% block js %}
+<script src="/static/js/ajax.js"></script>
 {% endblock %}

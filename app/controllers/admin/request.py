@@ -12,10 +12,12 @@ from app.models.request import Request
 from app.models.category import Category
 from app.models.user import User
 
+from translation import local
+
 
 class RequestForm(Form):
-    name = fields.TextField('Jmeno')
-    text = fields.TextAreaField('Text')
+    name = fields.TextField(local.NAME, [validators.Length(min=4, max=30, message=local.request['INVALID_NAME'])])
+    text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.request['INVALID_TEXT'])])
 
 
 @security.req_level(1)
@@ -28,19 +30,19 @@ def request_all():
         keys = [cat.id for cat in user.categories]
         requests = db.session.query(Request).filter(Request.id_category.in_(keys))
 
-    return render('admin/request_list.html', requests=requests)
+    return render('admin/request_list.html', title=local.request['TITLE_LIST'], requests=requests)
 
 
 @security.req_requested_category_mod
 def request_one(id):
     request = db.session.query(Request).filter_by(id=id).one()
 
-    return render('admin/request.html', request=request)
+    return render('admin/request.html', title=local.request['TITLE_DETAILS'], request=request)
 
 
 @security.req_login
 def request_submit(name = None):
-    form = RequestForm()
+    form = RequestForm(request.form)
 
     if request.method == 'POST' and form.validate():
         if name:
@@ -52,8 +54,8 @@ def request_submit(name = None):
                 category = db.session.query(Category).filter_by(name=name).one()
                 type = 1
             else:
-                flash('O moderatorstvi v kategorii jste uz zazadal!', 'error')
-                return render('request_submit.html', form=form)
+                flash(local.request['MOD_REQUESTED'], 'error')
+                return render('request_submit.html', title=local.request['TITLE_NEW'], form=form)
         else:
             category = None
             type = 0
@@ -61,12 +63,12 @@ def request_submit(name = None):
         db.session.add(req)
 
         db.session.commit()
-        flash('request odeslan', 'success')
+        flash(local.request['OK'], 'success')
 
         return redirect(url_for('category_all'))
 
     flash_errors(form)
-    return render('request_submit.html', form=form)
+    return render('request_submit.html', title=local.request['TITLE_NEW'], form=form)
 
 
 @security.req_requested_category_mod
@@ -91,7 +93,7 @@ def request_accept(id):
             category.moderators.append(request.owner)
 
         db.session.commit()
-        flash('Request schvalen', 'success')
+        flash(local.request['ACCEPTED'], 'success')
 
     return redirect(url_for('request_all'))
 
@@ -102,6 +104,6 @@ def request_decline(id):
     if request.state == 0:
         request.state = -1
         db.session.commit()
-        flash('Request neschvalen', 'success')
+        flash(local.request['DECLINED'], 'success')
 
     return redirect(url_for('request_all'))

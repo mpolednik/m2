@@ -1,9 +1,15 @@
-{% from "_images.html" import list_images %}
 {% from "_general.html" import header %}
 {% extends "layout.html" %}
 
+
 {% block body %}
     {{ header(local.adminmenu['USERS']) }}
+    <form action="" method="GET">
+        <input type="search" name="q" placeholder="{{ local.search['HINT_SEARCH'] }}">
+    </form>
+    {% if 'q' in request.args %}
+        <a href="{{ url_for('admin_user', page=1) }}">{{ local.ALL }}</a>
+    {% endif %}
     <table>
         <th>
             <td>Název</td>

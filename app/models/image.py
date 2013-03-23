@@ -70,6 +70,7 @@ class Image(db.Model, VotableObject):
     comments = db.relationship('Comment', backref='image', order_by=(Comment.id_father.desc(), Comment.rating.desc(), Comment.ts.desc()),
                                cascade='all, delete-orphan', passive_deletes=True)
 
+
     def __init__(self, id_user, category, name, text, link, filename):
         self.id_user = id_user
         self.category = category
@@ -78,21 +79,26 @@ class Image(db.Model, VotableObject):
         self.link = link
         self.kind = self._extension(filename)
 
+
     def __repr__(self):
         return '<Image({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.owner, self.category, self.name, self.text, self.link, self.score, self.rating, self.ts)
+
 
     @property
     def filename(self):
         return '{}.{}'.format(self.id, self.kind)
+
 
     @property
     def allowed(self):
         return '.' in self.filename and \
             self.kind.lower() in app.config['ALLOWED_EXTENSIONS']
 
+
     @staticmethod
     def _extension(filename):
         return filename.rsplit('.', 1)[1]
+
 
     def save(self, file = None):
         if file:
@@ -100,10 +106,12 @@ class Image(db.Model, VotableObject):
         else:
             urllib.urlretrieve(self.link, os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
 
+
     def save_thumbnail(self):
         im = Img.open(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))
         im.thumbnail(app.config['THUMBNAIL_SIZE'], Img.ANTIALIAS)
         im.save(os.path.join(app.config['THUMB_UPLOAD_FOLDER'], self.filename))
+
 
     def save_exif(self):
         if self.kind in app.config['EXIF_EXTENSIONS']:
@@ -112,6 +120,7 @@ class Image(db.Model, VotableObject):
                     db.session.add(Exif(self, TAGS.get(k), v))
             except:
                 return
+
 
     def delete_files(self):
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], self.filename))

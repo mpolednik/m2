@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import redirect, url_for, request, session, flash
 
 from app.helpers.middleware import db
@@ -29,7 +30,7 @@ def comment(id, cid = None):
     image = db.session.query(Image).get(id)
 
     comments = construct_comment_tree(image.comments, cid)
-    return render('comment.html', id=id, cid=cid, image=image, comments=comments, form=form)
+    return render('comment.html', title=local.comment['TITLE_ONE'], id=id, cid=cid, image=image, comments=comments, form=form)
 
 
 @security.req_login
@@ -64,9 +65,9 @@ def comment_submit(id, cid = None):
             commented = Comment.query.filter_by(id_user=session['user'], image=image, id_father=None).one()
         except:
             commented = False
-        return render('image.html', commented=commented, image=image, form=form, comments=comments)
+        return render('image.html', title=image.name, commented=commented, image=image, form=form, comments=comments)
     else:
-        return render('comment.html', id=id, cid=cid, comments=comments, form=form)
+        return render('comment.html', title=local.comment['TITLE_ONE'], id=id, cid=cid, comments=comments, form=form)
 
 
 @security.req_owner(Comment)
@@ -88,7 +89,7 @@ def comment_edit(id, cid):
     flash_errors(form)
     comments = construct_comment_tree(image.comments, comment.id)
 
-    return render('comment.html', edit=True, id=id, cid=cid, comments=comments, form=form)
+    return render('comment.html', title=local.comment['TITLE_EDIT'], edit=True, id=id, cid=cid, comments=comments, form=form)
 
 
 @security.req_owner(Comment)

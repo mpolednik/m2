@@ -1,7 +1,7 @@
 # coding=utf-8
 import MySQLdb as mdb
 
-from flask import session, redirect, url_for, flash, request
+from flask import session, redirect, url_for, flash, request, jsonify
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators
@@ -30,11 +30,12 @@ def superlogin():
             flash(local.admin['LOGGED_IN'], 'success')
             cache.delete(str(session['user']))
             session['admin'] = True
+            session.pop('id', None)
             return redirect(url_for('statistics'))
         else:
             flash(local.admin['NOT_LOGGED_IN'], 'error')
 
-    return render('admin/login.html', form=form)
+    return render('admin/login.html', title=local.admin['TITLE_LOGIN'], form=form)
 
 
 @security.req_level(2)
@@ -47,20 +48,53 @@ def superlogout():
 
 @security.req_level(2)
 def send_token():
-    try:
-        user = User.query.get(session['user'])
-        token = user.gen_token()
-        text = local.admin['SMS_TEXT'].format(token)
+    user = User.query.get(session['user'])
+    if len(user.phone) >= 9 and len(user.phone) <= 16:
+        try:
+            token = user.gen_token()
+            text = local.admin['SMS_TEXT'].format(token)
 
-        cache.set(str(session['user']), str(token), 120)
+            cache.set(str(session['user']), str(token), 120)
 
-        con = mdb.connect(smsconf['host'], smsconf['user'], smsconf['pass'], smsconf['name'])
-        cur = con.cursor()
-        cur.execute('INSERT INTO sms_send(phone, text) VALUES(%s, %s)', (user.phone, text))
-        con.commit()
+            con, cur = _mysqldb_connect()
+            # Send sms and save its id to session
+            cur.execute('INSERT INTO sms_send(phone, text) VALUES(%s, %s)', (user.phone, text))
+            session['id'] = cur.lastrowid
+            con.commit()
 
-        flash(local.admin['KEY_SENT'], 'success')
-    except:
-        flash(local.admin['KEY_NOT_SENT'], 'error')
+            flash(local.admin['KEY_SENT'], 'success')
+        except:
+            flash(local.admin['KEY_NOT_SENT'], 'error')
+    else:
+        flash(local.admin['PHONE_NOT_SET'], 'error')
 
     return redirect(url_for('superlogin'))
+
+
+@security.req_level(2)
+def get_sms_state():
+    if 'id' in session:
+        con, cur = _mysqldb_connect()
+
+        # Fetch state of the sms
+        cur.execute('SELECT state FROM sms_send WHERE id = %s', (session['id']))
+        status = cur.fetchone()[0]
+
+        states = (local.sms['STATE_UNPROCESSED'], local.sms['STATE_PROCESSED'], local.sms['STATE_SENT'], local.sms['STATE_ERROR'])
+
+        try:
+            state = states[status]
+        except KeyError:
+            state = local.sms['STATE_UNKNOWN']
+
+        # Push it to client
+        return jsonify(state=state)
+    else:
+        return jsonify(state=-1)
+
+
+def _mysqldb_connect():
+    con = mdb.connect(smsconf['host'], smsconf['user'], smsconf['pass'], smsconf['name'], smsconf['port'])
+    cur = con.cursor()
+
+    return (con, cur)

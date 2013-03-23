@@ -1,6 +1,7 @@
 {% from "_general.html" import header %}
 {% extends "layout.html" %}
 
+
 {% if request.state == 0 %}
     {% set actionbar=True %}
     {% block actionbar %}
@@ -8,6 +9,7 @@
         <a href="{{ url_for('request_decline', id=request.id) }}">{{ local.actions['DECLINE'] }}</a><br>
     {% endblock %}
 {% endif %}
+
 
 {% block body %}
     {{ header(local.admin['REQUEST']) }}

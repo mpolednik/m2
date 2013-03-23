@@ -13,12 +13,14 @@ from app.models.comment import Comment
 
 from translation import local
 
+
 def timeformat(seconds):
     hours = seconds // (60*60)
     seconds %= (60*60)
     minutes = seconds // 60
     seconds %= 60
     return "%02i:%02i:%02i" % (hours, minutes, seconds)
+
 
 @security.req_admin
 def statistics():
@@ -45,4 +47,4 @@ def statistics():
 
         cache.set('statistics', stats, 300) # 5 min cache
 
-    return render('admin/statistics.html', stats=stats)
+    return render('admin/statistics.html', title=local.statistics['TITLE'], stats=stats)

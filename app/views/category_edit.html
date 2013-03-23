@@ -1,5 +1,13 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
+
+
+{% set actionbar=True %}
+{% block actionbar %}
+    <a href="{{ url_for('category_one', name=category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a>
+{% endblock %}
+
+
 {% block body %}
     <form method="POST" action="">
         <ul>

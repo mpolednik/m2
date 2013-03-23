@@ -34,9 +34,11 @@ class VotableObject(object):
 
 epoch = datetime(1970, 1, 1)
 
+
 def _epoch_seconds(date):
     td = date - epoch
     return td.days * 86400 + td.seconds + (float(td.microseconds) / 1000000)
+
 
 def calculate_score(rating, date):
     order = log(max(abs(rating), 1), 10)

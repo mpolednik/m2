@@ -1,6 +1,7 @@
 {% from "_images.html" import list_images %}
 {% extends "layout.html" %}
 
+
 {% set widget=True %}
 {% block widget %}
     <ul>
@@ -8,6 +9,7 @@
         <li>Skóre obrázků:&nbsp;{{ user.rating_image }}
         <li>Skóre komentářů:&nbsp;{{ user.rating_comment }}
         <li>Vytvořen:&nbsp;{{ user.ts.strftime('%d. %m. %Y') }}</li>
+
 {% endblock %}
 
 {% block body %}

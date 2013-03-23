@@ -28,19 +28,20 @@ class EditForm(Form):
 class SubmitForm(EditForm):
     name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
     link = fields.TextAreaField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
-    image = fields.FileField(local.IMAGE, [validators.Optional()])
+    image = fields.FileField(local.FILE, [validators.Optional()])
 
 
 def category_all(page=1):
     images = Image.query.order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 100)
 
-    return render('category.html', title='test', images=images)
+    return render('category.html', title=local.category['TITLE_ALL'], images=images)
+
 
 def category_one(name, page=1):
     category = Category.query.filter_by(name=name).one()
     images = Image.query.filter_by(id_category=category.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 100)
 
-    return render('category.html', title='test', category=category, images=images)
+    return render('category.html', title=category.name, category=category, images=images)
 
 
 @security.req_login
@@ -79,7 +80,7 @@ def category_submit(name):
         return redirect(url_for('category_one', name=name))
 
     flash_errors(form)
-    return render('category_submit.html', title='test', form=form)
+    return render('category_submit.html', title=local.category['TITLE_SUBMIT'], category=category, form=form)
 
 
 @security.req_mod
@@ -97,7 +98,8 @@ def category_edit(name):
         return redirect(url_for('category_one', name=name))
 
     flash_errors(form)
-    return render('category_edit.html', title='test', form=form, category=category)
+    return render('category_edit.html', title=local.category['TITLE_EDIT'], form=form, category=category)
+
 
 @security.req_mod
 def category_pass_mod(name):
@@ -107,6 +109,7 @@ def category_pass_mod(name):
     db.session.commit()
     return redirect(url_for('category_one', name=name))
 
+
 @security.req_admin
 def category_become_mod(name):
     category = db.session.query(Category).filter_by(name=name).one()
@@ -114,6 +117,7 @@ def category_become_mod(name):
     category.moderators.append(user)
     db.session.commit()
     return redirect(url_for('category_one', name=name))
+
 
 @security.req_admin
 def category_create():
@@ -129,4 +133,4 @@ def category_create():
         return redirect(url_for('category_all'))
 
     flash_errors(form)
-    return render('category_create.html', title=local.category['NEW'], form=form)
+    return render('category_create.html', title=local.category['TITLE_NEW'], form=form)

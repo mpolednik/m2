@@ -2,6 +2,7 @@
 {% from "_comments.html" import list_comments %}
 {% extends "layout.html" %}
 
+
 {% set actionbar=True %}
 {% block actionbar %}
     {% if DEF_user and (DEF_user == image.owner or DEF_user.level > 1) %}
@@ -12,7 +13,9 @@
         <li><a href="{{ url_for('image_vote', id=image.id, v='up') }}">{{ local.actions['UPVOTE'] }}</a><br></li>
         <li><a href="{{ url_for('image_vote', id=image.id, v='down') }}">{{ local.actions['DOWNVOTE'] }}</a><br></li>
     {% endif %}
+    <a href="{{ url_for('category_one', name=image.category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a>
 {% endblock %}
+
 
 {% set widget=True %}
 {% block widget %}
@@ -31,6 +34,7 @@
         {% endif %}
     </ul>
 {% endblock %}
+
 
 {% block body %}
     <img src="/static/img/upload/{{ image.filename }}" alt="">

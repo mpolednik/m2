@@ -1,27 +1,31 @@
 # coding=utf-8
-NAME=u'Jméno'
+NAME=u'Název'
 TEXT=u'Popis'
-LINK=u'Odkaz'
-IMAGE=u'Obrázek'
-PASS=u'Heslo'
-MAIL=u'E-mail'
-UNAME=u'Přezdívka'
-PHONE=u'Telefonní číslo'
 CONTENT=u'Obsah'
+LINK=u'Odkaz'
+FILE=u'Soubor'
+
 ALL=u'Vše'
-ADMIN=u'Po aktivaci administrace získáte další práva...'
-MOD=u'Moderátor'
 ACTIONS=u'Akce'
 SEND=u'Odeslat'
+BACK=u'Zpět'
 
 category = {
-    'NEW': u'Nová kategorie',
     'INVALID_NAME': u'Délka názvu kategorie musí být mezi %(min)d a %(max)d znaky!',
     'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',
     'EDITTED': u'Kategorie editována.',
     'CREATED': u'Kategorie vytvořena.',
     'CREATE': u'Vytvořit',
     'EDIT': u'Editovat',
+    'REQUEST_NEW': u'Zažádat o novou kategorií',
+    'REQUEST_MOD': u'Zažádat o post moderátora',
+
+    'TITLE_NEW': u'nová kategorie',
+    'TITLE_ALL': u'všechny kategorie',
+    'TITLE_SUBMIT': u'vložení obrázku',
+    'TITLE_EDIT': u'editace kategorie',
+
+    'TITLE_ADMIN_LIST': u'seznam kategorií',
 }
 
 category_submit = {
@@ -34,6 +38,11 @@ category_submit = {
 }
 
 user = {
+    'MAIL': u'E-mailová adresa',
+    'PASS': u'Heslo',
+    'NICK': u'Přezdívka',
+    'PHONE': u'Telefonní číslo',
+
     'INVALID_MAIL': u'Neplatná e-mailový adresa! E-mail musí být zadán ve formátu name@domain.tld.',
     'INVALID_PASS': u'Heslo musí mít minimálně %(min)d znaky!',
     'INVALID_NAME': u'Délka přezdívky musí být mezi %(min)d a %(max)d znaky!',
@@ -51,6 +60,11 @@ user = {
     'REGISTERED': u'Registrace a přihlášení v pořádku. Vítejte!',
     'NOT_REGISTERED': u'Registrace se nezdařila.',
     'EDIT': u'Editovat',
+
+    'TITLE_LOGIN': u'přihlášení',
+    'TITLE_REGISTER': u'registrace',
+
+    'TITLE_ADMIN_LIST': u'seznam uživatelů',
 }
 
 comment = {
@@ -61,6 +75,11 @@ comment = {
     'EDITED': u'Komentář editován.',
     'VOTED': u'Hodnoceno!',
     'REPLY': u'Odpovědět',
+
+    'TITLE_ONE': u'komentář',
+    'TITLE_EDIT': u'editace komentáře',
+
+    'TITLE_ADMIN_LIST': u'seznam komentářů',
 }
 
 image = {
@@ -72,11 +91,19 @@ image = {
     'COMMENTS': u'Komentáře',
     'INFO': u'Informace',
     'REPLIED': u'Napsáno',
+
+    'TITLE_EDIT': u'editace obrázku',
+
+    'TITLE_ADMIN_LIST': u'seznam obrázků',
 }
 
 search = {
     'HINT_SEARCH': u'Hledat...',
-    'SEARCH': u'Vyhledávání',
+    'CATEGORIES': u'Kategorie',
+    'USERS': u'Uživatelé',
+    'IMAGES': u'Obrázky',
+
+    'TITLE_SEARCH': u'vyhledávání',
 }
 
 adminmenu = {
@@ -93,6 +120,7 @@ admin = {
     'SEND_TOKEN': u'Poslat SMS s jednorázovým přihlašovacím kódem',
     'KEY_SENT': u'Přihlašovací kód byl odeslán',
     'KEY_NOT_SENT': u'Nepovedlo se odeslat přihlašovací kód :(',
+    'PHONE_NOT_SET': u'Pro administrátorské přihlášení si musíte nastavit telefonní číslo!',
     'TOKEN': u'Přihlašovací kód',
     'LOGGED_IN': u'Přihlášen. Nepropadejte panice!',
     'NOT_LOGGED_IN': u'Přihlášení se nezdařilo.',
@@ -101,10 +129,16 @@ admin = {
     'SUPERLOGIN': u'Zapnout administraci',
     'SUPERLOGOUT': u'Vypnout administraci',
     'ADMIN': u'Administrátor',
+    'MOD': u'Moderátor',
+    'NOTICE': u'Po aktivaci administrace získáte další práva...',
+
+    'TITLE_LOGIN': u'administrátorské přihlášení',
 }
 
 statistics = {
     'GENERATED': u'Vygenerováno',
+
+    'TITLE': u'statistika',
 }
 
 actions = {
@@ -119,4 +153,28 @@ actions = {
     'REQUEST_MOD': u'Zažádat o moderátorství',
     'UPVOTE': u'Líbí se mi',
     'DOWNVOTE': u'Nelíbí se mi',
+}
+
+request = {
+    'INVALID_NAME': u'Délka názvu požadavku musí být mezi %(min)d a %(max)d znaky!',
+    'INVALID_TEXT': u'Maximální délka textu je %(max)d znaků!',
+    'OK': u'Požadavek odeslán.',
+    'FAIL': u'Požadavek se nepodařilo odeslat',
+    'ACCEPTED': u'Požadavek schválen.',
+    'DECLINED': u'Požadavek zamítnut.',
+    'MOD_REQUESTED': u'O moderátorství v této kategorií jste již zažádal!',
+
+    'TITLE_LIST': u'seznam požadavků',
+    'TITLE_REQUEST': u'nový požadavek',
+    'TITLE_DETAILS': u'podrobnosti požadavku',
+    'TITLE_NEW': u'nový požadavek',
+}
+
+sms = {
+    'STATE': u'Stav',
+    'STATE_UNKNOWN': u'neznámý',
+    'STATE_UNPROCESSED': u'příprava ke spracování',
+    'STATE_PROCESSED': u'zpracováno',
+    'STATE_SENT': u'odesláno',
+    'STATE_ERROR': u'došlo k chybě',
 }

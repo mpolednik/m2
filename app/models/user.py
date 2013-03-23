@@ -35,13 +35,16 @@ class User(db.Model):
     requests = db.relationship('Request', backref='owner')
     categories = db.relationship('Category', secondary=moderator)
 
+
     def __init__(self, name, mail, password):
         self.name = name
         self.mail = mail
         self.password = password
 
+
     def __repr__(self):
         return '<User({}, {}, {}, {}, {}, {}, {}, {}, {})>'.format(self.id, self.name, self.mail, self.password, self.phone, self.rating_image, self.rating_comment, self.ts, self.level)
+
 
     def already_commented(self, image, top = False):
         # Check if top-level comment for current image already exists
@@ -55,11 +58,13 @@ class User(db.Model):
         else:
             return False
 
+
     def already_requested(self, category):
         for request in self.requests:
             if request.type and not request.state and request.category == category:
                 return True
         return False
+
 
     def voted(self, obj):
         try:
@@ -68,8 +73,10 @@ class User(db.Model):
         except:
             return 0
         
+
     def gen_token(self):
         return random.randint(100000, 999999)
+
 
     @staticmethod
     def login(mail, password):
@@ -79,6 +86,7 @@ class User(db.Model):
             session['user'] = candidate.id
         else:
             raise Exception
+
 
     @staticmethod
     def logout():

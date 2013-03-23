@@ -6,12 +6,12 @@
                     <img src="/static/img/thumb/{{ image.filename }}" alt="">
                 </a>
             </figure>
-            {{ image.name }}
-            <a href="{{ url_for('user', id=image.owner.id) }}">{{ image.owner.name }}</a>
+            {{ image.name }}&nbsp;|
+            <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>&nbsp;|&nbsp;
             {% if voting and DEF_user %}
                 {% if category %}
                     {% if DEF_user.voted(image) == 1 %}
-                        +
+                        <span class="upvoted">+</span>
                     {% else %}
                         <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">+</a>
                     {% endif %}
@@ -23,7 +23,7 @@
                     {% endif %}
                 {% else %}
                     {% if DEF_user.voted(image) == 1 %}
-                        <span class="downvoted">-</span>
+                        <span class="upvoted">+</span>
                     {% else %}
                         <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">+</a>
                     {% endif %}
@@ -36,7 +36,7 @@
                 {% endif %}
             {% endif %}
             {% if not category %}
-                <a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
+                &nbsp;|&nbsp;<a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
             {% endif %}
         </div> <!-- /unit -->
     {% endfor %}

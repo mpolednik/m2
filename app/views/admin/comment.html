@@ -2,8 +2,15 @@
 {% from "_general.html" import header %}
 {% extends "layout.html" %}
 
+
 {% block body %}
     {{ header(local.adminmenu['COMMENTS']) }}
+    <form action="" method="GET">
+        <input type="search" name="q" placeholder="{{ local.search['HINT_SEARCH'] }}">
+    </form>
+    {% if 'q' in request.args %}
+        <a href="{{ url_for('admin_comment', page=1) }}">{{ local.ALL }}</a>
+    {% endif %}
     <table>
         <tr>
             <th>Text</th>

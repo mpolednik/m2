@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import redirect, url_for, request, session, flash
 import sqlalchemy.exc
 
@@ -16,8 +17,8 @@ from translation import local
 
 
 class LoginForm(Form):
-    mail = fields.TextField(local.MAIL, [validators.Email(local.user['INVALID_MAIL'])])
-    password = fields.PasswordField(local.PASS, [validators.Length(min=4, message=local.user['INVALID_PASS'])])
+    mail = fields.TextField(local.user['MAIL'], [validators.Email(local.user['INVALID_MAIL'])])
+    password = fields.PasswordField(local.user['PASS'], [validators.Length(min=4, message=local.user['INVALID_PASS'])])
 
     def validate_name(form, field):
         if form.data['name'] != field.data:
@@ -39,17 +40,18 @@ class LoginForm(Form):
 
 
 class RegistrationForm(LoginForm):
-    name = fields.TextField(local.UNAME, [validators.Length(4, 50, local.user['INVALID_NAME'])])
+    name = fields.TextField(local.user['NICK'], [validators.Length(4, 50, local.user['INVALID_NAME'])])
+
 
 class EditForm(RegistrationForm):
-    phone = fields.TextField(local.PHONE)
-    password = fields.PasswordField(local.PASS, [validators.Optional(), validators.Length(min=4, message=local.user['INVALID_PASS'])])
+    phone = fields.TextField(local.user['PHONE'])
+    password = fields.PasswordField(local.user['PASS'], [validators.Optional(), validators.Length(min=4, message=local.user['INVALID_PASS'])])
 
 
 def user(id, page=1):
     user = db.session.query(User).filter_by(id=id).one()
     images = Image.query.filter_by(id_user=user.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
-    return render('user.html', user=user, images=images)
+    return render('user.html', title=user.name, user=user, images=images)
 
 
 @security.req_login
@@ -72,7 +74,7 @@ def account():
             flash(local.user['NOT_EDITTED'], 'error')
 
     flash_errors(form)
-    return render('account.html', form=form)
+    return render('account.html', title=user.name, form=form)
 
 
 @security.req_nologin
@@ -87,7 +89,7 @@ def login():
         except:
             flash(local.user['NOT_LOGGED_IN'], 'error')
 
-    return render('login.html', form=form)
+    return render('login.html', title=local.user['TITLE_LOGIN'], form=form)
 
 
 @security.req_nologin
@@ -108,7 +110,7 @@ def register():
             flash(local.user['NOT_REGISTERED'], 'error')
 
     flash_errors(form)
-    return render('register.html', form=form)
+    return render('register.html', title=local.user['TITLE_REGISTER'], form=form)
 
 
 @security.req_login

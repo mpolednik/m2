@@ -1,33 +1,38 @@
 {% from "_images.html" import list_images %}
 {% extends "layout.html" %}
 
+
 {% if DEF_user %}
     {% set actionbar=True %}
     {% block actionbar %}
         {% if category and DEF_user %}
-            <li><a href="{{ url_for('category_submit', name=category.name) }}">{{ local.actions['NEW_IMAGE'] }}</a><br></li>
+            <li><a href="{{ url_for('category_submit', name=category.name, page=images.page) }}">{{ local.actions['NEW_IMAGE'] }}</a><br></li>
+
             {% if DEF_user in category.moderators %}
                 <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">{{ local.actions['PASS_MOD'] }}</a><br></li>
-                <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
+                <li><a href="{{ url_for('category_edit', name=category.name, page=images.page) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif 'admin' in session  %}
                 <li><a href="{{ url_for('category_become_mod', name=category.name) }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
-                <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
+                <li><a href="{{ url_for('category_edit', name=category.name, page=images.page) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif not DEF_user.already_requested(category) %}
                 <li><a href="{{ url_for('request_submit', name=category.name) }}">{{ local.actions['REQUEST_MOD'] }}</a><br></li>
             {% endif %}
+
             {% for moderator in category.moderators %}
                 <li>{{ moderator.name }}</li>
             {% endfor %}
         {% elif DEF_user and 'admin' not in session %}
-            <li><a href="{{ url_for('request_submit') }}">Request new category</a><br></li>
+            <li><a href="{{ url_for('request_submit') }}">{{ local.category['REQUEST_NEW'] }}</a><br></li>
         {% else %}
-            <li><a href="{{ url_for('category_create') }}">Vytvořit novou kategorií</a><br></li>
+            <li><a href="{{ url_for('category_create') }}">{{ local.category['REQUEST_MOD'] }}</a><br></li>
         {% endif %}
+
         {% if DEF_user.level > 1 and 'admin' not in session %}
-            <li><a href="{{ url_for('superlogin') }}" class="note">{{ local.ADMIN }}</a></li>
+            <li><a href="{{ url_for('superlogin') }}" class="note">{{ local.admin['NOTICE'] }}</a></li>
         {% endif %}
     {% endblock %}
 {% endif %}
+
 
 {% if category and category.text %}
     {% set widget=True %}
@@ -36,6 +41,7 @@
         {{ category.text }}
     {% endblock %}
 {% endif %}
+
 
 {% block body %}
     <div class="row cf gallery">
