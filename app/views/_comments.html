@@ -12,7 +12,7 @@
                 {% endfor %}
             {% endif %}
         {% endif %}
-        <li class="comment-wrap">
+        <li id="{{ comment.id }}" class="comment-wrap">
             <article class="comment">
                 <header class="comment__header">
                     <h3 class="meta-title"><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
@@ -20,14 +20,33 @@
                 </header>
                 
                 <p class="comment__content">
+                {% if comment.state == 1 %}
                     <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
+                {% else %}
+                    <span class="note">{{ local.comment['DELETED'] }}</span>
+                {% endif %}
                 </p>
             {% if DEF_user %}
-                <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up') }}">Upvote</a>
-                <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='down') }}">Downvote</a>
+                    {% if DEF_user.voted(comment) == 1 %}
+                        <span class="upvoted">+</span>
+                    {% else %}
+                        <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up', _anchor=comment.id) }}">+</a>
+                    {% endif %}
+                    {% if comment.rating < 0 %}
+                        ({{ comment.rating }})
+                    {% else %}
+                        {{ comment.rating }}
+                    {% endif %}
+                    {% if DEF_user.voted(comment) == -1 %}
+                        <span class="downvoted">-</span>
+                    {% else %}
+                        <a href="{{ url_for(('comment_vote'), id=image.id, cid=comment.id, v='down', _anchor=comment.id) }}">-</a>
+                    {% endif %}
                 {% if DEF_user == comment.owner or DEF_user.level > 1 %}
                     <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
-                    <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id) }}">Delete</a>
+                    {% if comment.state == 1 %}
+                        <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id, _anchor=comment.id) }}">Delete</a>
+                    {% endif %}
             {% endif %}
         {% endif %}
             </article>                   

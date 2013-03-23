@@ -53,11 +53,13 @@
         <a href="{{ url_for('search', q=q, ipage=images.page, upage=users.prev_num) }}">Prev</a>
     {% endif %}
     {{ header(local.search['IMAGES']) }}
-    {{ list_images(images, DEF_user, category, False) }}
-    {% if images.has_next %}
-        <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
-    {% endif %}
-    {% if images.has_prev %}
-        <a href="{{ url_for('search', q=q, ipage=images.prev_num, upage=users.page) }}">Prev</a>
-    {% endif %}
+    <div class="row cf gallery">
+        {{ list_images(images, DEF_user, category, False) }}
+        {% if images.has_next %}
+            <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
+        {% endif %}
+        {% if images.has_prev %}
+            <a href="{{ url_for('search', q=q, ipage=images.prev_num, upage=users.page) }}">Prev</a>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -82,14 +82,14 @@ def comment_edit(id, cid):
         comment.text = form.text.data
 
         db.session.commit()
-        flash(local.comment['EDITTED'], 'success')
+        flash(local.comment['EDITED'], 'success')
 
         return redirect(url_for('image', id=id))
 
     flash_errors(form)
     comments = construct_comment_tree(image.comments, comment.id)
 
-    return render('comment.html', title=local.comment['TITLE_EDIT'], edit=True, id=id, cid=cid, comments=comments, form=form)
+    return render('comment.html', title=local.comment['TITLE_EDIT'], edit=True, image=image, id=id, cid=cid, comments=comments, form=form)
 
 
 @security.req_owner(Comment)

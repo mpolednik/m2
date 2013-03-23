@@ -50,7 +50,7 @@
 </header> <!-- /page-header -->
 
 <!-- PAGE CONTENT -->
-<div class="container">
+<div class="container" id="top">
 <div class="row cf">
     <aside class="sidebar sidebar--fixed">
         <div class="widget widget__search">
@@ -97,6 +97,9 @@
     <div class="content">
         {% block body %}{% endblock %}
     </div> <!-- /content -->
+    <p class="back-top">
+        <a href="#top">{{ local.BACKTOTOP }}</a>
+    </p>
 </div> <!-- /row -->
 </div> <!-- /container -->
 

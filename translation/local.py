@@ -5,6 +5,8 @@ CONTENT=u'Obsah'
 LINK=u'Odkaz'
 FILE=u'Soubor'
 
+BACKTOTOP=u'Zpět nahoru'
+
 ALL=u'Vše'
 ACTIONS=u'Akce'
 SEND=u'Odeslat'
