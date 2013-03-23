@@ -48,7 +48,7 @@ def comment_submit(id, cid = None):
         else:
             db.session.add(comment)
             db.session.flush()
-            comment.vote(1)
+            comment.vote(1, session['user'])
             db.session.commit()
             flash(local.comment['POSTED'], 'success')
 
@@ -116,7 +116,7 @@ def comment_vote(id, cid):
         else:
             rating = -1
 
-    comment.vote(rating)
+    comment.vote(rating, session['user'])
 
     db.session.commit()
     flash(local.comment['VOTED'], 'success')

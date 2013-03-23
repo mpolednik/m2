@@ -33,7 +33,7 @@
         <nav class="top-header__nav">
             <ul class="nav nav--inline">
                 {% if DEF_user %}
-                    <li><a href="{{ url_for('account') }}">{{ local.user['ACCOUNT'] }}</a></li>
+                    <li><a href="{{ url_for('account') }}">{{ DEF_user.name }}</a></li>
                     <li><a href="{{ url_for('logout') }}">{{ local.user['LOGOUT'] }}</a></li>
                     {% if DEF_user.level > 1 and 'admin' not in session %}
                         <li><a href="{{ url_for('superlogin') }}">{{ local.admin['SUPERLOGIN'] }}</a></li>

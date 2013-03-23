@@ -1,3 +1,4 @@
+# coding=utf-8
 from app.helpers.middleware import db
 
 from app.models.request import Request

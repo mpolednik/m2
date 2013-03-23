@@ -27,7 +27,7 @@ class EditForm(Form):
 
 class SubmitForm(EditForm):
     name = fields.TextField(local.NAME, [validators.Length(min=2, max=50, message=local.category_submit['INVALID_NAME'])])
-    link = fields.TextAreaField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
+    link = fields.TextField(local.LINK, [validators.Optional(), validators.Length(max=200, message=local.category_submit['INVALID_LINK'])])
     image = fields.FileField(local.FILE, [validators.Optional()])
 
 
@@ -68,12 +68,12 @@ def category_submit(name):
         else:
             db.session.rollback()
             flash(local.category_submit['INVALID_IMAGE'], 'error')
-            return redirect(url_for('category_submit', name=name))
+            return render('category_submit.html', title=local.category['TITLE_SUBMIT'], category=category, form=form)
 
         image.save_thumbnail()
         image.save_exif()
         # Self upvote 
-        image.vote(1)
+        image.vote(1, session['user'])
         db.session.commit()
         flash(local.category_submit['IMAGE_POSTED'], 'success')
 

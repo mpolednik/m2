@@ -25,12 +25,12 @@
                 <a href="{{ url_for('admin_image_delete', id=image.id, page=images.page) }}">Smazat</a>
             </td>
         </tr>
-        {% if images.has_next %}
-            <a href="{{ url_for('admin_image', page=images.next_num) }}">Další</a>
-        {% endif %}
-        {% if images.has_prev %}
-            <a href="{{ url_for('admin_image', page=images.prev_num) }}">Předchozí</a>
-        {% endif %}
     {% endfor %}
     </table>
+    {% if images.has_next %}
+        <a href="{{ url_for('admin_image', page=images.next_num) }}">Další</a>
+    {% endif %}
+    {% if images.has_prev %}
+        <a href="{{ url_for('admin_image', page=images.prev_num) }}">Předchozí</a>
+    {% endif %}
 {% endblock %}

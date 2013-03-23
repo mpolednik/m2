@@ -40,7 +40,7 @@
     {% set widget=True %}
     {% block widget %}
         <h1>Informace</h1>
-        {{ category.text }}
+        {{ category.text|safe }}
     {% endblock %}
 {% endif %}
 

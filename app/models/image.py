@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 import urllib
 from PIL import Image as Img

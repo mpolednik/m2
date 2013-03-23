@@ -85,7 +85,7 @@ def image_vote(id, name=None, page=1):
         else:
             rating = -1
 
-    image.vote(rating)
+    image.vote(rating, session['user'])
 
     db.session.commit()
     flash(local.image['VOTED'], 'success')

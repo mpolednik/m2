@@ -1,3 +1,4 @@
+# coding=utf-8
 from datetime import datetime, timedelta
 from math import log, sqrt
 
@@ -8,16 +9,16 @@ from app.helpers.middleware import db
 
 class VotableObject(object):
 
-    def vote(self, rating):
+    def vote(self, rating, user):
         try:
-            rate = db.session.query(self.RatingClass).get((session['user'], self.id))
+            rate = db.session.query(self.RatingClass).get((user, self.id))
             if (rate.value + rating) > 1 or (rate.value + rating) < -1:
                 change = 0
             else:
                 change = rating
                 rate.value += change
         except:
-            rate = self.RatingClass(session['user'], self.id, rating)
+            rate = self.RatingClass(user, self.id, rating)
             db.session.add(rate)
             change = rating
 

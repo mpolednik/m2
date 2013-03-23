@@ -1,3 +1,4 @@
+# coding=utf-8
 import sqlalchemy.exc
 
 from app.helpers.middleware import db
