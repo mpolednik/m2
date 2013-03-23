@@ -56,6 +56,7 @@
 
         {{ list_images(images, DEF_user, category) }}
 
+        <nav id="pagination">
         {% if category %}
             {% if images.has_next %}
                 <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
@@ -71,6 +72,17 @@
                 <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
             {% endif %}
         {% endif %}
-
+        </nav>
     </div> <!-- /row -->
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/jquery.infinitescroll.min.js"></script>
+    <script src="/static/js/infinitescroll.js"></script>
+    <script>
+        // passed to script with translation
+        var msgText = '{{ local.LOADING }}';
+        var finishedMsg = '{{ local.LOADING_FINISHED }}';
+    </script>
 {% endblock %}

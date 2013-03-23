@@ -6,6 +6,8 @@ LINK=u'Odkaz'
 FILE=u'Soubor'
 
 BACKTOTOP=u'Zpět nahoru'
+LOADING=u'Načítám další příspěvky...'
+LOADING_FINISHED=u'Všechny příspěvky načteny!'
 
 ALL=u'Vše'
 ACTIONS=u'Akce'
