@@ -22,10 +22,11 @@
             {% for moderator in category.moderators %}
                 <li>{{ moderator.name }}</li>
             {% endfor %}
+
         {% elif DEF_user and 'admin' not in session %}
             <li><a href="{{ url_for('request_submit') }}">{{ local.category['REQUEST_NEW'] }}</a><br></li>
         {% else %}
-            <li><a href="{{ url_for('category_create') }}">{{ local.category['REQUEST_MOD'] }}</a><br></li>
+            <li><a href="{{ url_for('category_create') }}">{{ local.category['CREATE_NEW'] }}</a><br></li>
         {% endif %}
 
         {% if DEF_user.level > 1 and 'admin' not in session %}

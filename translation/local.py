@@ -19,6 +19,7 @@ category = {
     'EDIT': u'Editovat',
     'REQUEST_NEW': u'Zažádat o novou kategorií',
     'REQUEST_MOD': u'Zažádat o post moderátora',
+    'CREATE_NEW': u'Založit novou kategorií',
 
     'TITLE_NEW': u'nová kategorie',
     'TITLE_ALL': u'všechny kategorie',

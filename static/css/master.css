@@ -460,7 +460,7 @@ h6, .zeta {
 
 .content {
     margin-right: 298px; /* same as .sidebar--fixed width */
-    padding-left: 15px;  /* same as .unit padding-left */
+    padding-left: 25px;  /* same as .unit padding-left */
 }
 
 
@@ -599,15 +599,6 @@ h6, .zeta {
     margin: 0 0 0 285px;
 }
 
-.gallery__cell {
-    max-width: 256px;
-    max-height: 256px;
-}
-
-.gallery__cell h1 {
-    font-size: 18px;
-}
-
 .gallery__img {
     display: block;
     margin-bottom: 15px;
@@ -618,18 +609,23 @@ h6, .zeta {
 }
 
 .item {
-    width: 256px;
+    width: 24%;
     float: left;
-    margin: 10px;
     padding: 3px;
+    margin: 0 0 10px 0;
     text-align: center;
     background-color: #efefef;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
 }
 
+.item:hover {
+    background-color: #ccc;
+    border: 1px solid #adadad;
+}
+
 .masonry {
-    margin-top: 30px;
+    margin: 30px 0;
 }
 
 /* -------------------------------------------------------------------------- *
