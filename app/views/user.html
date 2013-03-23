@@ -1,4 +1,5 @@
 {% from "_images.html" import list_images %}
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
 
 
@@ -9,9 +10,12 @@
         <li>Skóre obrázků:&nbsp;{{ user.rating_image }}
         <li>Skóre komentářů:&nbsp;{{ user.rating_comment }}
         <li>Vytvořen:&nbsp;{{ user.ts.strftime('%d. %m. %Y') }}</li>
-
+    </ul>
 {% endblock %}
 
 {% block body %}
-    {{ list_images(images, DEF_user) }}
+    <div class="row cf gallery">
+        {{ header(user.name) }}
+        {{ list_images(images, DEF_user) }}
+    </div>
 {% endblock %}

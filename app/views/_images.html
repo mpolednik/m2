@@ -1,6 +1,7 @@
 {% macro list_images(images, DEF_user, category, voting=True) %}
+    <div class="masonry">
     {% for image in images.items %} 
-        <div class="unit gallery__cell">
+        <div class="item">
             <figure class="gallery__img">
                 <a href="{{ url_for(('image'), id=image.id) }}">
                     <img src="/static/img/thumb/{{ image.filename }}" alt="">
@@ -15,7 +16,11 @@
                     {% else %}
                         <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">+</a>
                     {% endif %}
-                    {{ image.rating }}
+                    {% if image.rating < 0 %}
+                        ({{ image.rating }})
+                    {% else %}
+                        {{ image.rating }}
+                    {% endif %}
                     {% if DEF_user.voted(image) == -1 %}
                         <span class="downvoted">-</span>
                     {% else %}
@@ -27,7 +32,11 @@
                     {% else %}
                         <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">+</a>
                     {% endif %}
-                    {{ image.rating }}
+                    {% if image.rating < 0 %}
+                        ({{ image.rating }})
+                    {% else %}
+                        {{ image.rating }}
+                    {% endif %}
                     {% if DEF_user.voted(image) == -1 %}
                         <span class="downvoted">-</span>
                     {% else %}
@@ -40,4 +49,5 @@
             {% endif %}
         </div> <!-- /unit -->
     {% endfor %}
+    </div>
 {% endmacro %}

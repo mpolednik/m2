@@ -1,4 +1,5 @@
 {% from "_images.html" import list_images %}
+{% from "_general.html" import header %}
 {% extends "layout.html" %}
 
 
@@ -46,33 +47,29 @@
 {% block body %}
     <div class="row cf gallery">
 
-        <header class="unit gallery__header">
-            <h1 class="gallery__header__h">
-                {% if category %}
-                    {{ category.name }}
-                {% else %}
-                    Všechny fotografie
-                {% endif %}
-            </h1>
-        </header> <!-- /gallery__header -->
+        {% if category %}
+            {{ header(category.name) }}
+        {% else %}
+            {{ header('Všechny fotografie') }}
+        {% endif %}
 
         {{ list_images(images, DEF_user, category) }}
 
-    {% if category %}
-        {% if images.has_next %}
-            <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
+        {% if category %}
+            {% if images.has_next %}
+                <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
+            {% endif %}
+            {% if images.has_prev %}
+                <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
+            {% endif %}
+        {% else %}
+            {% if images.has_next %}
+                <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
+            {% endif %}
+            {% if images.has_prev %}
+                <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
+            {% endif %}
         {% endif %}
-        {% if images.has_prev %}
-            <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
-        {% endif %}
-    {% else %}
-        {% if images.has_next %}
-            <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
-        {% endif %}
-        {% if images.has_prev %}
-            <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
-        {% endif %}
-    {% endif %}
 
     </div> <!-- /row -->
 {% endblock %}
