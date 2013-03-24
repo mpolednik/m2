@@ -513,7 +513,19 @@ h6, .zeta {
 }
 
 .top-header {
-    background: #bdbdbd;
+    background-image: linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.5, rgb(214,214,214)),
+            color-stop(1, rgb(176,174,176))
+    );
     position: relative;
     padding: 0 15px;  /* same as .unit padding-left */
     border-bottom: 1px solid #717171;
@@ -548,20 +560,35 @@ h6, .zeta {
  * -------------------------------------------------------------------------- */
 
 .widget {
-    background: #bdbdbd;
+    background-image: linear-gradient(bottom, rgb(245,245,245) 100%, rgb(235,235,235) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(245,245,245) 100%, rgb(235,235,235) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(245,245,245) 100%, rgb(235,235,235) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(245,245,245) 100%, rgb(235,235,235) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(245,245,245) 100%, rgb(235,235,235) 0%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(1, rgb(245,245,245)),
+            color-stop(0, rgb(235,235,235))
+    );
     color: #444444;
     margin: 15px 0;
     padding: 5px;
     border: 1px solid #717171;
+    border-radius: 5px;
+    box-shadow: 1px 1px rgba(0,0,0,.1);
 }
 
 .widget h1 {
-    color: #e6e6e6;
-    background: #444444;
+    color: #000;
+    background: transparent;
     text-align: center;
-    border: 1px solid #000000;
     margin: 0 0 5px;
     font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 2px 1px rgba(0,0,0,.1);
 }
 
 .widget ul {
@@ -570,11 +597,38 @@ h6, .zeta {
 }
 
 .widget__admin {
-    background: #ffcdcd;
+    background-image: linear-gradient(bottom, rgb(255,237,242) 100%, rgb(255,224,224) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(255,237,242) 100%, rgb(255,224,224) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(255,237,242) 100%, rgb(255,224,224) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(255,237,242) 100%, rgb(255,224,224) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(255,237,242) 100%, rgb(255,224,224) 0%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(1, rgb(255,237,242)),
+            color-stop(0, rgb(255,224,224))
+    );
 }
 
 .widget__action {
-    background: #cdcdff;
+    background-image: linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(1, rgb(235,246,255)),
+            color-stop(0, rgb(224,234,255))
+    );
+}
+
+.widget__search {
 }
 
 .widget__search form {
@@ -614,14 +668,25 @@ h6, .zeta {
     padding: 3px;
     margin: 0 0 10px 0;
     text-align: center;
-    background-color: #efefef;
+    background-image: linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(1, rgb(235,246,255)),
+            color-stop(0, rgb(224,234,255))
+    );
     border: 1px solid #e7e7e7;
     border-radius: 5px;
 }
 
 .item:hover {
-    background-color: #ccc;
-    border: 1px solid #adadad;
+    border: 1px solid #84C1FF;
 }
 
 .masonry {
