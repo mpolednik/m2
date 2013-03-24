@@ -18,7 +18,11 @@
         <li class="comment-wrap">
             <article class="comment">
                 <header class="comment__header">
+                {% if comment.owner %}
                     <h3 class="meta-title"><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
+                {% else %}
+                    <h3 class="meta-title note">{{ local.user['NONEXISTANT'] }}</h3>
+                {% endif %}
                     <p class="meta-time">{{ local.image['REPLIED'] }} {{ comment.ts.strftime('%d. %m. %Y') }}</p>
                 </header>
                 

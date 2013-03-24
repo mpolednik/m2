@@ -49,7 +49,7 @@ def superlogout():
 @security.req_level(2)
 def send_token():
     user = User.query.get(session['user'])
-    if len(user.phone) >= 9 and len(user.phone) <= 16:
+    if user.phone and len(user.phone) >= 9 and len(user.phone) <= 16:
         try:
             token = user.gen_token()
             text = local.admin['SMS_TEXT'].format(token)

@@ -46,7 +46,7 @@ def image_edit(id):
         image.text = form.text.data
 
         db.session.commit()
-        flash(local.image['EDITTED'], 'success')
+        flash(local.image['EDITED'], 'success')
 
         return redirect(url_for('image', id=id))
 

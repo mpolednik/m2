@@ -1,19 +1,19 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% from "_comments.html" import list_comments %}
+{% from "_voting.html" import votingmenu %}
 {% extends "layout.html" %}
 
 
 {% set actionbar=True %}
 {% block actionbar %}
-    {% if DEF_user and (DEF_user == image.owner or DEF_user.level > 1) %}
+    {% if DEF_user %}
+        <li class="centered">{{ votingmenu(DEF_user, image, "/ajax/vote_image") }}</li>
+    {% endif %}
+    {% if DEF_user and (DEF_user == image.owner or 'admin' in session) %}
         <li><a href="{{ url_for('image_edit', id=image.id) }}">{{ local.actions['EDIT'] }}</a><br></li>
         <li><a href="{{ url_for('image_delete', id=image.id) }}">{{ local.actions['DELETE'] }}</a><br></li>
     {% endif %}
-    {% if DEF_user %}
-        <li><a href="{{ url_for('image_vote', id=image.id, v='up') }}">{{ local.actions['UPVOTE'] }}</a><br></li>
-        <li><a href="{{ url_for('image_vote', id=image.id, v='down') }}">{{ local.actions['DOWNVOTE'] }}</a><br></li>
-    {% endif %}
-    <a href="{{ url_for('category_one', name=image.category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a>
+    <li><a href="{{ url_for('category_one', name=image.category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a></li>
 {% endblock %}
 
 

@@ -89,6 +89,7 @@ def login():
         except:
             flash(local.user['NOT_LOGGED_IN'], 'error')
 
+    flash_errors(form)
     return render('login.html', title=local.user['TITLE_LOGIN'], form=form)
 
 

@@ -65,7 +65,13 @@ def req_owner(Object):
             elif 'id' in kwargs:
                 id = kwargs['id']
 
-            obj = Object.query.filter_by(id=id).one()
+            user = User.query.get(session['user'])
+            obj = Object.query.get(id)
+
+            # Try ownership and adminship...
+            if user == obj.owner or 'admin' in session:
+                return f(*args, **kwargs)
+            # Fallback to moderators
 
             # Get parent object's moderators (assuming object is either comment or image)
             try:
@@ -73,8 +79,7 @@ def req_owner(Object):
             except:
                 mod = obj.image.category.moderators
 
-            user = User.query.get(session['user'])
-            if 'admin' in session or user == mod  or user == obj.owner:
+            if user == mod:
                 return f(*args, **kwargs)
             else:
                 raise SecurityException

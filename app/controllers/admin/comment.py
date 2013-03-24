@@ -6,8 +6,6 @@ from app.helpers import security
 
 from app.models.comment import Comment
 
-from app.controllers.comment import comment_delete
-
 from translation import local
 
 
@@ -24,4 +22,8 @@ def admin_comment(page=1):
 
 @security.req_admin
 def admin_comment_delete(id, page):
-    return comment_delete(cid=id, ref=url_for('admin_comment', page=page))
+    comment = db.session.query(Comment).get(id)
+    db.session.delete(comment)
+    db.session.commit()
+
+    return redirect(url_for('admin_comment', page=page))
