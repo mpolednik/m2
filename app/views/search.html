@@ -54,12 +54,22 @@
     {% endif %}
     {{ header(local.search['IMAGES']) }}
     <div class="row cf gallery">
-        {{ list_images(images, DEF_user, category, local, False) }}
-        {% if images.has_next %}
+        {{ list_images(images, DEF_user, category, local) }}
+        <nav id="pagination">
             <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
-        {% endif %}
-        {% if images.has_prev %}
             <a href="{{ url_for('search', q=q, ipage=images.prev_num, upage=users.page) }}">Prev</a>
-        {% endif %}
+        </nav>
     </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/ajaxfunctions.js"></script>
+    <script src="/static/js/jquery.infinitescroll.min.js"></script>
+    <script src="/static/js/infinitescroll.js"></script>
+    <script>
+        // passed to script with translation
+        var msgText = '{{ local.LOADING }}';
+        var finishedMsg = '{{ local.LOADING_FINISHED }}';
+    </script>
 {% endblock %}

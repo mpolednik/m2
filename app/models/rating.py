@@ -22,10 +22,11 @@ class VotableObject(object):
             db.session.add(rate)
             change = rating
 
-        if self.RatingClass.__tablename__ == 'comment_rating':
-            self.owner.rating_comment += change
-        else:
-            self.owner.rating_image += change
+        if self.owner:
+            if self.RatingClass.__tablename__ == 'comment_rating':
+                self.owner.rating_comment += change
+            else:
+                self.owner.rating_image += change
 
         self.rating += change
         time = datetime.now() if not self.ts else self.ts

@@ -1,7 +1,7 @@
 {% from "_voting.html" import votingmenu %}
 
 
-{% macro list_images(images, DEF_user, category, local, voting=True) %}
+{% macro list_images(images, DEF_user, category, local) %}
     <div class="masonry">
     {% for image in images.items %} 
         <div class="item">
@@ -16,7 +16,7 @@
             {% else %}
                 <span class="note">{{ local.user['NONEXISTANT'] }}</span>
             {% endif %}
-            {% if voting and DEF_user %}
+            {% if DEF_user %}
                 &nbsp;|
                 {{ votingmenu(DEF_user, image, "/ajax/vote_image") }} 
             {% endif %}
