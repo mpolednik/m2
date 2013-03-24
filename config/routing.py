@@ -44,6 +44,8 @@ views.add('/admin/categories/<int:page>', 'app.controllers.admin.category.admin_
 views.add('/admin/categories/<int:page>/<int:id>/delete', 'app.controllers.admin.category.admin_category_delete')
 views.add('/admin/users/<int:page>', 'app.controllers.admin.user.admin_user')
 views.add('/admin/users/<int:page>/<int:id>/delete', 'app.controllers.admin.user.admin_user_delete')
+views.add('/admin/users/<int:page>/<int:id>/promote', 'app.controllers.admin.user.admin_user_promote')
+views.add('/admin/users/<int:page>/<int:id>/demote', 'app.controllers.admin.user.admin_user_demote')
 views.add('/admin/images/<int:page>', 'app.controllers.admin.image.admin_image')
 views.add('/admin/images/<int:page>/<int:id>/delete', 'app.controllers.admin.image.admin_image_delete')
 views.add('/admin/comments/<int:page>', 'app.controllers.admin.comment.admin_comment')

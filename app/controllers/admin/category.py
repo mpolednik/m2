@@ -23,6 +23,9 @@ def admin_category(page=1):
 @security.req_admin
 def admin_category_delete(id, page):
     category = db.session.query(Category).get(id)
+    for user in category.moderators:
+        if len(user.categories) < 2 and user.level < 2:
+            user.level = 0
     db.session.delete(category)
     db.session.commit()
     cache.delete('categories')

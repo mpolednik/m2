@@ -28,3 +28,24 @@ def admin_user_delete(id, page):
     db.session.commit()
 
     return redirect(url_for('admin_user', page=page))
+
+
+@security.req_admin
+def admin_user_promote(id, page):
+    user = db.session.query(User).get(id)
+    user.level = 2
+    db.session.commit()
+
+    return redirect(url_for('admin_user', page=page))
+
+
+@security.req_admin
+def admin_user_demote(id, page):
+    user = db.session.query(User).get(id)
+    if len(user.categories) < 2:
+        user.level = 0
+    else:
+        user.level = 1
+    db.session.commit()
+
+    return redirect(url_for('admin_user', page=page))

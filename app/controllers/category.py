@@ -106,6 +106,8 @@ def category_pass_mod(name):
     category = db.session.query(Category).filter_by(name=name).one()
     user = User.query.get(session['user'])
     category.moderators.remove(user)
+    if len(user.categories) < 2 and user.level < 2:
+        user.level = 0
     db.session.commit()
     return redirect(url_for('category_one', name=name))
 

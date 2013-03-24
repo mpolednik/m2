@@ -11,8 +11,9 @@
                 </a>
             </figure>
             {{ image.name }}&nbsp;|
-            <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>&nbsp;|&nbsp;
+            <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>
             {% if voting and DEF_user %}
+                &nbsp;|
                 {{ votingmenu(DEF_user, image, "/ajax/vote_image") }} 
             {% endif %}
             {% if not category %}

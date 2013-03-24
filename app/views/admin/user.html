@@ -11,18 +11,28 @@
         <a href="{{ url_for('admin_user', page=1) }}">{{ local.ALL }}</a>
     {% endif %}
     <table>
-        <th>
+        <tr>
             <td>Název</td>
             <td>Smazat</td>
-        </th>
+            <td>Admin</td>
+        </tr>
     {% for user in users.items %}
         <tr>
             <td>
-                {{ user.name }}
+                <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
             </td>
             <td>
                 <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>
             </td>
+            {% if user.level < 2 %}
+                <td>
+                    <a href="{{ url_for('admin_user_promote', id=user.id, page=users.page) }}">Darovat admin práva</a>
+                </td>
+            {% else %}
+                <td>
+                    <a href="{{ url_for('admin_user_demote', id=user.id, page=users.page) }}">Odstranit admin práva</a>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </table>
