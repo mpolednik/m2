@@ -1,4 +1,7 @@
-{% macro list_comments(comments, DEF_user, image, local) %}
+{% from "_voting.html" import votingmenu %}
+
+
+{% macro list_comments(comments, DEF_user, image, local, session) %}
     <ol class="comment-list">
     {% set lastdepth=1 %}
     {% for comment in comments %}
@@ -12,43 +15,29 @@
                 {% endfor %}
             {% endif %}
         {% endif %}
-        <li id="{{ comment.id }}" class="comment-wrap">
+        <li class="comment-wrap">
             <article class="comment">
                 <header class="comment__header">
                     <h3 class="meta-title"><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
                     <p class="meta-time">{{ local.image['REPLIED'] }} {{ comment.ts.strftime('%d. %m. %Y') }}</p>
                 </header>
                 
-                <p class="comment__content">
+                <p id="{{ comment.id }}" class="comment__content">
                 {% if comment.state == 1 %}
                     <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
                 {% else %}
                     <span class="note">{{ local.comment['DELETED'] }}</span>
                 {% endif %}
                 </p>
-            {% if DEF_user %}
-                    {% if DEF_user.voted(comment) == 1 %}
-                        <span class="upvoted">+</span>
-                    {% else %}
-                        <a href="{{ url_for('comment_vote', id=image.id, cid=comment.id, v='up', _anchor=comment.id) }}">+</a>
-                    {% endif %}
-                    {% if comment.rating < 0 %}
-                        ({{ comment.rating }})
-                    {% else %}
-                        {{ comment.rating }}
-                    {% endif %}
-                    {% if DEF_user.voted(comment) == -1 %}
-                        <span class="downvoted">-</span>
-                    {% else %}
-                        <a href="{{ url_for(('comment_vote'), id=image.id, cid=comment.id, v='down', _anchor=comment.id) }}">-</a>
-                    {% endif %}
-                {% if DEF_user == comment.owner or DEF_user.level > 1 %}
+            {% if DEF_user and comment.state > 0 %}
+                <span id="actions_{{ comment.id }}">
+                {{ votingmenu(DEF_user, comment, "/ajax/vote_comment") }}
+                {% if 'admin' in session or DEF_user == comment.owner %}
                     <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
-                    {% if comment.state == 1 %}
-                        <a href="{{ url_for('comment_delete', id=image.id, cid=comment.id, _anchor=comment.id) }}">Delete</a>
-                    {% endif %}
+                    <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }})">Delete</a>
+                {% endif %}
+                </span>
             {% endif %}
-        {% endif %}
             </article>                   
         {% if loop.last %}
             </li>

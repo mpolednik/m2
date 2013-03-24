@@ -49,7 +49,7 @@ def req_mod(f):
     def inner(*args, **kwargs):
         category = Category.query.filter_by(name=kwargs['name']).one()
         user = User.query.get(session['user'])
-        if user.level > 1 or user in category.moderators:
+        if 'admin' in session or user in category.moderators:
             return f(*args, **kwargs)
         else:
             raise SecurityException
@@ -74,7 +74,7 @@ def req_owner(Object):
                 mod = obj.image.category.moderators
 
             user = User.query.get(session['user'])
-            if user.level > 1 or user == mod  or user == obj.owner:
+            if 'admin' in session or user == mod  or user == obj.owner:
                 return f(*args, **kwargs)
             else:
                 raise SecurityException
@@ -86,7 +86,7 @@ def req_requested_category_mod(f):
         try:
             request = Request.query.get(kwargs['id'])
             user = User.query.get(session['user'])
-            if user.level > 1 or user in request.category.moderators:
+            if 'admin' in session or user in request.category.moderators:
                 return f(*args, **kwargs)
             else:
                 raise SecurityException

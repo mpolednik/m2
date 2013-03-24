@@ -19,9 +19,18 @@
             <ul>
                 {{ render_field(form.text) }}
                 {{ form.hidden_tag() }}
-                {{ render_submit(local.comment['REPLY']) }}
+                {% if edit %}
+                    {{ render_submit(local.comment['EDIT']) }}
+                {% else %}
+                    {{ render_submit(local.comment['REPLY']) }}
+                {% endif %}
             </ul>
         </form>
     {% endif %}
-    {{ list_comments(comments, DEF_user, image, local) }}
+    {{ list_comments(comments, DEF_user, image, local, session) }}
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/ajaxfunctions.js"></script>
 {% endblock %}

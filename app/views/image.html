@@ -50,7 +50,12 @@
 
 <div class="comments-area" id="comments">
 
-    <h3>Comments on this article</h3>
-    {{ list_comments(comments, DEF_user, image, local) }}
+    <h3>{{ local.image['COMMENTS'] }}</h3>
+    {{ list_comments(comments, DEF_user, image, local, session) }}
 </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/ajaxfunctions.js"></script>
 {% endblock %}

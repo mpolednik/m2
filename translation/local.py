@@ -75,10 +75,9 @@ comment = {
     'INVALID_TEXT': u'Délka obsahu musí být mezi %(min)d a %(max)d znaky!',
     'ALREADY_COMMENTED': u'Komentář nejvyšší úrovně můžete mít jen jeden.',
     'POSTED': u'Komentář uložen.',
-    'DELETED': u'Komentář smazán.',
     'EDITED': u'Komentář editován.',
-    'VOTED': u'Hodnoceno!',
     'REPLY': u'Odpovědět',
+    'EDIT': u'Editovat',
 
     'TITLE_ONE': u'komentář',
     'TITLE_EDIT': u'editace komentáře',
@@ -89,7 +88,6 @@ comment = {
 image = {
     'DELETED': u'Obrázek smazán.',
     'EDITED': u'Obrázek editován.',
-    'VOTED': u'Hodnoceno!',
     'EXIF': u'EXIF data',
     'COMMENT': u'Komentovat',
     'COMMENTS': u'Komentáře',

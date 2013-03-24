@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import request, redirect, url_for, flash, session
+from flask import request, redirect, url_for, flash, session, jsonify
 import sqlalchemy.exc
 
 from app.helpers.middleware import db
@@ -76,23 +76,14 @@ def image_delete(id, ref=None):
 
 
 @security.req_login
-def image_vote(id, name=None, page=1):
+def image_vote():
+    id = int(request.args.get('id'))
+    rating = int(request.args.get('rating'))
     image = db.session.query(Image).get(id)
 
-    if 'v' in request.args:
-        if request.args['v'] == 'up':
-            rating = 1
-        else:
-            rating = -1
-
     image.vote(rating, session['user'])
-
     db.session.commit()
-    flash(local.image['VOTED'], 'success')
 
-    if name:
-        return redirect(url_for('category_one', name=name, page=page))
-    else:
-        if 'ref' in request.args:
-            return redirect(url_for('category_all', page=page))
-        return redirect(url_for('image', id=id))
+    user = db.session.query(User).get(session['user'])
+
+    return jsonify(rating=image.rating, rated=user.voted(image))

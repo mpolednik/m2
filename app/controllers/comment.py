@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import redirect, url_for, request, session, flash
+from flask import redirect, url_for, request, session, flash, jsonify
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
@@ -93,32 +93,25 @@ def comment_edit(id, cid):
 
 
 @security.req_owner(Comment)
-def comment_delete(cid, id=None, ref=None):
-    comment = db.session.query(Comment).filter_by(id=cid).one()
+def comment_delete(id):
+    comment = db.session.query(Comment).get(id)
     comment.state = 0
 
     db.session.commit()
-    flash(local.comment['DELETED'], 'success')
 
-    if ref:
-        return redirect(ref)
-    else:
-        return redirect(url_for('image', id=id))
+    return jsonify(text=local.comment['DELETED'])
 
 
 @security.req_login
-def comment_vote(id, cid):
-    comment = db.session.query(Comment).filter_by(id=cid).one()
+def comment_vote():
+    id = int(request.args.get('id'))
+    rating = int(request.args.get('rating'))
+    comment = db.session.query(Comment).get(id)
 
-    if 'v' in request.args:
-        if request.args['v'] == 'up':
-            rating = 1
-        else:
-            rating = -1
+    if comment.state > 0:
+        comment.vote(rating, session['user'])
+        db.session.commit()
 
-    comment.vote(rating, session['user'])
+    user = db.session.query(User).get(session['user'])
 
-    db.session.commit()
-    flash(local.comment['VOTED'], 'success')
-
-    return redirect(url_for('image', id=id))
+    return jsonify(rating=comment.rating, rated=user.voted(comment))

@@ -13,19 +13,15 @@ views.add('/c/<name>/submit', 'app.controllers.category.category_submit', method
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
 views.add('/c/<name>/pass', 'app.controllers.category.category_pass_mod')
 views.add('/c/<name>/become_mod', 'app.controllers.category.category_become_mod')
-views.add('/c/<name>/i/<int:id>/vote/<int:page>', 'app.controllers.image.image_vote')
 
 views.add('/i/<int:id>', 'app.controllers.image.image')
 views.add('/i/<int:id>/edit', 'app.controllers.image.image_edit', methods=('GET', 'POST'))
 views.add('/i/<int:id>/delete', 'app.controllers.image.image_delete')
-views.add('/i/<int:id>/vote', 'app.controllers.image.image_vote')
 views.add('/i/<int:id>/submit', 'app.controllers.comment.comment_submit', methods=('GET', 'POST'))
 
 views.add('/i/<int:id>/comment/<int:cid>', 'app.controllers.comment.comment', methods=('GET', 'POST'))
 views.add('/i/<int:id>/comment/<int:cid>/submit', 'app.controllers.comment.comment_submit', methods=('GET', 'POST'))
 views.add('/i/<int:id>/comment/<int:cid>/edit', 'app.controllers.comment.comment_edit', methods=('GET', 'POST'))
-views.add('/i/<int:id>/comment/<int:cid>/delete', 'app.controllers.comment.comment_delete')
-views.add('/i/<int:id>/comment/<int:cid>/vote', 'app.controllers.comment.comment_vote')
 
 views.add('/r', 'app.controllers.admin.request.request_all')
 views.add('/r/submit', 'app.controllers.admin.request.request_submit', methods=('GET', 'POST'))
@@ -53,6 +49,9 @@ views.add('/admin/images/<int:page>/<int:id>/delete', 'app.controllers.admin.ima
 views.add('/admin/comments/<int:page>', 'app.controllers.admin.comment.admin_comment')
 views.add('/admin/comments/<int:page>/<int:id>/delete', 'app.controllers.admin.comment.admin_comment_delete')
 
+views.add('/ajax/vote_image', 'app.controllers.image.image_vote')
+views.add('/ajax/vote_comment', 'app.controllers.comment.comment_vote')
+views.add('/ajax/delete_comment/<int:id>', 'app.controllers.comment.comment_delete')
 views.add('/ajax/smsstate', 'app.controllers.admin.login.get_sms_state')
 
 @app.errorhandler(404)

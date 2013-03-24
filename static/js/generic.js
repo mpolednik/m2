@@ -1,4 +1,7 @@
 $(function () {
+    // Fade flashes 2.5 secs after page load
+    $('.flashes').delay(2500).fadeOut(300);
+
     // hide #back-top first
     $(".back-top").hide();
 

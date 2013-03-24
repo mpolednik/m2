@@ -1,3 +1,6 @@
+{% from "_voting.html" import votingmenu %}
+
+
 {% macro list_images(images, DEF_user, category, voting=True) %}
     <div class="masonry">
     {% for image in images.items %} 
@@ -10,39 +13,7 @@
             {{ image.name }}&nbsp;|
             <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>&nbsp;|&nbsp;
             {% if voting and DEF_user %}
-                {% if category %}
-                    {% if DEF_user.voted(image) == 1 %}
-                        <span class="upvoted">+</span>
-                    {% else %}
-                        <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='up') }}">+</a>
-                    {% endif %}
-                    {% if image.rating < 0 %}
-                        ({{ image.rating }})
-                    {% else %}
-                        {{ image.rating }}
-                    {% endif %}
-                    {% if DEF_user.voted(image) == -1 %}
-                        <span class="downvoted">-</span>
-                    {% else %}
-                        <a href="{{ url_for(('image_vote'), id=image.id, name=image.category.name, page=images.page, v='down') }}">-</a><br>
-                    {% endif %}
-                {% else %}
-                    {% if DEF_user.voted(image) == 1 %}
-                        <span class="upvoted">+</span>
-                    {% else %}
-                        <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='up') }}">+</a>
-                    {% endif %}
-                    {% if image.rating < 0 %}
-                        ({{ image.rating }})
-                    {% else %}
-                        {{ image.rating }}
-                    {% endif %}
-                    {% if DEF_user.voted(image) == -1 %}
-                        <span class="downvoted">-</span>
-                    {% else %}
-                        <a href="{{ url_for(('image_vote'), id=image.id, ref='all', v='down') }}">-</a>
-                    {% endif %}
-                {% endif %}
+                {{ votingmenu(DEF_user, image, "/ajax/vote_image") }} 
             {% endif %}
             {% if not category %}
                 &nbsp;|&nbsp;<a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>

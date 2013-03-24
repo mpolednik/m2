@@ -1,0 +1,13 @@
+{% macro votingmenu(DEF_user, obj, ajaxurl) %}
+    {% if DEF_user.voted(obj) == 1 %}
+        <span id="upvote_{{ obj.id }}" onclick="vote('{{ ajaxurl }}', {{ obj.id }}, 1)" class="upvoted">+</span>
+    {% else %}
+        <span id="upvote_{{ obj.id }}" onclick="vote('{{ ajaxurl }}', {{ obj.id }}, 1)">+</span>
+    {% endif %}
+    <span id="vote_{{ obj.id }}">{{ obj.rating }}</span>
+    {% if DEF_user.voted(obj) == -1 %}
+        <span id="downvote_{{ obj.id }}" onclick="vote('{{ ajaxurl }}', {{ obj.id }}, -1)" class="downvoted">-</span>
+    {% else %}
+        <span id="downvote_{{ obj.id }}" onclick="vote('{{ ajaxurl }}', {{ obj.id }}, -1)">-</span>
+    {% endif %}
+{% endmacro %}
