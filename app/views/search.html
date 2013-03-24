@@ -54,7 +54,7 @@
     {% endif %}
     {{ header(local.search['IMAGES']) }}
     <div class="row cf gallery">
-        {{ list_images(images, DEF_user, category, False) }}
+        {{ list_images(images, DEF_user, category, local, False) }}
         {% if images.has_next %}
             <a href="{{ url_for('search', q=q, ipage=images.next_num, upage=users.page) }}">Next</a>
         {% endif %}

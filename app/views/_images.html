@@ -1,7 +1,7 @@
 {% from "_voting.html" import votingmenu %}
 
 
-{% macro list_images(images, DEF_user, category, voting=True) %}
+{% macro list_images(images, DEF_user, category, local, voting=True) %}
     <div class="masonry">
     {% for image in images.items %} 
         <div class="item">
@@ -11,12 +11,16 @@
                 </a>
             </figure>
             {{ image.name }}&nbsp;|
-            <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>
+            {% if image.owner %}
+                <a href="{{ url_for('user', id=image.owner.id, page=images.page) }}">{{ image.owner.name }}</a>
+            {% else %}
+                <span class="note">{{ local.user['NONEXISTANT'] }}</span>
+            {% endif %}
             {% if voting and DEF_user %}
                 &nbsp;|
                 {{ votingmenu(DEF_user, image, "/ajax/vote_image") }} 
             {% endif %}
-            {% if not category %}
+            {% if not category and image.category %}
                 &nbsp;|&nbsp;<a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
             {% endif %}
         </div> <!-- /unit -->

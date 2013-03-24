@@ -47,6 +47,7 @@ user = {
     'PASS': u'Heslo',
     'NICK': u'Přezdívka',
     'PHONE': u'Telefonní číslo',
+    'NONEXISTANT': u'<neexistující uživatel>',
 
     'INVALID_MAIL': u'Neplatná e-mailový adresa! E-mail musí být zadán ve formátu name@domain.tld.',
     'INVALID_PASS': u'Heslo musí mít minimálně %(min)d znaky!',

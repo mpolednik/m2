@@ -13,6 +13,7 @@
     <table>
         <tr>
             <td>Název</td>
+            <td>Moderuje</td>
             <td>Smazat</td>
             <td>Admin</td>
         </tr>
@@ -20,6 +21,14 @@
         <tr>
             <td>
                 <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
+            </td>
+            <td>
+                {% for category in user.categories %}
+                    <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+                    {% if not loop.last %}
+                        ,
+                    {% endif %}
+                {% endfor %}
             </td>
             <td>
                 <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>

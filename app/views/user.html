@@ -16,6 +16,6 @@
 {% block body %}
     <div class="row cf gallery">
         {{ header(user.name) }}
-        {{ list_images(images, DEF_user) }}
+        {{ list_images(images, DEF_user, local) }}
     </div>
 {% endblock %}

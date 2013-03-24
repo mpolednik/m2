@@ -54,7 +54,7 @@
             {{ header('Všechny fotografie') }}
         {% endif %}
 
-        {{ list_images(images, DEF_user, category) }}
+        {{ list_images(images, DEF_user, category, local) }}
 
         <nav id="pagination">
         {% if category %}

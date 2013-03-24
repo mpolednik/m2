@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.29)
 # Database: maturita
-# Generation Time: 2013-03-19 18:53:18 +0000
+# Generation Time: 2013-03-24 16:48:14 +0000
 # ************************************************************
 
 
@@ -112,8 +112,8 @@ CREATE TABLE `image` (
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `image_ibfk_4` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `image_ibfk_3` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`) ON DELETE SET NULL
+  CONSTRAINT `image_ibfk_3` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `image_ibfk_4` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
