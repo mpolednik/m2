@@ -58,19 +58,11 @@
 
         <nav id="pagination">
         {% if category %}
-            {% if images.has_next %}
-                <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
-            {% endif %}
-            {% if images.has_prev %}
-                <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
-            {% endif %}
+            <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
+            <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
         {% else %}
-            {% if images.has_next %}
-                <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
-            {% endif %}
-            {% if images.has_prev %}
-                <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
-            {% endif %}
+            <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
+            <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
         {% endif %}
         </nav>
     </div> <!-- /row -->
