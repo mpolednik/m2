@@ -71,16 +71,6 @@ def req_owner(Object):
             # Try ownership and adminship...
             if user == obj.owner or 'admin' in session:
                 return f(*args, **kwargs)
-            # Fallback to moderators
-
-            # Get parent object's moderators (assuming object is either comment or image)
-            try:
-                mod = obj.category.moderators
-            except:
-                mod = obj.image.category.moderators
-
-            if user == mod:
-                return f(*args, **kwargs)
             else:
                 raise SecurityException
         return inner
