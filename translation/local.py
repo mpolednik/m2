@@ -79,6 +79,7 @@ comment = {
     'EDITED': u'Komentář editován.',
     'REPLY': u'Odpovědět',
     'EDIT': u'Editovat',
+    'DELETED': u'Smazaný komentář.',
 
     'TITLE_ONE': u'komentář',
     'TITLE_EDIT': u'editace komentáře',
