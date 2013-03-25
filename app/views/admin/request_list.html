@@ -9,11 +9,9 @@
             <th>Název</th>
             <th>Text</th>
             <th>Typ</th>
-            <th>Příjmout</th>
-            <th>Zamítnout</th>
-            <th>Smazat</th>
+            <th colspan="3">Akce</th>
         </tr>
-    {% for request in requests %}
+    {% for request in requests.items %}
         {% if request.state == 1 %}
             <tr class="accepted">
         {% elif request.state == -1 %}
@@ -25,16 +23,20 @@
                 <a href="/r/{{ request.id }}">{{ request.name }}</a><br>
             </td>
             <td>
-                {{ request.type }}
-            </td>
-            <td>
                 {{ request.text }}
             </td>
             <td>
-                <a href="{{ url_for('request_accept', id=request.id) }}">Příjmout</a>
+                {{ request.type }}
             </td>
             <td>
+                {% if request.state == 0 %}
+                    <a href="{{ url_for('request_accept', id=request.id) }}">Příjmout</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if request.state == 0 %}
                 <a href="{{ url_for('request_decline', id=request.id) }}">Zamítnout</a>
+                {% endif %}
             </td>
             <td>
                 <a href="{{ url_for('request_delete', id=request.id) }}">Smazat</a>
@@ -42,4 +44,10 @@
         </tr>
     {% endfor %}
     </table>
+    {% if requests.has_next %}
+        <a href="{{ url_for('request_all', page=requests.next_num) }}">Další</a>
+    {% endif %}
+    {% if requests.has_prev %}
+        <a href="{{ url_for('request_all', page=requests.prev_num) }}">Předchozí</a>
+    {% endif %}
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask import request, session, flash, redirect, url_for
 
-from app.helpers.middleware import db
+from app.helpers.middleware import db, cache
 from app.helpers.rendering import render
 from app.helpers import security
 from app.helpers.forms import flash_errors
@@ -21,20 +21,20 @@ class RequestForm(Form):
 
 
 @security.req_level(1)
-def request_all():
+def request_all(page=1):
     # Display every request visible to user (admin or moderator of categories)
     user = User.query.get(session['user'])
-    if user.level > 1:
-        requests = db.session.query(Request).all()
+    if 'admin' in session > 1:
+        requests = Request.query.paginate(page, 20)
     else:
         keys = [cat.id for cat in user.categories]
-        requests = db.session.query(Request).filter(Request.id_category.in_(keys))
+        requests = Request.query.filter(Request.id_category.in_(keys)).paginate(page, 20)
 
     return render('admin/request_list.html', title=local.request['TITLE_LIST'], requests=requests)
 
 
 @security.req_requested_category_mod
-def request_one(id):
+def request_one(id, page=1):
     request = db.session.query(Request).filter_by(id=id).one()
 
     return render('admin/request.html', title=local.request['TITLE_DETAILS'], request=request)
@@ -72,7 +72,7 @@ def request_submit(name = None):
 
 
 @security.req_requested_category_mod
-def request_accept(id):
+def request_accept(id, page):
     request = db.session.query(Request).get(id)
     user = User.query.get(request.owner.id)
     if request.state == 0:
@@ -85,6 +85,7 @@ def request_accept(id):
             category = Category(request.name, request.text)
             category.moderators.append(request.owner)
             db.session.add(category)
+            cache.delete('categories')
         # Type: new moderator
         elif request.type == 1:
             if user.level < 2:
@@ -99,7 +100,7 @@ def request_accept(id):
 
 
 @security.req_requested_category_mod
-def request_decline(id):
+def request_decline(id, page):
     request = db.session.query(Request).get(id)
     if request.state == 0:
         request.state = -1
@@ -109,7 +110,7 @@ def request_decline(id):
     return redirect(url_for('request_all'))
 
 @security.req_admin
-def request_delete(id):
+def request_delete(id, page):
     request = db.session.query(Request).get(id)
     db.session.delete(request)
     db.session.commit()
