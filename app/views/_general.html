@@ -8,25 +8,32 @@
 
 {% macro list_users(users, local, admin=False) %}
     <table>
+        <tr>
+            <th>přezdívka</th>
+            <th>{{ local.user['SCORE_IMAGES'] }}</th>
+            <th>{{ local.user['SCORE_COMMENTS'] }}</th>
+            <th>{{ local.user['NUM_IMAGES'] }}</th>
+            <th>{{ local.user['NUM_COMMENTS'] }}</th>
+            <th>{{ local.user['MODERATES'] }}</th>
+            {% if admin %}
+            <th colspan="3">{{ local.ACTIONS }}</th>
+            {% endif %}
+        </tr>
     {% for user in users.items %}
         <tr>
             <td>
                 <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
             </td>
             <td>
-                {{ local.user['SCORE_IMAGES'] }}:&nbsp;
                 {{ user.rating_image }}
             </td>
             <td>
-                {{ local.user['SCORE_COMMENTS'] }}:&nbsp;
                 {{ user.rating_comment }}
             </td>
             <td>
-                {{ local.user['NUM_IMAGES'] }}:&nbsp;
                 {{ user.images|count }}
             </td>
             <td>
-                {{ local.user['NUM_COMMENTS'] }}:&nbsp;
                 {{ user.comments|count }}
             </td>
             <td>

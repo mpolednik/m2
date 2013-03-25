@@ -29,3 +29,9 @@ var delete_comment = function (id, text) {
         });
     }
 };
+
+var get_sms_state = function () {
+    $.getJSON('/ajax/smsstate', function(data) {
+        $('.state').html(data.state)
+    });
+};

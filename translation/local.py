@@ -8,7 +8,7 @@ BACKTOTOP=u'Zpět nahoru'
 LOADING=u'Načítám další příspěvky...'
 LOADING_FINISHED=u'Všechny příspěvky načteny!'
 ALL=u'Vše'
-ACTIONS=u'Akce'
+ACTIONS=u'akce'
 SEND=u'Odeslat'
 BACK=u'Zpět'
 NOTFOUND=u'Požadovaná stránka neexistuje!'
@@ -53,12 +53,12 @@ user = {
     'NONEXISTANT': u'<neexistující uživatel>',
     'SETTINGS': u'nastavení',
 
-    'SCORE_IMAGES': u'Skóre obrázků',
-    'SCORE_COMMENTS': u'Skóre komentářů',
-    'NUM_IMAGES': u'Obrázků',
-    'NUM_COMMENTS': u'Komentářů',
-    'CREATED': u'Vytvořen',
-    'MODERATES': u'Moderuje',
+    'SCORE_IMAGES': u'skóre obrázků',
+    'SCORE_COMMENTS': u'skóre komentářů',
+    'NUM_IMAGES': u'obrázků',
+    'NUM_COMMENTS': u'komentářů',
+    'CREATED': u'vytvořen',
+    'MODERATES': u'moderuje',
 
     'ADMINISTRATOR': u'administrátor',
     'MODERATOR': u'moderátor',

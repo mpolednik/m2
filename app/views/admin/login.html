@@ -18,5 +18,10 @@
 
 
 {% block js %}
-    <script src="/static/js/ajax.js"></script>
+    <script src="/static/js/ajaxfunctions.js"></script>
+    {% if 'id' in session %}
+        <script>
+            var timer = setInterval(get_sms_state, 3000);
+        </script>
+    {% endif %}
 {% endblock %}

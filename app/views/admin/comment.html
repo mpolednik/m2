@@ -13,12 +13,12 @@
     {% endif %}
     <table>
         <tr>
-            <th>{{ local.TEXT }}</th>
-            <th>Vlastník</th>
-            <th>Obrázek</th>
-            <th>Hodnocení</th>
-            <th>Přidáno</th>
-            <th>Smazat</th>
+            <th>název</th>
+            <th>vlastník</th>
+            <th>obrázek</th>
+            <th>hodnocení</th>
+            <th>přidáno</th>
+            <th>akce</th>
         </tr>
     {% for comment in comments.items %}
         {% if comment.state == 1 %}
