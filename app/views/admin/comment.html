@@ -21,7 +21,7 @@
     {% for comment in comments.items %}
         <tr>
             <td>
-                {{ comment.text }}
+                {{ comment.text|truncate(30, True, '...') }}
             </td>
             <td>
                 {{ comment.owner.name }}
