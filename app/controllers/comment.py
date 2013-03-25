@@ -92,7 +92,7 @@ def comment_edit(id, cid):
     return render('comment.html', title=local.comment['TITLE_EDIT'], edit=True, image=image, id=id, cid=cid, comments=comments, form=form)
 
 
-@security.req_owner(Comment)
+@security.req_mod(Comment)
 def comment_delete(id):
     comment = db.session.query(Comment).get(id)
     comment.state = 0

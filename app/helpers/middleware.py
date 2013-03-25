@@ -14,7 +14,7 @@ tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../views')
 app = Flask('m2', template_folder=tmpl_dir)
 
 # SQLAlchemy
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(dbconf['user'], dbconf['pass'], dbconf['host'], dbconf['name'])
 db = SQLAlchemy(app)
 

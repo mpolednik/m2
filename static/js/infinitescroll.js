@@ -18,7 +18,7 @@ $(function () {
         loading: {
             finishedMsg: finishedMsg,
             msgText: msgText,
-            img: 'http://i.imgur.com/6RMhx.gif'
+            img: '/static/img/loading.gif',
         }
     },
     // trigger Masonry as a callback

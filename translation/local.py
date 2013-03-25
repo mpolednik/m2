@@ -4,15 +4,15 @@ TEXT=u'Popis'
 CONTENT=u'Obsah'
 LINK=u'Odkaz'
 FILE=u'Soubor'
-
 BACKTOTOP=u'Zpět nahoru'
 LOADING=u'Načítám další příspěvky...'
 LOADING_FINISHED=u'Všechny příspěvky načteny!'
-
 ALL=u'Vše'
 ACTIONS=u'Akce'
 SEND=u'Odeslat'
-BACK=u'Zpět'
+BACK=u'Zpět',
+EXCEPTION=u'Na stránce došlo k chybě!'
+SECURITYEXCEPTION=u'Pro tuto akci nemáte dostatečné oprávnění!'
 
 category = {
     'INVALID_NAME': u'Délka názvu kategorie musí být mezi %(min)d a %(max)d znaky!',

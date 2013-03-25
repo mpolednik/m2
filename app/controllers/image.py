@@ -54,7 +54,7 @@ def image_edit(id):
     return render('image_edit.html', title=local.image['TITLE_EDIT'], image=image, form=form)
 
 
-@security.req_owner(Image)
+@security.req_mod(Image)
 def image_delete(id, ref=None):
     image = db.session.query(Image).filter_by(id=id).one()
     try:

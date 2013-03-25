@@ -1,5 +1,7 @@
+# coding=utf-8
 from app.helpers.middleware import app
 from app.helpers.rendering import render
+
 
 @app.errorhandler(404)
 def page_error(error):

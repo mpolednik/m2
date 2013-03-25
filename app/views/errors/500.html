@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
+
+
 {% block body %}
-    <h1>Error</h1>
-    <h2>{{ error }}</h2>
+    {% if error.code == 1000 %}
+        {{ local.SECURITYEXCEPTION }}  
+    {% else %}
+        {{ local.EXCEPTION }}  
+    {% endif %}
 {% endblock %}
