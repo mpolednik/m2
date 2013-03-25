@@ -24,6 +24,7 @@ category = {
     'REQUEST_NEW': u'Zažádat o novou kategorií',
     'REQUEST_MOD': u'Zažádat o post moderátora',
     'CREATE_NEW': u'Založit novou kategorií',
+    'MODERATORS': u'Moderátoři',
 
     'TITLE_NEW': u'nová kategorie',
     'TITLE_ALL': u'všechny kategorie',

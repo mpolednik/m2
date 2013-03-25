@@ -13,9 +13,29 @@
     </ul>
 {% endblock %}
 
+
 {% block body %}
     <div class="row cf gallery">
         {{ header(user.name) }}
         {{ list_images(images, DEF_user, local) }}
+
+        <nav id="pagination">
+        {% if images.items|count > 0 %}
+            <a href="{{ url_for('user', id=user.id, page=images.next_num) }}">Next</a>
+            <a href="{{ url_for('user', id=user.id, page=images.prev_num) }}">Prev</a>
+        {% endif %}
+        </nav>
     </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/ajaxfunctions.js"></script>
+    <script src="/static/js/jquery.infinitescroll.min.js"></script>
+    <script src="/static/js/infinitescroll.js"></script>
+    <script>
+        // passed to script with translation
+        var msgText = '{{ local.LOADING }}';
+        var finishedMsg = '{{ local.LOADING_FINISHED }}';
+    </script>
 {% endblock %}

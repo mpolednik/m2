@@ -19,9 +19,12 @@
                 <li><a href="{{ url_for('request_submit', name=category.name) }}">{{ local.actions['REQUEST_MOD'] }}</a><br></li>
             {% endif %}
 
-            {% for moderator in category.moderators %}
-                <li>{{ moderator.name }}</li>
-            {% endfor %}
+            {% if category.moderators %}
+                <h1>{{ local.category['MODERATORS'] }}</h1>
+                {% for moderator in category.moderators %}
+                    <li><a href="{{ url_for('user', id=moderator.id) }}">{{ moderator.name }}</a></li>
+                {% endfor %}
+            {% endif %}
 
         {% elif DEF_user and 'admin' not in session %}
             <li><a href="{{ url_for('request_submit') }}">{{ local.category['REQUEST_NEW'] }}</a><br></li>
@@ -57,12 +60,14 @@
         {{ list_images(images, DEF_user, category, local) }}
 
         <nav id="pagination">
-        {% if category %}
-            <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
-            <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
-        {% else %}
-            <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
-            <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
+        {% if images.items|count > 0 %}
+            {% if category %}
+                <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
+                <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
+            {% else %}
+                <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
+                <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
+            {% endif %}
         {% endif %}
         </nav>
     </div> <!-- /row -->
