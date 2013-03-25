@@ -513,18 +513,18 @@ h6, .zeta {
 }
 
 .top-header {
-    background-image: linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(214,214,214) 50%, rgb(176,174,176) 100%);
+    background-image: linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
+    background-image: -o-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
+    background-image: -moz-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
+    background-image: -webkit-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
+    background-image: -ms-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
 
     background-image: -webkit-gradient(
             linear,
             left bottom,
             left top,
-            color-stop(0.5, rgb(214,214,214)),
-            color-stop(1, rgb(176,174,176))
+            color-stop(0.34, rgb(207,207,207)),
+            color-stop(0.67, rgb(219,219,219))
     );
     position: relative;
     padding: 0 15px;  /* same as .unit padding-left */
