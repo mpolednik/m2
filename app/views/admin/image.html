@@ -12,10 +12,10 @@
         <a href="{{ url_for('admin_image', page=1) }}">{{ local.ALL }}</a>
     {% endif %}
     <table>
-        <th>
+        <tr>
             <td>Název</td>
             <td>Smazat</td>
-        </th>
+        </tr>
     {% for image in images.items %}
         <tr>
             <td>

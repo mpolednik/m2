@@ -107,3 +107,11 @@ def request_decline(id):
         flash(local.request['DECLINED'], 'success')
 
     return redirect(url_for('request_all'))
+
+@security.req_admin
+def request_delete(id):
+    request = db.session.query(Request).get(id)
+    db.session.delete(request)
+    db.session.commit()
+
+    return redirect(url_for('request_all'))

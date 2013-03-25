@@ -777,17 +777,46 @@ textarea {
     ### Tables
  * -------------------------------------------------------------------------- */
 
-.table {
-
-}
-
-.table__request {
+table {
     width: 100%;
+    margin-bottom: 22px;
 }
 
-.table__request td {
-    border: 1px solid black;
-    padding: 1px;
+th, td {
+    text-align: left;
+    padding: 11px;
+}
+
+tr {
+   border-bottom: 1px solid #f0f0f0;
+}
+
+[colspan] {
+    text-align: center;
+}
+
+[colspan="1"] {
+    text-align: left;
+}
+
+[rowspan] {
+    vertical-align: middle;
+}
+
+[rowspan="1"] {
+   vertical-align: top;
+}
+
+.numerical {
+    text-align: right;
+}
+
+.accepted {
+    background: #ebffeb;
+}
+
+.declined {
+    background: #fff0f0;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -885,14 +914,6 @@ textarea {
 .exact {
     margin: 0 5px 0 5px;
     font-size: 2rem;
-}
-
-.accepted {
-    background: #cdffcd;
-}
-
-.declined {
-    background: #ffcdcd;
 }
 
 .upvoted {

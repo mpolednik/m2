@@ -5,6 +5,14 @@
 {% block body %}
     {{ header(local.adminmenu['REQUESTS']) }}
     <table>
+        <tr>
+            <th>Název</th>
+            <th>Text</th>
+            <th>Typ</th>
+            <th>Příjmout</th>
+            <th>Zamítnout</th>
+            <th>Smazat</th>
+        </tr>
     {% for request in requests %}
         {% if request.state == 1 %}
             <tr class="accepted">
@@ -18,6 +26,18 @@
             </td>
             <td>
                 {{ request.type }}
+            </td>
+            <td>
+                {{ request.text }}
+            </td>
+            <td>
+                <a href="{{ url_for('request_accept', id=request.id) }}">Příjmout</a>
+            </td>
+            <td>
+                <a href="{{ url_for('request_decline', id=request.id) }}">Zamítnout</a>
+            </td>
+            <td>
+                <a href="{{ url_for('request_delete', id=request.id) }}">Smazat</a>
             </td>
         </tr>
     {% endfor %}
