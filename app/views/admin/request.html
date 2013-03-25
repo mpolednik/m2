@@ -1,19 +1,65 @@
-{% from "_general.html" import header %}
+{% from "_general.html" import header, confirmlink %}
 {% extends "layout.html" %}
 
 
-{% if request.state == 0 %}
-    {% set actionbar=True %}
-    {% block actionbar %}
-        <a href="{{ url_for('request_accept', id=request.id) }}">{{ local.actions['ACCEPT'] }}</a><br>
-        <a href="{{ url_for('request_decline', id=request.id) }}">{{ local.actions['DECLINE'] }}</a><br>
-    {% endblock %}
-{% endif %}
-
-
 {% block body %}
-    {{ header(local.admin['REQUEST']) }}
-    {{ request.name }}
-    {{ request.text }}
-    {{ request.type }}
+    {{ header(local.adminmenu['REQUESTS']) }}
+    <table>
+        <tr>
+            <th>Název</th>
+            <th>Text</th>
+            <th>Vlastník</th>
+            <th>Typ</th>
+            <th colspan="3">Akce</th>
+        </tr>
+    {% for request in requests.items %}
+        {% if request.state == 1 %}
+            <tr class="accepted">
+        {% elif request.state == -1 %}
+            <tr class="declined">
+        {% else %}
+            <tr>
+        {% endif %}
+            <td>
+                {{ request.name }}
+            </td>
+            <td>
+                {{ request.text }}
+            </td>
+            <td>
+                {% if request.owner %}
+                    <a href="{{ url_for('user', id=request.owner.id) }}">{{ request.owner.name }}</a>
+                {% else %}
+                    {{ local.user['NONEXISTANT'] }}
+                {% endif %}
+            </td>
+            <td>
+                {% if request.type == 1 %}
+                    {{ local.request['NEW_MODERATOR'] }}
+                {% else %}
+                    {{ local.request['NEW_CATEGORY'] }}
+                {% endif %}
+            </td>
+            <td>
+                {% if request.state == 0 %}
+                    {{ confirmlink(url_for('request_accept', id=request.id, page=requests.page), local.confirms['REQUEST_ACCEPT'].format(request.name), "schválit") }}
+                {% endif %}
+            </td>
+            <td>
+                {% if request.state == 0 %}
+                    {{ confirmlink(url_for('request_decline', id=request.id, page=requests.page), local.confirms['REQUEST_DECLINE'].format(request.name), "zamítnout") }}
+                {% endif %}
+            </td>
+            <td>
+                {{ confirmlink(url_for('request_delete', id=request.id, page=requests.page), local.confirms['REQUEST_DELETE'].format(request.name), "smazat") }}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% if requests.has_next %}
+        <a href="{{ url_for('request_all', page=requests.next_num) }}">Další</a>
+    {% endif %}
+    {% if requests.has_prev %}
+        <a href="{{ url_for('request_all', page=requests.prev_num) }}">Předchozí</a>
+    {% endif %}
 {% endblock %}

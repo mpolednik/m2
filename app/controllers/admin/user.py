@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, flash
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
@@ -13,7 +13,6 @@ from translation import local
 def admin_user(page=1):
     if 'q' in request.args:
         q = request.args.get('q')
-        print q.split(';')
         users = User.query.filter(User.name.like('%{}%'.format(q))).paginate(page, 20)
     else:
         users = User.query.paginate(page, 20)
@@ -27,6 +26,7 @@ def admin_user_delete(id, page):
     db.session.delete(user)
     db.session.commit()
 
+    flash(local.admin['USER_DELETED'], 'success')
     return redirect(url_for('admin_user', page=page))
 
 
@@ -36,16 +36,18 @@ def admin_user_promote(id, page):
     user.level = 2
     db.session.commit()
 
+    flash(local.admin['PROMOTED'].format(user.name), 'success')
     return redirect(url_for('admin_user', page=page))
 
 
 @security.req_admin
 def admin_user_demote(id, page):
     user = db.session.query(User).get(id)
-    if len(user.categories) < 2:
+    if len(user.categories) < 1:
         user.level = 0
     else:
         user.level = 1
     db.session.commit()
 
+    flash(local.admin['DEMOTED'].format(user.name), 'success')
     return redirect(url_for('admin_user', page=page))

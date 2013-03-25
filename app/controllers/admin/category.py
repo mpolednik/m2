@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, flash
 
 from app.helpers.middleware import db, cache
 from app.helpers.rendering import render
@@ -29,5 +29,6 @@ def admin_category_delete(id, page):
     db.session.delete(category)
     db.session.commit()
     cache.delete('categories')
+    flash(local.admin['CATEGORY_DELETED'], 'success')
 
     return redirect(url_for('admin_category', page=page))

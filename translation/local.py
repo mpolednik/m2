@@ -10,7 +10,8 @@ LOADING_FINISHED=u'Všechny příspěvky načteny!'
 ALL=u'Vše'
 ACTIONS=u'Akce'
 SEND=u'Odeslat'
-BACK=u'Zpět',
+BACK=u'Zpět'
+NOTFOUND=u'Požadovaná stránka neexistuje!'
 EXCEPTION=u'Na stránce došlo k chybě!'
 SECURITYEXCEPTION=u'Pro tuto akci nemáte dostatečné oprávnění!'
 
@@ -25,6 +26,7 @@ category = {
     'REQUEST_MOD': u'Zažádat o post moderátora',
     'CREATE_NEW': u'Založit novou kategorií',
     'MODERATORS': u'Moderátoři',
+    'NONEXISTANT': u'<neexistující kategorie>',
 
     'TITLE_NEW': u'nová kategorie',
     'TITLE_ALL': u'všechny kategorie',
@@ -58,6 +60,10 @@ user = {
     'CREATED': u'Vytvořen',
     'MODERATES': u'Moderuje',
 
+    'ADMINISTRATOR': u'administrátor',
+    'MODERATOR': u'moderátor',
+    'USER': u'uživatel',
+
     'INVALID_MAIL': u'Neplatná e-mailový adresa! E-mail musí být zadán ve formátu name@domain.tld.',
     'INVALID_PASS': u'Heslo musí mít minimálně %(min)d znaky!',
     'INVALID_NAME': u'Délka přezdívky musí být mezi %(min)d a %(max)d znaky!',
@@ -90,6 +96,8 @@ comment = {
     'REPLY': u'Odpovědět',
     'EDIT': u'Editovat',
     'DELETED': u'Smazaný komentář.',
+    'STATE_DELETED': u'smazán',
+    'STATE_HEALTHY': u'aktivní',
 
     'TITLE_ONE': u'komentář',
     'TITLE_EDIT': u'editace komentáře',
@@ -129,7 +137,24 @@ adminmenu = {
     'COMMENTS': u'Komentáře',
 }
 
+confirms = {
+    'COMMENT_DELETE': u'Opravdu chcete smazat komentář "{}"?',
+    'CATEGORY_DELETE': u'Opravdu chcete smazat kategorií "{}"?',
+    'USER_DELETE': u'Opravdu chcete smazat uživatele "{}"?',
+    'USER_PROMOTE': u'Opravdu chcete uživateli "{}" darovat administrační práva?',
+    'USER_DEMOTE': u'Opravdu chcete uživateli "{}" zrušit administrační práva?',
+    'IMAGE_DELETE': u'Opravdu chcete smazat obrázek "{}"?',
+    'REQUEST_DELETE': u'Opravdu chcete smazat požadavek "{}"?',
+    'REQUEST_DECLINE': u'Opravdu chcete zamítnout požadavek "{}"?',
+    'REQUEST_ACCEPT': u'Opravdu chcete schválit požadavek "{}"?',
+}
+
 admin = {
+    'CATEGORY_DELETED': u'Kategorie smazána!',
+    'COMMENT_DELETED': u'Komentář smazán!',
+    'REQUEST_DELETED': u'Požadavek smazán!',
+    'USER_DELETED': u'Uživatel smazán!',
+
     'REQUEST': u'Požadavek',
     'SEND_TOKEN': u'Poslat SMS s jednorázovým přihlašovacím kódem',
     'KEY_SENT': u'Přihlašovací kód byl odeslán',
@@ -145,12 +170,44 @@ admin = {
     'ADMIN': u'Administrátor',
     'MOD': u'Moderátor',
     'NOTICE': u'Po aktivaci administrace získáte další práva...',
+    'PROMOTED': u'Administrační práva uživateli {} udělena!',
+    'DEMOTED': u'Administrační práva uživateli {} odebrána!',
 
     'TITLE_LOGIN': u'administrátorské přihlášení',
 }
 
 statistics = {
     'GENERATED': u'Vygenerováno',
+    'UPTIME': u'Uptime',
+    'DEBUG': u'Debug',
+    'OS': u'Operační systém',
+    'UPLOAD_FOLDER': u'Cesta k obrázkům',
+    'THUMB_UPLOAD_FOLDER': u'Cesta k náhledům',
+    'THUMBNAIL_SIZE': u'Hraniční velikost náhledů',
+    'NUM_CATEGORIES': u'Počet kategorií',
+    'NUM_USERS': u'Počet uživatelů',
+    'NUM_USERS_ADMIN': u'... z toho administrátorů',
+    'NUM_USERS_MOD': u'... z toho moderátorů',
+    'NUM_REQUESTS': u'Počet požadavků',
+    'NUM_REQUESTS_ACCEPTED': u'... z toho schválených',
+    'NUM_REQUESTS_DECLINED': u'... z toho neschválenýchh',
+    'NUM_REQUESTS_NOACTION': u'... z toho nerozhodnuto',
+    'NUM_IMAGES': u'Počet obrázků',
+    'NUM_RATING_IMAGES': u'Počet hodnocení obrázků',
+    'IMAGE_RATING_POSITIVE': u'... obr. postivních',
+    'IMAGE_RATING_NEGATIVE': u'... obr. negativních',
+    'IMAGE_RATING_NEUTRAL': u'... obr. neutrálních',
+    'NUM_COMMENTS': u'Počet komentářů',
+    'NUM_COMMENTS_ACTIVE': u'... z toho aktivních',
+    'NUM_COMMENTS_DELETED': u'... z toho smazaných',
+    'NUM_RATING_COMMENTS': u'Počet hodnocení komentářů',
+    'COMMENT_RATING_POSITIVE': u'... kom. positivních',
+    'COMMENT_RATING_NEGATIVE': u'... kom. negativních',
+    'COMMENT_RATING_NEUTRAL': u'... kom. neutrálních',
+    'AVG_CATEGORY_IMAGE': u'Průměrný počet obrázků na kategorií',
+    'AVG_COMMENT_IMAGE': u'Průměrný počet komentářů na obrázek',
+    'AVG_RATING_IMAGE': u'Průměrný počet hodnocení na obrázek',
+    'AVG_RATING_COMMENT': u'Průměrný počet hodnocení na komentář',
 
     'TITLE': u'statistika',
 }
@@ -177,6 +234,8 @@ request = {
     'ACCEPTED': u'Požadavek schválen.',
     'DECLINED': u'Požadavek zamítnut.',
     'MOD_REQUESTED': u'O moderátorství v této kategorií jste již zažádal!',
+    'NEW_CATEGORY': u'nová kategorie',
+    'NEW_MODERATOR': u'nový moderátor',
 
     'TITLE_LIST': u'seznam požadavků',
     'TITLE_REQUEST': u'nový požadavek',

@@ -30,14 +30,7 @@ def request_all(page=1):
         keys = [cat.id for cat in user.categories]
         requests = Request.query.filter(Request.id_category.in_(keys)).paginate(page, 20)
 
-    return render('admin/request_list.html', title=local.request['TITLE_LIST'], requests=requests)
-
-
-@security.req_requested_category_mod
-def request_one(id, page=1):
-    request = db.session.query(Request).filter_by(id=id).one()
-
-    return render('admin/request.html', title=local.request['TITLE_DETAILS'], request=request)
+    return render('admin/request.html', title=local.request['TITLE_LIST'], requests=requests)
 
 
 @security.req_login
@@ -114,5 +107,6 @@ def request_delete(id, page):
     request = db.session.query(Request).get(id)
     db.session.delete(request)
     db.session.commit()
+    flash(local.admin['REQUEST_DELETED'], 'success')
 
     return redirect(url_for('request_all'))

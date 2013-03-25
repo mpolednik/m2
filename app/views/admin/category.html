@@ -1,5 +1,5 @@
 {% from "_images.html" import list_images %}
-{% from "_general.html" import header %}
+{% from "_general.html" import header, confirmlink %}
 {% extends "layout.html" %}
 
 
@@ -13,7 +13,9 @@
     {% endif %}
     <table>
         <tr>
-            <th>Název</th>
+            <th>{{ local.NAME }}</th>
+            <th>Obrázků</th>
+            <th>Požadavků</th>
             <th>Moderátoři</th>
             <th>Smazat</th>
         </tr>
@@ -21,6 +23,12 @@
         <tr>
             <td>
                 <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+            </td>
+            <td>
+                {{ category.images|count }}
+            </td>
+            <td>
+                {{ category.requests|count }}
             </td>
             <td>
                 {% for moderator in category.moderators %}
@@ -31,7 +39,7 @@
                 {% endfor %}
             </td>
             <td>
-                <a href="{{ url_for('admin_category_delete', id=category.id, page=categories.page) }}">Smazat</a>
+                {{ confirmlink(url_for('admin_category_delete', id=category.id, page=categories.page), local.confirms['CATEGORY_DELETE'].format(category.name), "smazat") }}
             </td>
         </tr>
     {% endfor %}

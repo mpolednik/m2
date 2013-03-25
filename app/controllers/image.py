@@ -54,9 +54,13 @@ def image_edit(id):
     return render('image_edit.html', title=local.image['TITLE_EDIT'], image=image, form=form)
 
 
-@security.req_mod(Image)
 def image_delete(id, ref=None):
-    image = db.session.query(Image).filter_by(id=id).one()
+    image = Image.query.get(id)
+    user = User.query.get(session['user'])
+
+    if image.owner != user and 'admin' not in session and user not in image.category.moderators:
+        raise security.SecurityException
+
     try:
         category = image.category.name
     except:

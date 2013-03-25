@@ -1,5 +1,5 @@
 {% from "_images.html" import list_images %}
-{% from "_general.html" import header %}
+{% from "_general.html" import header, confirmlink %}
 {% extends "layout.html" %}
 
 
@@ -13,13 +13,19 @@
     {% endif %}
     <table>
         <tr>
-            <th>Text</th>
+            <th>{{ local.TEXT }}</th>
             <th>Vlastník</th>
-            <th>Stav</th>
+            <th>Obrázek</th>
+            <th>Hodnocení</th>
+            <th>Přidáno</th>
             <th>Smazat</th>
         </tr>
     {% for comment in comments.items %}
-        <tr>
+        {% if comment.state == 1 %}
+            <tr class="accepted">
+        {% else %}
+            <tr class="declined">
+        {% endif %}
             <td>
                 <a href="{{ url_for('comment', id=comment.image.id, cid=comment.id) }}">{{ comment.text|truncate(30, True, '...') }}</a>
             </td>
@@ -31,11 +37,17 @@
                 {% endif %}
             </td>
             <td>
-                {{ comment.state }}
+                <a href="{{ url_for('image', id=comment.image.id) }}">{{ comment.image.name }}</a>
+            </td>
+            <td>
+                {{ comment.rating }}
+            </td>
+            <td>
+                {{ comment.ts }}
             </td>
             <td>
                 {% if comment.state == 1 %}
-                    <a href="{{ url_for('admin_comment_delete', id=comment.id, page=comments.page) }}">Smazat</a>
+                    {{ confirmlink(url_for('admin_comment_delete', id=comment.id, page=comments.page), local.confirms['COMMENT_DELETE'].format(comment.text), "smazat") }}
                 {% endif %}
             </td>
         </tr>

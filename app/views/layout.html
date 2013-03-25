@@ -76,6 +76,12 @@
                         <li><a href="{{ url_for('admin_image', page=1) }}">{{ local.adminmenu['IMAGES'] }}</a></li>
                         <li><a href="{{ url_for('admin_comment', page=1) }}">{{ local.adminmenu['COMMENTS'] }}</a></li>
                     {% endif %}
+                    {% if DEF_user.categories|count > 0 %}
+                        <h1>{{ local.adminmenu['CATEGORIES'] }}</h1>
+                        {% for category in DEF_user.categories %}
+                            <li><a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             </div> <!-- /widget -->
         {% endif %}

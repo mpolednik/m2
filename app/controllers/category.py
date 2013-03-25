@@ -83,7 +83,7 @@ def category_submit(name):
     return render('category_submit.html', title=local.category['TITLE_SUBMIT'], category=category, form=form)
 
 
-@security.req_mod
+@security.req_mod()
 def category_edit(name):
     category = db.session.query(Category).filter_by(name=name).one()
 

@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, flash
 
 from app.helpers.middleware import db
 from app.helpers.rendering import render
@@ -23,7 +23,8 @@ def admin_comment(page=1):
 @security.req_admin
 def admin_comment_delete(id, page):
     comment = db.session.query(Comment).get(id)
-    db.session.delete(comment)
+    comment.state = 0
     db.session.commit()
+    flash(local.admin['COMMENT_DELETED'], 'success')
 
     return redirect(url_for('admin_comment', page=page))

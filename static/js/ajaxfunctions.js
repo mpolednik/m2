@@ -19,11 +19,13 @@ var vote = function (path, id, rating) {
     });
 };
 
-var delete_comment = function (id) {
-    $.getJSON('/ajax/delete_comment/'+id, function(result) {
-        $('#delete_'+id).hide();
-        $('#actions_'+id).hide();
-        var element = $('#'+id);
-        element.html('<span class="note">'+result.text+'</span>');
-    });
+var delete_comment = function (id, text) {
+    if (confirm(text)) {
+        $.getJSON('/ajax/delete_comment/'+id, function(result) {
+            $('#delete_'+id).hide();
+            $('#actions_'+id).hide();
+            var element = $('#'+id);
+            element.html('<span class="note">'+result.text+'</span>');
+        });
+    }
 };

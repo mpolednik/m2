@@ -1,6 +1,7 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% from "_comments.html" import list_comments %}
 {% from "_voting.html" import votingmenu %}
+{% from "_general.html" import confirmlink %}
 {% extends "layout.html" %}
 
 
@@ -11,7 +12,10 @@
     {% endif %}
     {% if DEF_user and (DEF_user == image.owner or 'admin' in session) %}
         <li><a href="{{ url_for('image_edit', id=image.id) }}">{{ local.actions['EDIT'] }}</a><br></li>
-        <li><a href="{{ url_for('image_delete', id=image.id) }}">{{ local.actions['DELETE'] }}</a><br></li>
+        <li>{{ confirmlink(url_for('image_delete', id=image.id), local.confirms['IMAGE_DELETE'].format(image.name), local.actions['DELETE']) }}</li>
+    {% endif %}
+    {% if DEF_user and DEF_user in image.category.moderators  %}
+        <li>{{ confirmlink(url_for('image_delete', id=image.id), local.confirms['IMAGE_DELETE'].format(image.name), local.actions['DELETE']) }}</li>
     {% endif %}
     <li><a href="{{ url_for('category_one', name=image.category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a></li>
 {% endblock %}

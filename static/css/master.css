@@ -790,6 +790,10 @@ tr {
    border-bottom: 1px solid #f0f0f0;
 }
 
+tr:hover {
+    background: #ebebff;
+}
+
 [colspan] {
     text-align: center;
 }

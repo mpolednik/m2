@@ -57,36 +57,13 @@ def req_mod(Object=None):
     def decorator(f):
         @req_login
         def inner(*args, **kwargs):
-            # Try moderator (required first due to categories)
-            try:
-                category = Category.query.filter_by(name=kwargs['name']).one()
-                user = User.query.get(session['user'])
+            category = Category.query.filter_by(name=kwargs['name']).one()
+            user = User.query.get(session['user'])
 
-                if user in category.moderators:
-                    return f(*args, **kwargs)
-                else:
-                    raise SecurityException
-            except:
-                pass
-
-            # Not a moderator, go for admin or owner
-            try:
-                if 'cid' in kwargs:
-                    id = kwargs['cid']
-                elif 'id' in kwargs:
-                    id = kwargs['id']
-
-                user = User.query.get(session['user'])
-                obj = Object.query.get(id)
-
-                # Try ownership and adminship...
-                if user == obj.owner or 'admin' in session:
-                    return f(*args, **kwargs)
-                else:
-                    raise SecurityException
-            except:
+            if 'admin' in session or user in category.moderators:
+                return f(*args, **kwargs)
+            else:
                 raise SecurityException
-
         return inner
     return decorator
 

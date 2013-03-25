@@ -40,19 +40,33 @@
             </td>
             {% if admin %}
                 <td>
-                    <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>
+                    {% if user.level == 2 %}
+                        {{ local.user['ADMINISTRATOR'] }}
+                    {% elif user.level == 1 %}
+                        {{ local.user['MODERATOR'] }}
+                    {% else %}
+                        {{ local.user['USER'] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ confirmlink(url_for('admin_user_delete', id=user.id, page=users.page), local.confirms['USER_DELETE'].format(user.name), "smazat") }}
                 </td>
                 {% if user.level < 2 %}
                     <td>
-                        <a href="{{ url_for('admin_user_promote', id=user.id, page=users.page) }}">Darovat admin práva</a>
+                        {{ confirmlink(url_for('admin_user_promote', id=user.id, page=users.page), local.confirms['USER_PROMOTE'].format(user.name), "darovat práva") }}
                     </td>
                 {% else %}
                     <td>
-                        <a href="{{ url_for('admin_user_demote', id=user.id, page=users.page) }}">Odstranit admin práva</a>
+                        {{ confirmlink(url_for('admin_user_demote', id=user.id, page=users.page), local.confirms['USER_DEMOTE'].format(user.name), "odstranit práva") }}
                     </td>
                 {% endif %}
             {% endif %}
         </tr>
     {% endfor %}
     </table>
+{% endmacro %}
+
+
+{% macro confirmlink(url, confirmtext, text) %}
+    <a href="{{ url }}" onclick="return confirm('{{ confirmtext }}')" }}>{{ text }}</a>
 {% endmacro %}

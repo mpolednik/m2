@@ -1,5 +1,5 @@
 {% from "_images.html" import list_images %}
-{% from "_general.html" import header %}
+{% from "_general.html" import header, confirmlink %}
 {% extends "layout.html" %}
 
 
@@ -14,6 +14,11 @@
     <table>
         <tr>
             <td>Název</td>
+            <td>Vlastník</td>
+            <td>Kategorie</td>
+            <td>Hodnocení</td>
+            <td>Komentářů</td>
+            <td>Přidáno</td>
             <td>Smazat</td>
         </tr>
     {% for image in images.items %}
@@ -22,7 +27,30 @@
                 {{ image.name }}
             </td>
             <td>
-                <a href="{{ url_for('admin_image_delete', id=image.id, page=images.page) }}">Smazat</a>
+                {% if image.owner %}
+                    <a href="{{ url_for('user', id=image.owner.id) }}">{{ image.owner.name }}</a>
+                {% else %}
+                    {{ local.user['NONEXISTANT'] }}
+                {% endif %}
+            </td>
+            <td>
+                {% if image.category %}
+                    <a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
+                {% else %}
+                    {{ local.category['NONEXISTANT'] }}
+                {% endif %}
+            </td>
+            <td>
+                {{ image.rating }}
+            </td>
+            <td>
+                {{ image.comments|count }}
+            </td>
+            <td>
+                {{ image.ts }}
+            </td>
+            <td>
+                {{ confirmlink(url_for('admin_image_delete', id=image.id, page=images.page), local.confirms['IMAGE_DELETE'].format(image.name), "smazat") }}
             </td>
         </tr>
     {% endfor %}
