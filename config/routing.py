@@ -32,6 +32,7 @@ views.add('/r/<int:id>/decline', 'app.controllers.admin.request.request_decline'
 views.add('/r/<int:id>/delete', 'app.controllers.admin.request.request_delete')
 
 views.add('/u/<int:id>', 'app.controllers.user.user')
+views.add('/u/<int:id>/<int:page>', 'app.controllers.user.user')
 views.add('/login', 'app.controllers.user.login', methods=('GET', 'POST'))
 views.add('/register', 'app.controllers.user.register', methods=('GET', 'POST'))
 views.add('/account', 'app.controllers.user.account', methods=('GET', 'POST'))

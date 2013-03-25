@@ -59,17 +59,17 @@
 
         {{ list_images(images, DEF_user, category, local) }}
 
-        <nav id="pagination">
         {% if images.items|count > 0 %}
-            {% if category %}
-                <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
-                <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
-            {% else %}
-                <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
-                <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
-            {% endif %}
+            <nav id="pagination">
+                {% if category %}
+                    <a href="{{ url_for('category_one', name=category.name, page=images.next_num) }}">Next</a>
+                    <a href="{{ url_for('category_one', name=category.name, page=images.prev_num) }}">Prev</a>
+                {% else %}
+                    <a href="{{ url_for('category_all', page=images.next_num) }}">Next</a>
+                    <a href="{{ url_for('category_all', page=images.prev_num) }}">Prev</a>
+                {% endif %}
+            </nav>
         {% endif %}
-        </nav>
     </div> <!-- /row -->
 {% endblock %}
 

@@ -51,6 +51,7 @@ class EditForm(RegistrationForm):
 def user(id, page=1):
     user = db.session.query(User).filter_by(id=id).one()
     images = Image.query.filter_by(id_user=user.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
+
     return render('user.html', title=user.name, user=user, images=images)
 
 

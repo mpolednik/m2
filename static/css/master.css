@@ -724,16 +724,15 @@ input[type="text"] {
 }
 
 input[type="search"] {
-    border: 1px solid #ccc;
-    padding: 6px;
     width: 240px;
 
-    /* 1. Removes rounded corners on iOS*/
-    border-radius: 0;
-    /* 2. Removes inner shadow on iOS*/
-    -webkit-appearance: none; 
-
-    box-shadow: 1px 1px rgba(0,0,0,.1);
+    border: 0;
+    padding: rem(14);
+    outline: none;
+    background: transparent;
+    &:focus {
+            background: transparent;
+    }
 }
 
 input[type="password"] {
