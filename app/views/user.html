@@ -1,22 +1,32 @@
 {% from "_images.html" import list_images %}
-{% from "_general.html" import header %}
 {% extends "layout.html" %}
 
 
 {% set widget=True %}
 {% block widget %}
     <ul>
-        <li><h1>Informace</h1></li>
-        <li>Skóre obrázků:&nbsp;{{ user.rating_image }}
-        <li>Skóre komentářů:&nbsp;{{ user.rating_comment }}
-        <li>Vytvořen:&nbsp;{{ user.ts.strftime('%d. %m. %Y') }}</li>
+        <li><h1>{{ user.name }}</h1></li>
+        <li>{{ local.user['SCORE_IMAGES'] }}:&nbsp;{{ user.rating_image }}
+        <li>{{ local.user['SCORE_COMMENTS'] }}:&nbsp;{{ user.rating_comment }}
+        <li>{{ local.user['NUM_IMAGES'] }}:&nbsp;{{ user.images|count }}</li>
+        <li>{{ local.user['NUM_COMMENTS'] }}:&nbsp;{{ user.comments|count }}</li>
+        <li>{{ local.user['CREATED'] }}:&nbsp;{{ user.ts.strftime('%d. %m. %Y') }}</li>
+        {% if user.categories|count > 0 %}
+        <li>{{ local.user['MODERATES'] }}:&nbsp;
+            {% for category in user.categories %}
+                <a href=" {{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+                {% if not loop.last %}
+                    , 
+                {% endif %}
+            {% endfor %}
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 
 
 {% block body %}
     <div class="row cf gallery">
-        {{ header(user.name) }}
         {{ list_images(images, DEF_user, local) }}
 
         {% if images.items|count > 0 %}

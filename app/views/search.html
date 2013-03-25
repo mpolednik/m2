@@ -1,5 +1,5 @@
 {% from "_images.html" import list_images %}
-{% from "_general.html" import header %}
+{% from "_general.html" import header, list_users %}
 {% extends "layout.html" %}
 
 
@@ -12,40 +12,7 @@
         <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
     {% endfor %}
     {{ header(local.search['USERS']) }}
-    <table>
-    {% for user in users.items %}
-        <tr>
-            <td>
-                <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
-            </td>
-            <td>
-                Obrázků:&nbsp;
-                {{ user.images|count }}
-            </td>
-            <td>
-                Komentářů:&nbsp;
-                {{ user.comments|count }}
-            </td>
-            <td>
-                Moderuje:&nbsp;
-                {% for category in user.categories %}
-                    <a href=" {{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
-                    {% if not loop.last %}
-                        , 
-                    {% endif %}
-                {% endfor %}
-            </td>
-            <td>
-                Hodnocení&nbsp;obrázků:&nbsp;
-                {{ user.rating_image }}
-            </td>
-            <td>
-                Hodnocení&nbsp;komentářů:&nbsp;
-                {{ user.rating_comment }}
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
+    {{ list_users(users, local) }}
     {% if users.has_next %}
         <a href="{{ url_for('search', q=q, ipage=images.page, upage=users.next_num) }}">Next</a>
     {% endif %}

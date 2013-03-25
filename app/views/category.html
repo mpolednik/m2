@@ -39,10 +39,10 @@
 {% endif %}
 
 
-{% if category and category.text %}
+{% if category %}
     {% set widget=True %}
     {% block widget %}
-        <h1>Informace</h1>
+        <h1>{{ category.name }}</h1>
         {{ category.text|safe }}
     {% endblock %}
 {% endif %}
@@ -51,9 +51,7 @@
 {% block body %}
     <div class="row cf gallery">
 
-        {% if category %}
-            {{ header(category.name) }}
-        {% else %}
+        {% if not category %}
             {{ header('Všechny fotografie') }}
         {% endif %}
 

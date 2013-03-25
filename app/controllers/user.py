@@ -6,6 +6,7 @@ from app.helpers.middleware import db
 from app.helpers.rendering import render
 from app.helpers import security
 from app.helpers.forms import flash_errors
+from app.helpers.general import check_naive
 
 from flask.ext.wtf import Form
 from wtforms import fields, validators, ValidationError
@@ -42,6 +43,10 @@ class LoginForm(Form):
 class RegistrationForm(LoginForm):
     name = fields.TextField(local.user['NICK'], [validators.Length(4, 50, local.user['INVALID_NAME'])])
 
+    def validate_name(form, field):
+        if not check_naive(field.data):
+            raise ValidationError(local.user['INVALID_NAME_CHARS'])
+
 
 class EditForm(RegistrationForm):
     phone = fields.TextField(local.user['PHONE'])
@@ -49,7 +54,7 @@ class EditForm(RegistrationForm):
 
 
 def user(id, page=1):
-    user = db.session.query(User).filter_by(id=id).one()
+    user = db.session.query(User).get(id)
     images = Image.query.filter_by(id_user=user.id).order_by(Image.score.desc(), Image.ts.desc()).paginate(page, 20)
 
     return render('user.html', title=user.name, user=user, images=images)

@@ -5,3 +5,54 @@
         </h1>
     </header> <!-- /gallery__header -->
 {% endmacro %}
+
+{% macro list_users(users, local, admin=False) %}
+    <table>
+    {% for user in users.items %}
+        <tr>
+            <td>
+                <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
+            </td>
+            <td>
+                {{ local.user['SCORE_IMAGES'] }}:&nbsp;
+                {{ user.rating_image }}
+            </td>
+            <td>
+                {{ local.user['SCORE_COMMENTS'] }}:&nbsp;
+                {{ user.rating_comment }}
+            </td>
+            <td>
+                {{ local.user['NUM_IMAGES'] }}:&nbsp;
+                {{ user.images|count }}
+            </td>
+            <td>
+                {{ local.user['NUM_COMMENTS'] }}:&nbsp;
+                {{ user.comments|count }}
+            </td>
+            <td>
+                {{ local.user['MODERATES'] }}:&nbsp;
+                {% for category in user.categories %}
+                    <a href=" {{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
+                    {% if not loop.last %}
+                        , 
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% if admin %}
+                <td>
+                    <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>
+                </td>
+                {% if user.level < 2 %}
+                    <td>
+                        <a href="{{ url_for('admin_user_promote', id=user.id, page=users.page) }}">Darovat admin práva</a>
+                    </td>
+                {% else %}
+                    <td>
+                        <a href="{{ url_for('admin_user_demote', id=user.id, page=users.page) }}">Odstranit admin práva</a>
+                    </td>
+                {% endif %}
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </table>
+{% endmacro %}

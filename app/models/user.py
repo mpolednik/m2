@@ -32,9 +32,10 @@ class User(db.Model):
         self._password = bcrypt.generate_password_hash(password)
 
     images = db.relationship('Image', backref='owner')
-    comments = db.relationship('Comment', backref='owner')
-    requests = db.relationship('Request', backref='owner')
+    requests = db.relationship('Request', backref='owner',
+                               cascade='all, delete-orphan', passive_deletes=True)
     categories = db.relationship('Category', secondary=moderator)
+    comments = db.relationship('Comment', backref='owner')
 
 
     def __init__(self, name, mail, password):

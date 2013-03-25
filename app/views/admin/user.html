@@ -1,4 +1,4 @@
-{% from "_general.html" import header %}
+{% from "_general.html" import header, list_users %}
 {% extends "layout.html" %}
 
 
@@ -10,41 +10,7 @@
     {% if 'q' in request.args %}
         <a href="{{ url_for('admin_user', page=1) }}">{{ local.ALL }}</a>
     {% endif %}
-    <table>
-        <tr>
-            <td>Název</td>
-            <td>Moderuje</td>
-            <td>Smazat</td>
-            <td>Admin</td>
-        </tr>
-    {% for user in users.items %}
-        <tr>
-            <td>
-                <a href="{{ url_for('user', id=user.id) }}">{{ user.name }}</a>
-            </td>
-            <td>
-                {% for category in user.categories %}
-                    <a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a>
-                    {% if not loop.last %}
-                        ,
-                    {% endif %}
-                {% endfor %}
-            </td>
-            <td>
-                <a href="{{ url_for('admin_user_delete', id=user.id, page=users.page) }}">Smazat</a>
-            </td>
-            {% if user.level < 2 %}
-                <td>
-                    <a href="{{ url_for('admin_user_promote', id=user.id, page=users.page) }}">Darovat admin práva</a>
-                </td>
-            {% else %}
-                <td>
-                    <a href="{{ url_for('admin_user_demote', id=user.id, page=users.page) }}">Odstranit admin práva</a>
-                </td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </table>
+    {{ list_users(users, local, True) }}
     {% if users.has_next %}
         <a href="{{ url_for('admin_user', page=users.next_num) }}">Další</a>
     {% endif %}
