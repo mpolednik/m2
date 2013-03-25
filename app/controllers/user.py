@@ -69,9 +69,9 @@ def account():
 
         try:
             db.session.commit()
-            flash(local.user['EDITTED'], 'success')
+            flash(local.user['EDITED'], 'success')
         except sqlalchemy.exc.IntegrityError:
-            flash(local.user['NOT_EDITTED'], 'error')
+            flash(local.user['NOT_EDITED'], 'error')
 
     flash_errors(form)
     return render('account.html', title=user.name, form=form)

@@ -93,7 +93,7 @@ def category_edit(name):
         category.text = form.text.data
 
         db.session.commit()
-        flash(local.category['EDITTED'], 'success')
+        flash(local.category['EDITED'], 'success')
 
         return redirect(url_for('category_one', name=name))
 

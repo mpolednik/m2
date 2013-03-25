@@ -21,10 +21,14 @@
     {% for comment in comments.items %}
         <tr>
             <td>
-                {{ comment.text|truncate(30, True, '...') }}
+                <a href="{{ url_for('comment', id=comment.image.id, cid=comment.id) }}">{{ comment.text|truncate(30, True, '...') }}</a>
             </td>
             <td>
-                {{ comment.owner.name }}
+                {% if comment.owner %}
+                    <a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a>
+                {% else %}
+                    {{ local.user['NONEXISTANT'] }}
+                {% endif %}
             </td>
             <td>
                 {{ comment.state }}
