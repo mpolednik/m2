@@ -19,6 +19,6 @@ def search(upage=1, ipage=1):
     categories_related = [x for x in categories_related if x not in categories]
     users = User.query.filter(User.name.like('%{}%'.format(q))).paginate(upage, 20)
     images = Image.query.filter(db.or_(Image.name.like('%{}%'.format(q)), 
-                                       Image.text.like('%{}%'.format(q)))).paginate(ipage, 20)
+                                       Image.text.like('%{}%'.format(q)))).order_by(Image.score.desc(), Image.ts.desc()).paginate(ipage, 20)
 
     return render('search.html', title=local.search['TITLE_SEARCH'], q=q, categories=categories, categories_related=categories_related, users=users, images=images)
