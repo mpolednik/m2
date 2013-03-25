@@ -35,7 +35,10 @@ class Exif(db.Model):
 
     @property
     def value(self):
-        return pickle.loads(self._value)
+        try:
+            return pickle.loads(self._value)
+        except:
+            return None
 
     @value.setter
     def value(self, v):
@@ -66,7 +69,7 @@ class Image(db.Model, VotableObject):
 
     RatingClass = ImageRating
 
-    exif = db.relationship('Exif', backref='image')
+    exif = db.relationship('Exif', backref='image', cascade='delete')
     # id.father order desc to optimize tree generating algorithm
     comments = db.relationship('Comment', backref='image', order_by=(Comment.id_father.desc(), Comment.rating.desc(), Comment.ts.desc()),
                                cascade='all, delete-orphan', passive_deletes=True)
