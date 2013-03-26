@@ -682,7 +682,7 @@ h6, .zeta {
             color-stop(0, rgb(224,234,255))
     );
     border: 1px solid #e7e7e7;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .item:hover {
