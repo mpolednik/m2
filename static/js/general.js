@@ -7,6 +7,9 @@ $(function () {
         $('.container').animate({opacity: 1});
     });
 
+    // hide pagination
+    $('#pagination').hide();
+
     // hide #back-top first
     $(".back-top").hide();
 

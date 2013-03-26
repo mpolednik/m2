@@ -20,9 +20,13 @@
 <header class="page-header">
     <nav class="top-bar">
         <ul class="nav nav--inline">
-            <li><a href="/">{{ local.ALL }}</a></li>
+            <li><a href="{{ url_for('category_all') }}">{{ local.ALL }}</a></li>
+            <li>|</li>
             {% for category in DEF_categories %}
-                <li><a href="/c/{{ category.name }}">{{ category.name }}</a></li>
+                <li><a href="{{ url_for('category_one', name=category.name) }}">{{ category.name }}</a></li>
+                {% if not loop.last %}
+                <li>-</li>
+                {% endif %}
             {% endfor %}
         </ul>
     </nav> <!-- /top-bar -->
@@ -34,15 +38,20 @@
             <ul class="nav nav--inline">
                 {% if DEF_user %}
                     <li><a href="{{ url_for('user', id=DEF_user.id) }}">{{ DEF_user.name  }}</a></li>
+                    <li>|</li>
                     <li><a href="{{ url_for('account') }}">{{ local.user['SETTINGS']  }}</a></li>
+                    <li>|</li>
                     <li><a href="{{ url_for('logout') }}">{{ local.user['LOGOUT'] }}</a></li>
                     {% if DEF_user.level > 1 and 'admin' not in session %}
+                        <li>|</li>
                         <li><a href="{{ url_for('superlogin') }}">{{ local.admin['SUPERLOGIN'] }}</a></li>
                     {% elif 'admin' in session %}
+                        <li>|</li>
                         <li><a href="{{ url_for('superlogout') }}">{{ local.admin['SUPERLOGOUT'] }}</a></li>
                     {% endif %}
                 {% else %}
                     <li><a href="{{ url_for('login') }}">{{ local.user['LOGIN'] }}</a></li>
+                    <li>|</li>
                     <li><a href="{{ url_for('register') }}">{{ local.user['REGISTER'] }}</a></li>
                 {% endif %}
             </ul>

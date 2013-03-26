@@ -7,13 +7,13 @@
     {% set actionbar=True %}
     {% block actionbar %}
         {% if category and DEF_user %}
-            <li><a href="{{ url_for('category_submit', name=category.name, page=images.page) }}">{{ local.actions['NEW_IMAGE'] }}</a><br></li>
+            <li><a href="{{ url_for('category_submit', name=category.name) }}">{{ local.actions['NEW_IMAGE'] }}</a><br></li>
 
             {% if DEF_user in category.moderators %}
-                <li><a href="{{ url_for('category_pass_mod', name=category.name, page=images.page) }}">{{ local.actions['PASS_MOD'] }}</a><br></li>
+                <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">{{ local.actions['PASS_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif 'admin' in session  %}
-                <li><a href="{{ url_for('category_become_mod', name=category.name, page=images.page) }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
+                <li><a href="{{ url_for('category_become_mod', name=category.name) }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif not DEF_user.already_requested(category) %}
                 <li><a href="{{ url_for('request_submit', name=category.name) }}">{{ local.actions['REQUEST_MOD'] }}</a><br></li>
@@ -39,22 +39,19 @@
 {% endif %}
 
 
-{% if category %}
-    {% set widget=True %}
-    {% block widget %}
+{% set widget=True %}
+{% block widget %}
+    {% if category %}
         <h1>{{ category.name }}</h1>
         {{ category.text|safe }}
-    {% endblock %}
-{% endif %}
+    {% else %}
+        <h1>{{ local.ALL }}</h1>
+    {% endif %}
+{% endblock %}
 
 
 {% block body %}
     <div class="row cf gallery">
-
-        {% if not category %}
-            {{ header('Všechny fotografie') }}
-        {% endif %}
-
         {{ list_images(images, DEF_user, category, local) }}
 
         {% if images.items|count > 0 %}

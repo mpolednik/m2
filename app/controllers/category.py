@@ -101,7 +101,7 @@ def category_edit(name):
     return render('category_edit.html', title=local.category['TITLE_EDIT'], form=form, category=category)
 
 
-@security.req_mod
+@security.req_mod()
 def category_pass_mod(name):
     category = db.session.query(Category).filter_by(name=name).one()
     user = User.query.get(session['user'])

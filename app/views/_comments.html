@@ -17,16 +17,16 @@
         {% endif %}
         <li class="comment-wrap">
             <article class="comment">
-                <header class="comment__header">
-                {% if comment.owner %}
-                    <h3 class="meta-title"><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
-                {% else %}
-                    <h3 class="meta-title note">{{ local.user['NONEXISTANT'] }}</h3>
-                {% endif %}
-                    <p class="meta-time">{{ local.image['REPLIED'] }} {{ comment.ts.strftime('%d. %m. %Y') }}</p>
+                <header>
+                    {% if comment.owner %}
+                        <h3><a href="{{ url_for('user', id=comment.owner.id) }}">{{ comment.owner.name }}</a></h3>
+                    {% else %}
+                        <h3>{{ local.user['NONEXISTANT'] }}</h3>
+                    {% endif %}
+                    {{ local.image['REPLIED'] }} {{ comment.ts.strftime('%d. %m. %Y') }}
                 </header>
                 
-                <p id="{{ comment.id }}" class="comment__content">
+                <p id="{{ comment.id }}">
                 {% if comment.state == 1 %}
                     <a href="{{ url_for('comment', id=image.id, cid=comment.id) }}">{{ comment.text }}</a>
                 {% else %}

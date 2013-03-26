@@ -1,7 +1,7 @@
 {% from "_formhelpers.html" import render_field, render_submit %}
 {% from "_comments.html" import list_comments %}
 {% from "_voting.html" import votingmenu %}
-{% from "_general.html" import confirmlink %}
+{% from "_general.html" import confirmlink, header %}
 {% extends "layout.html" %}
 
 
@@ -17,7 +17,11 @@
     {% if DEF_user and DEF_user in image.category.moderators  %}
         <li>{{ confirmlink(url_for('image_delete', id=image.id), local.confirms['IMAGE_DELETE'].format(image.name), local.actions['DELETE']) }}</li>
     {% endif %}
-    <li><a href="{{ url_for('category_one', name=image.category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a></li>
+    {% if image.category %}
+        <li><a href="{{ url_for('category_one', name=image.category.name) }}">{{ local.BACK }}</a></li>
+    {% else %}
+        <li><a href="{{ url_for('category_all') }}">{{ local.BACK }}</a></li>
+    {%endif %}
 {% endblock %}
 
 
@@ -52,11 +56,9 @@
         </form>
     {% endif %}
 
-<div class="comments-area" id="comments">
-
-    <h3>{{ local.image['COMMENTS'] }}</h3>
-    {{ list_comments(comments, DEF_user, image, local, session) }}
-</div>
+    <div class="comments-area" id="comments">
+        {{ list_comments(comments, DEF_user, image, local, session) }}
+    </div>
 {% endblock %}
 
 

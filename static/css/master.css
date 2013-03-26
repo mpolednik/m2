@@ -425,15 +425,8 @@ h6, .zeta {
 
 .row {
     margin-left: -15px;
+    margin-right: -15px;
 }
-
-/*.span1-2 {
-    width: 50%;
-}
-
-.span1-4 {
-    width: 25%;
-}*/
 
 .unit {
     float: left;
@@ -446,7 +439,7 @@ h6, .zeta {
 }
 
 .sidebar {
-    padding-left: 30px;  /* double of .unit padding-left */
+    padding: 0 22px 0 22px;
 }
 
 .sidebar--fixed, .content {
@@ -455,11 +448,11 @@ h6, .zeta {
 
 .sidebar--fixed {
     float: right;
-    width: 298px;
+    width: 280px;
 }
 
 .content {
-    margin-right: 298px; /* same as .sidebar--fixed width */
+    margin-right: 280px; /* same as .sidebar--fixed width */
     padding-left: 25px;  /* same as .unit padding-left */
 }
 
@@ -472,8 +465,8 @@ h6, .zeta {
 .nav {
     list-style: none;
     margin: 0;
-    height: 18px;
-    line-height: 18px;
+    height: 16px;
+    line-height: 15px;
     overflow: hidden;
 }
 
@@ -501,50 +494,50 @@ h6, .zeta {
 }
 
 .top-bar {
-    background: #444444;
+    background: #E7EFF2;
     padding: 0 15px;  /* same as .unit padding-left */
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #ADACAC;
+    color: #000;
 }
 
 .top-bar .nav a {
-    color: #e6e6e6;
-    font-size: 13px;
+    color: #000;
+    font-size: 10px;
     font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .top-header {
-    background-image: linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
-    background-image: -o-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
-    background-image: -moz-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
-    background-image: -webkit-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
-    background-image: -ms-linear-gradient(bottom, rgb(207,207,207) 34%, rgb(219,219,219) 67%);
-
-    background-image: -webkit-gradient(
-            linear,
-            left bottom,
-            left top,
-            color-stop(0.34, rgb(207,207,207)),
-            color-stop(0.67, rgb(219,219,219))
-    );
+    background: #F1F1F1;
     position: relative;
     padding: 0 15px;  /* same as .unit padding-left */
-    border-bottom: 1px solid #717171;
+    border-bottom: 1px solid #ADACAC;
 }
 
 .top-header__h {
-    text-align: center;
-    line-height: 55px;
+    line-height: 45px;
+    height: 40px;
+    font-weight: lighter;
+    letter-spacing: 1px;
 }
 
 .top-header__nav {
     position: absolute;
+    border: 1px solid #ADACAC;
+    border-bottom: none;
+    background: #EBEBEB;
+    padding: 3px 3px 0 3px;
+    border-radius: 1px;
     right: 15px;     /* same as .unit padding-left */
     bottom: 0;
 }
 
 .top-header__nav a {
     color: #444444;
-    font-size: 14px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: lighter;
 }
 
 .page-footer {
@@ -576,9 +569,13 @@ h6, .zeta {
     color: #444444;
     margin: 15px 0;
     padding: 5px;
-    border: 1px solid #717171;
+    border: 1px solid #ADACAC;
     border-radius: 3px;
     box-shadow: 1px 1px rgba(0,0,0,.1);
+}
+
+.widget:first-child {
+    margin: 0;
 }
 
 .widget h1 {
@@ -589,11 +586,16 @@ h6, .zeta {
     font-size: 16px;
     border-radius: 3px;
     box-shadow: 2px 1px rgba(0,0,0,.1);
+    font-weight: lighter;
 }
 
 .widget ul {
     list-style: none;
     margin: 0;
+}
+
+.widget a {
+    font-weight: lighter;
 }
 
 .widget__admin {
@@ -640,10 +642,6 @@ h6, .zeta {
     ### Modules
  * -------------------------------------------------------------------------- */
 
-.gallery {
-
-}
-
 .gallery__header {
     width: 100%;
 }
@@ -653,33 +651,24 @@ h6, .zeta {
     margin: 0 0 0 285px;
 }
 
-.gallery__img {
-    display: block;
-    margin-bottom: 15px;
-}
-
-.gallery__img img {
-    width: 100%;
-}
-
 .item {
     width: 24%;
     float: left;
     padding: 3px;
     margin: 0 0 10px 0;
     text-align: center;
-    background-image: linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
-    background-image: -o-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
-    background-image: -moz-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
-    background-image: -webkit-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
-    background-image: -ms-linear-gradient(bottom, rgb(235,246,255) 100%, rgb(224,234,255) 0%);
+    background-image: linear-gradient(bottom, rgb(226,234,235) 38%, rgb(242,248,250) 69%);
+    background-image: -o-linear-gradient(bottom, rgb(226,234,235) 38%, rgb(242,248,250) 69%);
+    background-image: -moz-linear-gradient(bottom, rgb(226,234,235) 38%, rgb(242,248,250) 69%);
+    background-image: -webkit-linear-gradient(bottom, rgb(226,234,235) 38%, rgb(242,248,250) 69%);
+    background-image: -ms-linear-gradient(bottom, rgb(226,234,235) 38%, rgb(242,248,250) 69%);
 
     background-image: -webkit-gradient(
             linear,
             left bottom,
             left top,
-            color-stop(1, rgb(235,246,255)),
-            color-stop(0, rgb(224,234,255))
+            color-stop(0.38, rgb(226,234,235)),
+            color-stop(0.69, rgb(242,248,250))
     );
     border: 1px solid #e7e7e7;
     border-radius: 3px;
@@ -690,7 +679,7 @@ h6, .zeta {
 }
 
 .masonry {
-    margin: 30px 0;
+    margin: 0;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -826,9 +815,18 @@ tr:hover {
     ### Comments
  * -------------------------------------------------------------------------- */
 
+.comment-list:first-child {
+    margin: 15px 0;
+}
+
 .comment-list {
     list-style: none;
     padding: 0;
+}
+
+.comment-list p {
+    padding: 0px;
+    margin: 10px;
 }
 
 .comment-wrap .comment-list {
