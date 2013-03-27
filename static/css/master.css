@@ -829,6 +829,10 @@ tr:hover {
     margin: 10px;
 }
 
+.comment-list p a {
+    font-weight: normal;
+}
+
 .comment-wrap .comment-list {
     padding-left: 3em;
     margin-left: 3em;

@@ -6,12 +6,16 @@ Maturitní projekt fotogalerie
 
 * uživatel: root, m2
 * heslo: maturita (stejné pro oba)
-
-Import pomoci VirtualBox -> Import Appliance
+* Import pomoci VirtualBox -> Import Appliance
+* Start přes VirtualBox GUI nebo VBoxHeadless --startvm {m2}
 
 ###Automatický provoz
 
 Systém je připraven k použití po spuštění - všechny service automaticky naběhnout (příp. zjistit IP u bridged mode)
+
+/etc/nginx/nginx.conf
+
+    listen: 80;
 
 ###Manuální provoz
 
@@ -127,8 +131,10 @@ Databáze serveru, na kterém běží sms handler
 
 ##Poznámky na konec
 
-Sms login u administrace lze obejít přes backdoor zadáním kódu REALLY_AWESOME_BACKDOOR
+Sms login u administrace lze obejít přes backdoor zadáním kódu REALLY\_AWESOME\_BACKDOOR
+
 Adresářová struktura (nutná pro korektní funkčnost)
+
     application.py
     app
         models
@@ -143,3 +149,5 @@ Adresářová struktura (nutná pro korektní funkčnost)
             thumb
             upload
     translation
+
+Skript generator.py lze využít pro generování dalších náhodných dat, pro dané použití musí být upraven
