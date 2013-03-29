@@ -4,7 +4,7 @@
 
 {% set actionbar=True %}
 {% block actionbar %}
-    <a href="{{ url_for('category_one', name=category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a>
+    <li><a href="{{ url_for('category_one', name=category.name, page=request.args.get('page')) }}">{{ local.BACK }}</a></li>
 {% endblock %}
 
 
