@@ -71,13 +71,11 @@
 
         {% if DEF_user and DEF_user.level > 0 %}
             <div class="widget widget__admin">
-                <li>
-                    {% if DEF_user.level > 1 %}
-                        <h1>{{ local.admin['ADMIN'] }}</h1>
-                    {% else %}
-                        <h1>{{ local.admin['MOD'] }}</h1>
-                    {% endif %}
-                </li>
+                {% if DEF_user.level > 1 %}
+                    <h1>{{ local.admin['ADMIN'] }}</h1>
+                {% else %}
+                    <h1>{{ local.admin['MOD'] }}</h1>
+                {% endif %}
                 <ul>
                     <li><a href="/r">{{ local.adminmenu['REQUESTS'] }}</a></li>
                     {% if DEF_user.level > 1 and 'admin' in session %}
@@ -105,7 +103,7 @@
 
         {% if actionbar %}
             <div class="widget widget__action">
-                <li><h1>{{ local.ACTIONS }}</h1></li>
+                <h1>{{ local.ACTIONS }}</h1>
                 <ul>
                     {% block actionbar %}{% endblock %}
                 </ul>
