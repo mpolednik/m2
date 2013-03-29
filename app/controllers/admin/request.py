@@ -25,10 +25,10 @@ def request_all(page=1):
     # Display every request visible to user (admin or moderator of categories)
     user = User.query.get(session['user'])
     if 'admin' in session > 1:
-        requests = Request.query.paginate(page, 20)
+        requests = Request.query.order_by(ts.desc()).paginate(page, 20)
     else:
         keys = [cat.id for cat in user.categories]
-        requests = Request.query.filter(Request.id_category.in_(keys)).paginate(page, 20)
+        requests = Request.query.filter(Request.id_category.in_(keys)).order_by(ts.desc()).paginate(page, 20)
 
     return render('admin/request.html', title=local.request['TITLE_LIST'], requests=requests)
 
