@@ -39,8 +39,7 @@
                 {% if 'admin' in session or DEF_user == comment.owner %}
                     <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
                     <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text) }}')">Delete</a>
-                {% endif %}
-                {% if comment.image.category and DEF_user in comment.image.category.moderators %}
+                {% elif comment.image.category and DEF_user in comment.image.category.moderators %}
                     <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text) }}')">Delete</a>
                 {% endif %}
                 </span>
