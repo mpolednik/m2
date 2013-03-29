@@ -53,19 +53,17 @@ def req_level(level):
     return decorator
 
 
-def req_mod(Object=None):
-    def decorator(f):
-        @req_login
-        def inner(*args, **kwargs):
-            category = Category.query.filter_by(name=kwargs['name']).one()
-            user = User.query.get(session['user'])
+def req_mod(f):
+    @req_login
+    def inner(*args, **kwargs):
+        category = Category.query.filter_by(name=kwargs['name']).one()
+        user = User.query.get(session['user'])
 
-            if 'admin' in session or user in category.moderators:
-                return f(*args, **kwargs)
-            else:
-                raise SecurityException
-        return inner
-    return decorator
+        if 'admin' in session or user in category.moderators:
+            return f(*args, **kwargs)
+        else:
+            raise SecurityException
+    return inner
 
 
 def req_owner(Object):
