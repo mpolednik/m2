@@ -20,8 +20,12 @@
                 &nbsp;|
                 {{ votingmenu(DEF_user, image, "/ajax/vote_image") }} 
             {% endif %}
-            {% if not category and image.category %}
-                &nbsp;|&nbsp;<a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
+            {% if not category %}
+                {% if image.category %}
+                    &nbsp;|&nbsp;<a href="{{ url_for('category_one', name=image.category.name) }}">{{ image.category.name }}</a>
+                {% else %}
+                    <span class="note">{{ local.category['NONEXISTANT'] }}</span>
+                {% endif %}
             {% endif %}
         </div> <!-- /unit -->
     {% endfor %}
