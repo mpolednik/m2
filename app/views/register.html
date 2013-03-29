@@ -1,13 +1,15 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
 
 
 {% block body %}
     <form action="" method="POST">
-        {{ render_field(form.name) }}
-        {{ render_field(form.mail) }}
-        {{ render_field(form.password) }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="Login">
+        <ul>
+            {{ render_field(form.name) }}
+            {{ render_field(form.mail) }}
+            {{ render_field(form.password) }}
+            {{ form.hidden_tag() }}
+            {{ render_submit('Registrace') }}
+        </ul>
     </form>
 {% endblock %}
