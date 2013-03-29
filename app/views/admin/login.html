@@ -7,10 +7,10 @@
         {{ local.sms['STATE'] }}:&nbsp;<span class="state"></span><br>
     {% endif %}
     <a href="{{ url_for('send_token') }}">{{ local.admin['SEND_TOKEN'] }}</a>
-    <form method="POST" action="">
+    <form action="{{ url_for('superlogin') }}" method="post">
         <ul>
             {{ render_field(form.token) }}
-            {{ form.hidden_tag() }}
+            <li>{{ form.hidden_tag() }}</li>
             {{ render_submit(local.admin['LOGIN']) }}
         </ul>
     </form>
