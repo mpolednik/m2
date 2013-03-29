@@ -38,9 +38,9 @@
                 {{ votingmenu(DEF_user, comment, "/ajax/vote_comment") }}
                 {% if 'admin' in session or DEF_user == comment.owner %}
                     <a href="{{ url_for('comment_edit', id=image.id, cid=comment.id) }}">Edit</a>
-                    <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text) }}')">Delete</a>
+                    <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text)|striptags }}')">Delete</a>
                 {% elif comment.image.category and DEF_user in comment.image.category.moderators %}
-                    <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text) }}')">Delete</a>
+                    <a id="delete_{{ comment.id }}" onclick="delete_comment({{ comment.id }}, '{{ local.confirms['COMMENT_DELETE'].format(comment.text)|striptags }}')">Delete</a>
                 {% endif %}
                 </span>
             {% endif %}
