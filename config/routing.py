@@ -12,7 +12,7 @@ views.add('/search/<int:ipage>/<int:upage>', 'app.controllers.search.search')
 views.add('/c/<name>/submit', 'app.controllers.category.category_submit', methods=('GET', 'POST'))
 views.add('/c/<name>/edit', 'app.controllers.category.category_edit', methods=('GET', 'POST'))
 views.add('/c/<name>/pass', 'app.controllers.category.category_pass_mod')
-views.add('/c/<name>/<int:page>/become_mod', 'app.controllers.category.category_become_mod')
+views.add('/c/<name>/become_mod', 'app.controllers.category.category_become_mod')
 
 views.add('/i/<int:id>', 'app.controllers.image.image')
 views.add('/i/<int:id>/edit', 'app.controllers.image.image_edit', methods=('GET', 'POST'))
