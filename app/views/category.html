@@ -13,7 +13,7 @@
                 <li><a href="{{ url_for('category_pass_mod', name=category.name) }}">{{ local.actions['PASS_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif 'admin' in session  %}
-                <li><a href="{{ url_for('category_become_mod', name=category.name }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
+                <li><a href="{{ url_for('category_become_mod', name=category.name) }}">{{ local.actions['BECOME_MOD'] }}</a><br></li>
                 <li><a href="{{ url_for('category_edit', name=category.name) }}">{{ local.actions['EDIT'] }}</a><br></li>
             {% elif not DEF_user.already_requested(category) %}
                 <li><a href="{{ url_for('request_submit', name=category.name) }}">{{ local.actions['REQUEST_MOD'] }}</a><br></li>
