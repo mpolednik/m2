@@ -8,6 +8,7 @@
         <tr>
             <th>název</th>
             <th>text</th>
+            <th>kategorie</th>
             <th>vlastník</th>
             <th>typ</th>
             <th colspan="3">akce</th>
@@ -25,6 +26,13 @@
             </td>
             <td>
                 {{ request.text }}
+            </td>
+            <td>
+                {% if request.category %}
+                    {{ request.category.name }}
+                {% else %}
+                    {{ local.category['NONEXISTANT'] }}
+                {% endif %}
             </td>
             <td>
                 {% if request.owner %}
