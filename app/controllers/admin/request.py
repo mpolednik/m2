@@ -103,7 +103,7 @@ def request_decline(id, page):
     return redirect(url_for('request_all'))
 
 @security.req_mod
-def request_delete(id, page):
+def request_delete(id, name, page):
     request = db.session.query(Request).get(id)
     db.session.delete(request)
     db.session.commit()
