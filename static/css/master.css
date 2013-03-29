@@ -472,7 +472,6 @@ h6, .zeta {
 .nav--inline li, .nav--inline li a {
     display: inline-block;
     display: inline;
-    zoom: 1;
 }
 
 .nav--block > li {
@@ -713,14 +712,12 @@ input[type="text"] {
 
 input[type="search"] {
     width: 240px;
-
     border: 0;
-    padding: 14px;
     outline: none;
     background: transparent;
 }
 
-input[type="search"}:focus {
+input[type="search"]:focus {
     background: transparent;
 }
 
