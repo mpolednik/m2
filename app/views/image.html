@@ -28,7 +28,7 @@
 {% block widget %}
     <ul>
         <li><h1>{{ local.image['INFO'] }}</h1></li>
-        <li>Popis:&nbsp;{{ image.text|safe }}</li>
+        <li>Popis:&nbsp;{{ image.text }}</li>
         <li>Vlasník:&nbsp;<a href="/u/{{ image.owner.id }}">{{ image.owner.name }}</a></li>
         <li>Kategorie:&nbsp;<a href="/c/{{ image.category.name }}">{{ image.category.name }}</a></li>
         <li>Hodnocení:&nbsp;{{ image.rating }}</li>
