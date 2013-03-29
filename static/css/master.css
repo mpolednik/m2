@@ -335,7 +335,7 @@ body {
     font-size: 14px;
     line-height: 22px;
     font-family: "HelveticaNeue-Light", Helvetica Neue, Arial, sans-serif;
-    background-color: f8f8ff;
+    background-color: #f8f8ff;
     color: black;
 }
 
@@ -411,7 +411,6 @@ h6, .zeta {
  * -------------------------------------------------------------------------- */
 
 .cf {
-    *zoom: 1;
 }
 
 .cf:before, .cf:after {
@@ -470,10 +469,10 @@ h6, .zeta {
     overflow: hidden;
 }
 
-.nav--inline > li, .nav--inline > li > a {
+.nav--inline li, .nav--inline li a {
     display: inline-block;
-    *display: inline;
-    *zoom: 1;
+    display: inline;
+    zoom: 1;
 }
 
 .nav--block > li {
@@ -716,12 +715,13 @@ input[type="search"] {
     width: 240px;
 
     border: 0;
-    padding: rem(14);
+    padding: 14px;
     outline: none;
     background: transparent;
-    &:focus {
-            background: transparent;
-    }
+}
+
+input[type="search"}:focus {
+    background: transparent;
 }
 
 input[type="password"] {
