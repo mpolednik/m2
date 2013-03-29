@@ -13,8 +13,7 @@
     {% if DEF_user and (DEF_user == image.owner or 'admin' in session) %}
         <li><a href="{{ url_for('image_edit', id=image.id) }}">{{ local.actions['EDIT'] }}</a><br></li>
         <li>{{ confirmlink(url_for('image_delete', id=image.id), local.confirms['IMAGE_DELETE'].format(image.name), local.actions['DELETE']) }}</li>
-    {% endif %}
-    {% if DEF_user and DEF_user in image.category.moderators  %}
+    {% elif DEF_user and DEF_user in image.category.moderators  %}
         <li>{{ confirmlink(url_for('image_delete', id=image.id), local.confirms['IMAGE_DELETE'].format(image.name), local.actions['DELETE']) }}</li>
     {% endif %}
     {% if image.category %}
