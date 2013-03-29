@@ -5,7 +5,7 @@
 
 {% set actionbar=True %}
 {% block actionbar %}
-    <a href="{{ url_for('image', id=id) }}">{{ local.BACK }}</a>
+    <li><a href="{{ url_for('image', id=id) }}">{{ local.BACK }}</a></li>
 {% endblock %}
 
 
