@@ -9,7 +9,7 @@
             {% if comment.depth > lastdepth %}
                 <ol class="comment-list">
             {% else %}
-                {% for depth in range(comment.depth, lastdepth) %}
+                {% for depth in range(comment.depth-1, lastdepth) %}
                     </li>
                     </ol>
                 {% endfor %}
