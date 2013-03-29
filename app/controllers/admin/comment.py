@@ -13,9 +13,9 @@ from translation import local
 def admin_comment(page=1):
     if 'q' in request.args:
         q = request.args.get('q')
-        comments = Comment.query.filter(Comment.text.like('%{}%'.format(q))).paginate(page, 20)
+        comments = Comment.query.filter(Comment.text.like('%{}%'.format(q))).order_by(Comment.ts.desc()).paginate(page, 20)
     else:
-        comments = Comment.query.paginate(page, 20)
+        comments = Comment.query.order_by(Comment.ts.desc()).paginate(page, 20)
 
     return render('admin/comment.html', title=local.comment['TITLE_ADMIN_LIST'], comments=comments)
 
