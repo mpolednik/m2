@@ -59,7 +59,7 @@
                 {% endif %}
             </td>
             <td>
-                {{ confirmlink(url_for('request_delete', id=request.id, name=request.category.name, page=requests.page), local.confirms['REQUEST_DELETE'].format(request.name), "smazat") }}
+                {{ confirmlink(url_for('request_delete', id=request.id, page=requests.page), local.confirms['REQUEST_DELETE'].format(request.name), "smazat") }}
             </td>
         </tr>
     {% endfor %}
