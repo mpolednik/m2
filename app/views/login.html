@@ -7,8 +7,8 @@
         <ul>
             {{ render_field(form.mail) }}
             {{ render_field(form.password) }}
-            {{ form.hidden_tag() }}
-            <li>{{ render_submit(local.LOGIN) }}</li>
+            <li>{{ form.hidden_tag() }}</li>
+            {{ render_submit(local.LOGIN) }}
         </ul>
     </form>
 {% endblock %}
