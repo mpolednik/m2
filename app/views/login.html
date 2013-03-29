@@ -3,12 +3,12 @@
 
 
 {% block body %}
-    <form action="" method="POST">
+    <form action="{{ url_for('login') }}" method="post">
         <ul>
             {{ render_field(form.mail) }}
             {{ render_field(form.password) }}
             {{ form.hidden_tag() }}
-            {{ render_submit('Přihlášení) }}
+            <li>{{ render_submit('Přihlášení) }}</li>
         </ul>
     </form>
 {% endblock %}
