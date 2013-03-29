@@ -1,4 +1,4 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_field, render_submit %}
 {% extends "layout.html" %}
 
 
@@ -9,9 +9,9 @@
 
 
 {% block body %}
-    <form action="" method="POST">
+    <form action="{{ url_for('image_edit', id=image.id) }}" method="post">
         {{ render_field(form.text) }}
-        {{ form.hidden_tag() }}
-        <input type="submit" value="editovat">
+        <li>{{ form.hidden_tag() }}</li>
+        {{ render_submit('Editovat') }}
     </form>
 {% endblock %}

@@ -9,13 +9,13 @@
 
 
 {% block body %}
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form action="{{ url_for('category_submit', name=category.name) }}" enctype="multipart/form-data" method="post">
         <ul>
             {{ render_field(form.name) }}
             {{ render_field(form.text) }}
             {{ render_field(form.link) }}
             {{ render_field(form.image) }}
-            {{ form.hidden_tag() }}
+            <li>{{ form.hidden_tag() }}</li>
             {{ render_submit(local.category_submit['POST']) }}
         </ul>
     </form>

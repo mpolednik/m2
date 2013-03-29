@@ -3,11 +3,11 @@
 
 
 {% block body %}
-    <form method="POST" action="">
+    <form action="{{ url_for('category_create') }}" method="post">
         <ul>
             {{ render_field(form.name) }}
             {{ render_field(form.text) }}
-            {{ form.hidden_tag() }}
+            <li>{{ form.hidden_tag() }}</li>
             {{ render_submit(local.category['CREATE']) }}
         </ul>
     </form>

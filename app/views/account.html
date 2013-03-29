@@ -3,13 +3,13 @@
 
 {% block body %}
     {% if DEF_user %}
-        <form action="" method="POST">
+        <form action="{{ url_for('account') }}" method="post">
             <ul>
                 {{ render_field(form.name) }}
                 {{ render_field(form.mail) }}
                 {{ render_field(form.phone) }}
                 {{ render_field(form.password) }}
-                {{ form.hidden_tag() }}
+                <li>{{ form.hidden_tag() }}</li>
                 {{ render_submit(local.user['EDIT']) }}
             </ul>
         </form>
