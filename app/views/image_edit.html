@@ -2,6 +2,12 @@
 {% extends "layout.html" %}
 
 
+{% set actionbar=True %}
+{% block actionbar %}
+    <li><a href="{{ url_for('image', id=image.id) }}">{{ local.BACK }}</a></li>
+{% endblock %}
+
+
 {% block body %}
     <form action="" method="POST">
         {{ render_field(form.text) }}
