@@ -12,6 +12,7 @@ Maturitní projekt fotogalerie
 ###Automatický provoz
 
 Systém je připraven k použití po spuštění - všechny service automaticky naběhnout (příp. zjistit IP u bridged mode)
+Defaultně server poslouchá na portu 80 - pro změnu je potřeba editovat...
 
 /etc/nginx/nginx.conf
 
@@ -108,6 +109,7 @@ Databáze využívaná aplikací (defaultně data shodná s konfigurací mysqld)
 
 Databáze serveru, na kterém běží sms handler
 
+* Dva servery (jedne záložní, defaultní nastavení obou odpovída školní síti a WAN)
 * local / global
 * host: 192.168.171.11 / 95.82.149.75
 * port 3306 / 9999
@@ -120,6 +122,14 @@ Databáze serveru, na kterém běží sms handler
         'name': 'sms',
         'host': '95.82.149.75',
         'port': 9999,
+    }
+
+    smsconf_bak = {
+        'user': 'polema',
+        'pass': 'maturita',
+        'name': 'sms',
+        'host': '192.168.171.11',
+        'port': 3306,
     }
 
 ###Spouštění software stacku (příklad na obecném GNU/Linux OS)
