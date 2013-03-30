@@ -65,7 +65,7 @@ user = {
     'MODERATOR': u'moderátor',
     'USER': u'uživatel',
 
-    'INVALID_MAIL': u'Neplatná e-mailový adresa! E-mail musí být zadán ve formátu name@domain.tld.',
+    'INVALID_MAIL': u'Neplatná e-mailová adresa! E-mail musí být zadán ve formátu name@domain.tld.',
     'INVALID_PASS': u'Heslo musí mít minimálně %(min)d znaky!',
     'INVALID_NAME': u'Délka přezdívky musí být mezi %(min)d a %(max)d znaky!',
     'INVALID_NAME_CHARS': u'Přezdívka musí obsahovat pouze písmena, číslice a znaky _ a -',

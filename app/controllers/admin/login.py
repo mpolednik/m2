@@ -12,7 +12,7 @@ from app.helpers import security
 
 from app.models.user import User
 
-from config.database import smsconf
+from config.database import smsconf, smsconf_bak
 
 from translation import local
 
@@ -94,7 +94,11 @@ def get_sms_state():
 
 
 def _mysqldb_connect():
-    con = mdb.connect(smsconf['host'], smsconf['user'], smsconf['pass'], smsconf['name'], smsconf['port'])
+    try:
+        con = mdb.connect(smsconf['host'], smsconf['user'], smsconf['pass'], smsconf['name'], smsconf['port'])
+    except:
+        con = mdb.connect(smsconf_bak['host'], smsconf_bak['user'], smsconf_bak['pass'], smsconf_bak['name'], smsconf_bak['port'])
+
     cur = con.cursor()
 
     return (con, cur)

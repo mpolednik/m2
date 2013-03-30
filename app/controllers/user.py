@@ -21,31 +21,29 @@ class LoginForm(Form):
     mail = fields.TextField(local.user['MAIL'], [validators.Email(local.user['INVALID_MAIL'])])
     password = fields.PasswordField(local.user['PASS'], [validators.Length(min=4, message=local.user['INVALID_PASS'])])
 
-    def validate_name(form, field):
-        if form.data['name'] != field.data:
-            try:
-                User.query.filter_by(name=field.data).one()
-            except:
-                pass
-            else:
-                raise ValidationError(local.user['EXISTS_NAME'])
-
-    def validate_mail(form, field):
-        if form.data['mail'] != field.data:
-            try:
-                User.query.filter_by(mail=field.data).one()
-            except:
-                pass
-            else:
-                raise ValidationError(local.user['EXISTS_MAIL'])
-
 
 class RegistrationForm(LoginForm):
     name = fields.TextField(local.user['NICK'], [validators.Length(4, 50, local.user['INVALID_NAME'])])
 
+    def validate_mail(form, field):
+        try:
+            user = User.query.filter_by(mail=field.data).one()
+        except:
+            pass
+        else:
+            if ('user' in session and user.id != session['user']) or 'user' not in session:
+                raise ValidationError(local.user['EXISTS_MAIL'])
+
     def validate_name(form, field):
         if not check_naive(field.data):
             raise ValidationError(local.user['INVALID_NAME_CHARS'])
+        try:
+            user = User.query.filter_by(name=field.data).one()
+        except:
+            pass
+        else:
+            if ('user' in session and user.id != session['user']) or 'user' not in session:
+                raise ValidationError(local.user['EXISTS_NAME'])
 
 
 class EditForm(RegistrationForm):
