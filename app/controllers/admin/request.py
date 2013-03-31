@@ -16,7 +16,7 @@ from translation import local
 
 
 class RequestForm(Form):
-    name = fields.TextField(local.NAME, [validators.Length(min=4, max=30, message=local.request['INVALID_NAME'])])
+    name = fields.TextField(local.NAME, [validators.Length(min=2, max=30, message=local.request['INVALID_NAME'])])
     text = fields.TextAreaField(local.TEXT, [validators.Length(max=1024, message=local.request['INVALID_TEXT'])])
 
 
