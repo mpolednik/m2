@@ -86,7 +86,7 @@ def request_accept(id, page):
 
             # Check if category already exists
             try:
-                category = Category.query.filter_by(name=form.name.data).one()
+                category = Category.query.filter_by(name=request.name).one()
             except:
                 pass
             else:
