@@ -43,6 +43,7 @@ def superlogout():
     if 'admin' in session:
         session.pop('admin', None)
 
+    flash(local.admin['LOGGED_OUT'], 'success')
     return redirect(url_for('category_all'))
 
 

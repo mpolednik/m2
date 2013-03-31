@@ -50,8 +50,18 @@ def request_submit(name = None):
                 flash(local.request['MOD_REQUESTED'], 'error')
                 return render('request_submit.html', title=local.request['TITLE_NEW'], form=form)
         else:
+            # Check if category already exists
+            try:
+                category = Category.query.filter_by(name=form.name.data).one()
+            except:
+                pass
+            else:
+                flash(local.request['DUPLICATE_CATEGORY'], 'error')
+                return render('request_submit.html', title=local.request['TITLE_NEW'], form=form)
+
             category = None
             type = 0
+
         req = Request(session['user'], category, type, form.name.data, form.text.data)
         db.session.add(req)
 
@@ -73,6 +83,16 @@ def request_accept(id, page):
     
         # Type: new category
         if request.type == 0:
+
+            # Check if category already exists
+            try:
+                category = Category.query.filter_by(name=form.name.data).one()
+            except:
+                pass
+            else:
+                flash(local.request['DUPLICATE_CATEGORY'], 'error')
+                return redirect(url_for('request_all', page=page))
+
             if user.level < 2:
                 user.level = 1
             category = Category(request.name, request.text)
